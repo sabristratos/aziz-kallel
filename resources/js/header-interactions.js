@@ -26,7 +26,6 @@ class HeaderInteractions {
         this.setupPopoverAnimations();
         this.setupMobileMenuAnimations();
         this.setupNavigationEffects();
-        this.setupScrollSpy();
     }
 
     setupHeaderEffects() {
@@ -47,17 +46,17 @@ class HeaderInteractions {
             if (scrollY > 100) {
                 if (scrollDelta > 0) {
                     // Scrolling down - slight compress
-                    gsap.to(this.header, { 
-                        scaleY: 0.98, 
-                        duration: 0.2, 
-                        ease: 'power2.out' 
+                    gsap.to(this.header, {
+                        scaleY: 0.98,
+                        duration: 0.2,
+                        ease: 'power2.out'
                     });
                 } else {
                     // Scrolling up - return to normal
-                    gsap.to(this.header, { 
-                        scaleY: 1, 
-                        duration: 0.3, 
-                        ease: 'power2.out' 
+                    gsap.to(this.header, {
+                        scaleY: 1,
+                        duration: 0.3,
+                        ease: 'power2.out'
                     });
                 }
             }
@@ -78,11 +77,11 @@ class HeaderInteractions {
 
     setupPopoverAnimations() {
         const popovers = document.querySelectorAll('[x-data*="open"]');
-        
+
         popovers.forEach(popover => {
             const trigger = popover.querySelector('[x-on\\:mouseenter], [x-on\\:click]');
             const content = popover.querySelector('[x-show="open"]');
-            
+
             if (!trigger || !content) return;
 
             // Enhanced hover animations
@@ -107,7 +106,7 @@ class HeaderInteractions {
                 mutations.forEach((mutation) => {
                     if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
                         const isVisible = !content.style.display || content.style.display !== 'none';
-                        
+
                         if (isVisible) {
                             gsap.fromTo(content.children, {
                                 y: 20,
@@ -136,7 +135,7 @@ class HeaderInteractions {
 
     setupNavigationEffects() {
         const navItems = document.querySelectorAll('.nav-item');
-        
+
         navItems.forEach(item => {
             // Magnetic effect on hover
             item.addEventListener('mouseenter', (e) => {
@@ -155,8 +154,31 @@ class HeaderInteractions {
                 });
             });
 
-            // Click ripple effect
+            // Click ripple effect and smooth scrolling
             item.addEventListener('click', (e) => {
+                const href = item.getAttribute('href');
+                
+                // Handle smooth scrolling for anchor links
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    const targetId = href.substring(1);
+                    const target = document.getElementById(targetId);
+                    
+                    if (target) {
+                        // Calculate header height for proper offset
+                        const header = document.querySelector('header') || document.querySelector('.header');
+                        const headerHeight = header ? header.offsetHeight : 80;
+                        const offsetTop = target.offsetTop - headerHeight - 20; // Extra 20px padding
+                        
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+
+                // Ripple effect
                 const ripple = document.createElement('span');
                 const rect = item.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
@@ -169,7 +191,7 @@ class HeaderInteractions {
                     height: ${size}px;
                     left: ${x}px;
                     top: ${y}px;
-                    background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+                    background: radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%);
                     border-radius: 50%;
                     pointer-events: none;
                     opacity: 0.3;
@@ -191,78 +213,6 @@ class HeaderInteractions {
         });
     }
 
-    setupScrollSpy() {
-        const sections = document.querySelectorAll('section[id]');
-        const navItems = document.querySelectorAll('.nav-item[href^="#"]');
-        
-        if (sections.length === 0 || navItems.length === 0) return;
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '-20% 0px -80% 0px',
-            threshold: 0
-        };
-
-        const activeNavItems = new Set();
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const sectionId = entry.target.id;
-                const navItem = document.querySelector(`.nav-item[href="#${sectionId}"]`);
-                
-                if (!navItem) return;
-
-                if (entry.isIntersecting) {
-                    activeNavItems.add(sectionId);
-                    
-                    // Animate nav item activation
-                    gsap.to(navItem, {
-                        scale: 1.1,
-                        duration: 0.3,
-                        ease: 'back.out(1.7)'
-                    });
-                } else {
-                    activeNavItems.delete(sectionId);
-                    
-                    // Return to normal size
-                    gsap.to(navItem, {
-                        scale: 1,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                }
-
-                // Update active classes
-                this.updateActiveNavigation();
-            });
-        }, observerOptions);
-
-        sections.forEach(section => observer.observe(section));
-    }
-
-    updateActiveNavigation() {
-        const navItems = document.querySelectorAll('.nav-item[href^="#"]');
-        
-        navItems.forEach(item => {
-            const href = item.getAttribute('href');
-            const sectionId = href.substring(1);
-            const isActive = document.querySelector(`#${sectionId}`)?.classList.contains('active-section');
-            
-            if (isActive) {
-                item.classList.add('active');
-                gsap.to(item, {
-                    color: 'var(--color-primary)',
-                    duration: 0.2
-                });
-            } else {
-                item.classList.remove('active');
-                gsap.to(item, {
-                    color: 'var(--color-muted-foreground)',
-                    duration: 0.2
-                });
-            }
-        });
-    }
 
     // Public method to refresh interactions after dynamic content changes
     refresh() {

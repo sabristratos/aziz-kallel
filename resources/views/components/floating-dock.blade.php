@@ -54,13 +54,14 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
 
     <!-- Emergency Help Button -->
     <div class="relative group animate-scale">
-        <a href="tel:112" 
+        <a href="https://www.dvag.de/abdelaziz.kallel/notfallhilfe.html" 
+           target="_blank"
            class="flex items-center justify-center w-10 h-10 bg-red-600/90 hover:bg-red-600 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105">
             <x-heroicon-o-exclamation-triangle class="w-4 h-4" />
         </a>
         <!-- Tooltip -->
         <div class="absolute right-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
-            <x-ui.text size="xs" color="white" as="span">Hilfe im Notfall (112)</x-ui.text>
+            <x-ui.text size="xs" color="white" as="span">Notfallhilfe</x-ui.text>
             <div class="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-gray-900"></div>
         </div>
     </div>
@@ -119,7 +120,8 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
             </a>
 
             <!-- Emergency -->
-            <a href="tel:112" 
+            <a href="https://www.dvag.de/abdelaziz.kallel/notfallhilfe.html" 
+               target="_blank"
                class="flex items-center justify-center w-10 h-10 bg-red-600/90 text-white rounded-full shadow-md">
                 <x-heroicon-o-exclamation-triangle class="w-4 h-4" />
             </a>

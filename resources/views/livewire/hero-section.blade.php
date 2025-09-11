@@ -1,9 +1,9 @@
-<x-section-wrapper id="hero" variant="hero" spacing="none" class="relative pt-16 lg:pt-24 overflow-hidden min-h-[500px] lg:min-h-[600px] pb-0">
+<x-section-wrapper id="hero" variant="hero" spacing="none" class="relative pt-8 lg:pt-12 overflow-hidden min-h-[500px] lg:min-h-[600px] pb-0">
     <!-- Diagonal Fade Grid Background -->
-    <div class="absolute inset-0 z-0" 
+    <div class="absolute inset-0 z-0"
          style="background-image: linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 32px 32px; -webkit-mask-image: radial-gradient(ellipse 70% 60% at 20% 40%, #000 40%, transparent 85%); mask-image: radial-gradient(ellipse 70% 60% at 20% 40%, #000 40%, transparent 85%);">
     </div>
-    
+
     <!-- Mobile: Content first, then image below -->
     <div class="block lg:hidden">
         <!-- Mobile Hero Copy -->
