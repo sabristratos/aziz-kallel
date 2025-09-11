@@ -1,0 +1,256 @@
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
+@import '@splidejs/splide/css';
+@import './fonts.css';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
+@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Science Blue Brand Colors */
+    --color-science-blue-50: #f2f6fd;
+    --color-science-blue-100: #e5ecf9;
+    --color-science-blue-200: #c5d7f2;
+    --color-science-blue-300: #92b5e7;
+    --color-science-blue-400: #588fd8;
+    --color-science-blue-500: #2f69b8;
+    --color-science-blue: #2f69b8;
+    --color-science-blue-600: #2357a6;
+    --color-science-blue-700: #1d4587;
+    --color-science-blue-800: #1c3d70;
+    --color-science-blue-900: #1c345e;
+    --color-science-blue-950: #13223e;
+
+    /* Golden Amber Accent Colors */
+    --color-golden-amber-50: #fffbeb;
+    --color-golden-amber-100: #fef3c7;
+    --color-golden-amber-200: #fde68a;
+    --color-golden-amber-300: #fcd34d;
+    --color-golden-amber-400: #fbbf24;
+    --color-golden-amber-500: #f59e0b;
+    --color-golden-amber: #f59e0b;
+    --color-golden-amber-600: #d97706;
+    --color-golden-amber-700: #b45309;
+    --color-golden-amber-800: #92400e;
+    --color-golden-amber-900: #78350f;
+    --color-golden-amber-950: #451a03;
+
+    /* Slate Colors for Dark Shades */
+    --color-slate-50: #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
+    --color-slate-300: #cbd5e1;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-700: #334155;
+    --color-slate-800: #1e293b;
+    --color-slate-900: #0f172a;
+    --color-slate-950: #020617;
+
+    /* Font Families */
+    --font-family-heading: 'Lexend', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-body: 'Public Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: rgb(203 213 225);
+    }
+}
+
+@layer utilities {
+    .font-heading {
+        font-family: var(--font-family-heading);
+    }
+    
+    .font-body {
+        font-family: var(--font-family-body);
+    }
+}
+
+
+[data-flux-field]:not(ui-radio, ui-checkbox) {
+    @apply grid gap-2;
+}
+
+[data-flux-label] {
+    @apply  !mb-0 !leading-tight;
+}
+
+input:focus[data-flux-control],
+textarea:focus[data-flux-control],
+select:focus[data-flux-control] {
+    @apply outline-hidden ring-2 ring-science-blue-600 ring-offset-2 ring-offset-white rounded-lg;
+}
+
+
+/* Animation Classes for GSAP - Progressive Enhancement */
+@layer components {
+    /* Content is visible by default - animations are progressive enhancement */
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-slide-left,
+    .animate-slide-right,
+    .animate-scale,
+    .animate-stagger,
+    .animate-stagger > * {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Only hide elements when GSAP is ready (applied via JavaScript) */
+    .gsap-ready .animate-fade-in,
+    .gsap-ready .animate-slide-up,
+    .gsap-ready .animate-slide-left,
+    .gsap-ready .animate-slide-right,
+    .gsap-ready .animate-scale,
+    .gsap-ready .animate-stagger > * {
+        opacity: 0;
+    }
+
+    .gsap-ready .animate-fade-in {
+        transform: translateY(30px);
+    }
+
+    .gsap-ready .animate-slide-up {
+        transform: translateY(50px);
+    }
+
+    .gsap-ready .animate-slide-left {
+        transform: translateX(50px);
+    }
+
+    .gsap-ready .animate-slide-right {
+        transform: translateX(-50px);
+    }
+
+    .gsap-ready .animate-scale {
+        transform: scale(0.8);
+    }
+
+    .gsap-ready .animate-stagger > * {
+        transform: translateY(30px);
+    }
+
+    /* Professional animation utilities */
+    .animation-ready {
+        will-change: transform, opacity;
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+        .animate-fade-in,
+        .animate-slide-up,
+        .animate-slide-left,
+        .animate-slide-right,
+        .animate-scale,
+        .animate-stagger,
+        .animate-stagger > * {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+
+    /* Smooth scroll behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Performance optimizations for animations */
+    [class*="animate-"] {
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+
+    /* Splide Testimonials Custom Styling */
+    .testimonials-splide {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .testimonials-splide .splide__track {
+        width: 100%;
+    }
+
+    .testimonials-splide .splide__list {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .testimonials-splide .splide__slide {
+        width: 100%;
+        display: flex !important;
+        justify-content: center;
+    }
+
+    /* Mobile: Full width single slide */
+    @media (max-width: 1023px) {
+        .testimonials-splide .splide__slide {
+            width: 100% !important;
+            margin: 0 !important;
+        }
+        
+        .testimonials-splide .splide__slide > div {
+            width: 100%;
+            max-width: none;
+        }
+    }
+
+    /* Desktop: Three slides with proper centering */
+    @media (min-width: 1024px) {
+        .testimonials-splide .splide__track {
+            overflow: visible;
+        }
+
+        .testimonials-splide .splide__slide {
+            opacity: 1;
+            transform: none;
+            transition: all 0.3s ease;
+        }
+
+        .testimonials-splide .splide__slide.is-active {
+            opacity: 1;
+            transform: none;
+        }
+
+        .testimonials-splide .splide__list {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    /* Custom pagination dots */
+    .testimonials-splide .splide__pagination__page {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgb(203 213 225);
+        border: none;
+        transition: all 0.3s ease;
+        margin: 0 4px;
+    }
+
+    .testimonials-splide .splide__pagination__page.is-active {
+        background: rgb(47 105 184);
+        width: 24px;
+        border-radius: 12px;
+    }
+
+    .testimonials-splide .splide__pagination__page:hover {
+        background: rgb(148 163 184);
+    }
+
+}

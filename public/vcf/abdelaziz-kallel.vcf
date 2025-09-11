@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Abdelaziz Kallel
+N:Kallel;Abdelaziz;;;
+ORG:Deutsche Vermögensberatung
+TITLE:Finanzberater
+TEL;TYPE=WORK,VOICE:+49 123 456 789
+EMAIL;TYPE=WORK:info@abdelaziz-kallel.de
+URL:https://www.dvag.de/abdelaziz.kallel/
+NOTE:Ihr persönlicher Finanzberater für Altersvorsorge, Geldanlage, Versicherungen und Immobilienfinanzierung. Kostenlose Erstberatung und individuelle Lösungen für Ihre finanziellen Ziele.
+CATEGORIES:Finanzberatung,Versicherung,Altersvorsorge
+END:VCARD
