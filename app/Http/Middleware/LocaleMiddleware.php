@@ -16,17 +16,12 @@ class LocaleMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $availableLocales = config('app.available_locales', []);
-        $defaultLocale = config('app.locale', 'de');
+        $defaultLocale = config('app.locale', 'ar');
 
         // Check for locale in session first
         $locale = session('locale');
 
-        // If not in session, check if there's a locale parameter in the request
-        if (!$locale && $request->has('locale')) {
-            $locale = $request->input('locale');
-        }
-
-        // If still no locale, use browser preferences
+        // If no locale in session, use browser preferences
         if (!$locale) {
             $preferredLanguages = $request->getLanguages();
             foreach ($preferredLanguages as $lang) {
@@ -52,9 +47,6 @@ class LocaleMiddleware
 
         // Set the application locale
         app()->setLocale($locale);
-
-        // Store locale in session for future requests
-        session(['locale' => $locale]);
 
         return $next($request);
     }
