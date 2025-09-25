@@ -23,7 +23,7 @@ class ProfilePhotoSeeder extends Seeder
         );
 
         // Check if the profile photo file exists
-        $photoPath = public_path('abdelaziz-kallel.png');
+        $photoPath = public_path('abdelaziz-kallel-2.png');
 
         if (file_exists($photoPath)) {
             // Clear any existing media

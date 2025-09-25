@@ -6,15 +6,7 @@ use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'homepage')->name('home');
-Route::get('/landing', function () {
-    // Handle language query parameter
-    $locale = request('lang');
-    if ($locale && array_key_exists($locale, config('app.available_locales', []))) {
-        app()->setLocale($locale);
-    }
-
-    return view('landing');
-})->name('landing');
+Route::view('/landing', 'landing')->name('landing');
 
 // Language switching
 Route::get('/locale/{locale}', function ($locale) {
