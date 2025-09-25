@@ -83,12 +83,18 @@ class SettingsSeeder extends Seeder
             // Hero Section
             [
                 'key' => 'hero_title',
-                'value' => ['de' => 'Ihr persönlicher Finanzberater in Schöneck'],
+                'value' => [
+                    'de' => 'Ihr persönlicher Finanzberater in Schöneck',
+                    'ar' => 'مستشارك المالي الشخصي في شونيك'
+                ],
                 'type' => 'string'
             ],
             [
                 'key' => 'hero_subtitle',
-                'value' => ['de' => 'Professionelle Finanzberatung mit Fokus auf Ihre Wünsche und Ziele'],
+                'value' => [
+                    'de' => 'Professionelle Finanzberatung mit Fokus auf Ihre Wünsche und Ziele',
+                    'ar' => 'استشارات مالية احترافية تركز على أهدافك ورغباتك'
+                ],
                 'type' => 'string'
             ],
             [
@@ -100,7 +106,10 @@ class SettingsSeeder extends Seeder
             // About Section
             [
                 'key' => 'about_title',
-                'value' => ['de' => 'Über mich'],
+                'value' => [
+                    'de' => 'Über mich',
+                    'ar' => 'من أنا'
+                ],
                 'type' => 'string'
             ],
             [
@@ -151,12 +160,114 @@ Mein Fokus liegt auf kundenorientierten Lösungen, die individuell auf Ihre Bed�
             // Contact Section
             [
                 'key' => 'contact_title',
-                'value' => ['de' => 'Kontakt aufnehmen'],
+                'value' => [
+                    'de' => 'Kontakt aufnehmen',
+                    'ar' => 'اطلب استشارة'
+                ],
                 'type' => 'string'
             ],
             [
                 'key' => 'contact_subtitle',
-                'value' => ['de' => 'Vereinbaren Sie noch heute einen unverbindlichen Beratungstermin'],
+                'value' => [
+                    'de' => 'Vereinbaren Sie noch heute einen unverbindlichen Beratungstermin',
+                    'ar' => 'استشارة شخصية'
+                ],
+                'type' => 'string'
+            ],
+
+            // Why Me Section
+            [
+                'key' => 'why_me_title',
+                'value' => [
+                    'de' => 'Warum ich?',
+                    'ar' => 'لماذا أنا؟'
+                ],
+                'type' => 'string'
+            ],
+            [
+                'key' => 'why_me_benefits',
+                'value' => [
+                    'de' => json_encode([
+                        'Kostenlose Erstberatung',
+                        'Individuelle Lösungen für Ihre Ziele',
+                        'Über Seit 2009 Jahre Erfahrung',
+                        'Terminflexibilität nach Ihren Wünschen'
+                    ]),
+                    'ar' => json_encode([
+                        'استشارة أولية مجانية',
+                        'حلول مخصصة تناسب أهدافك',
+                        'خبرة منذ 2009',
+                        'مرونة في المواعيد حسب رغبتك'
+                    ])
+                ],
+                'type' => 'json'
+            ],
+
+            // Service Categories
+            [
+                'key' => 'service_categories_title',
+                'value' => [
+                    'de' => 'Welche Themen interessieren Sie?',
+                    'ar' => 'ما هي المواضيع التي تهمك؟'
+                ],
+                'type' => 'string'
+            ],
+            [
+                'key' => 'service_categories',
+                'value' => [
+                    'de' => json_encode([
+                        'Altersvorsorge',
+                        'Versicherungen',
+                        'Steueroptimierung',
+                        'Geldanlage',
+                        'Immobilienfinanzierung',
+                        'Vermögensaufbau'
+                    ]),
+                    'ar' => json_encode([
+                        'التقاعد',
+                        'التأمينات',
+                        'تحسين الضرائب',
+                        'الاستثمارات',
+                        'تمويل العقارات',
+                        'بناء الثروة'
+                    ])
+                ],
+                'type' => 'json'
+            ],
+
+            // Contact Labels
+            [
+                'key' => 'contact_direct_call_label',
+                'value' => [
+                    'de' => 'Direkter Anruf',
+                    'ar' => 'اتصال مباشر'
+                ],
+                'type' => 'string'
+            ],
+            [
+                'key' => 'contact_consultation_label',
+                'value' => [
+                    'de' => 'Persönliche Beratung',
+                    'ar' => 'استشارة شخصية'
+                ],
+                'type' => 'string'
+            ],
+
+            // About Me Section - Expertise and Trust
+            [
+                'key' => 'about_expertise',
+                'value' => [
+                    'de' => 'Über Seit 2009 Jahre Erfahrung in der Finanzberatung',
+                    'ar' => 'خبرة في الاستشارات المالية منذ عام 2009'
+                ],
+                'type' => 'string'
+            ],
+            [
+                'key' => 'about_trust',
+                'value' => [
+                    'de' => 'Zertifizierter Finanzberater',
+                    'ar' => 'مستشار مالي معتمد'
+                ],
                 'type' => 'string'
             ],
 

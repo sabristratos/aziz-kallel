@@ -82,6 +82,21 @@ return [
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'de'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Available Locales
+    |--------------------------------------------------------------------------
+    |
+    | List of available locales for the application. This is used for
+    | translation and localization features.
+    |
+    */
+
+    'available_locales' => [
+        'de' => 'Deutsch',
+        'ar' => 'العربية',
+    ],
+
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     /*

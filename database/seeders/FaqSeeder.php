@@ -15,8 +15,14 @@ class FaqSeeder extends Seeder
     {
         $faqs = [
             [
-                'question' => ['de' => 'Wie läuft eine Finanzberatung bei Ihnen ab?'],
-                'answer' => ['de' => 'Meine Finanzberatung erfolgt in einem strukturierten 5-Schritte-Prozess: Zunächst führen wir ein ausführliches Erstgespräch, in dem ich Ihre aktuelle Situation und Ihre Ziele analysiere. Anschließend bewerte ich Ihre bestehenden Finanzprodukte und entwickle eine individuelle Strategie für Sie. Nach der gemeinsamen Umsetzung der empfohlenen Lösungen begleite ich Sie kontinuierlich und passe die Strategie bei Bedarf an.'],
+                'question' => [
+                    'de' => 'Wie läuft eine Finanzberatung bei Ihnen ab?',
+                    'ar' => 'كيف تتم الاستشارة المالية معك؟'
+                ],
+                'answer' => [
+                    'de' => 'Meine Finanzberatung erfolgt in einem strukturierten 5-Schritte-Prozess: Zunächst führen wir ein ausführliches Erstgespräch, in dem ich Ihre aktuelle Situation und Ihre Ziele analysiere. Anschließend bewerte ich Ihre bestehenden Finanzprodukte und entwickle eine individuelle Strategie für Sie. Nach der gemeinsamen Umsetzung der empfohlenen Lösungen begleite ich Sie kontinuierlich und passe die Strategie bei Bedarf an.',
+                    'ar' => 'تتم الاستشارة المالية لدي وفق عملية منظمة من خمس خطوات: في البداية نجري مقابلة أولية شاملة، أقوم خلالها بتحليل وضعك الحالي وأهدافك. بعد ذلك أقوم بتقييم منتجاتك المالية الحالية وأضع لك استراتيجية فردية. بعد تنفيذ الحلول الموصى بها معًا، أتابع معك بشكل مستمر وأقوم بتعديل الاستراتيجية. ما يهمني دائمًا هو التنويع المتوازن وضمان أنك تفهم خيارات الاستثمار وتشعر بالراحة معها'
+                ],
                 'order' => 1,
                 'is_active' => true
             ],
@@ -39,8 +45,14 @@ class FaqSeeder extends Seeder
                 'is_active' => true
             ],
             [
-                'question' => ['de' => 'Welche Versicherungen sind wirklich notwendig?'],
-                'answer' => ['de' => 'Die Auswahl der richtigen Versicherungen hängt von Ihrer Lebenssituation ab. Zu den wichtigsten Versicherungen gehören meist die Privathaftpflicht, Berufsunfähigkeitsversicherung und für Familien eine Risikolebensversicherung. Bei der Krankenversicherung und anderen Sparten prüfe ich gemeinsam mit Ihnen, welcher Schutz sinnvoll und bezahlbar ist, ohne Sie zu überversichern.'],
+                'question' => [
+                    'de' => 'Welche Versicherungen sind wirklich notwendig?',
+                    'ar' => 'ما هي التأمينات الضرورية حقًا؟'
+                ],
+                'answer' => [
+                    'de' => 'Die Auswahl der richtigen Versicherungen hängt von Ihrer Lebenssituation ab. Zu den wichtigsten Versicherungen gehören meist die Privathaftpflicht, Berufsunfähigkeitsversicherung und für Familien eine Risikolebensversicherung. Bei der Krankenversicherung und anderen Sparten prüfe ich gemeinsam mit Ihnen, welcher Schutz sinnvoll und bezahlbar ist, ohne Sie zu überversichern.',
+                    'ar' => 'اختيار التأمينات المناسبة يعتمد على وضعك الشخصي. من أهم التأمينات عادةً التأمين ضد المسؤولية الشخصية، التأمين ضد العجز عن العمل، وللعائلات تأمين الحياة. أما بالنسبة للتأمين الصحي والتأمينات الأخرى، فأقوم بمراجعتها معك لتحديد أيها مناسب وضروري وبسعر معقول، حتى لا يكون لديك تغطية زائدة عن الحاجة.'
+                ],
                 'order' => 5,
                 'is_active' => true
             ],
@@ -51,8 +63,14 @@ class FaqSeeder extends Seeder
                 'is_active' => true
             ],
             [
-                'question' => ['de' => 'Wie oft sollten wir uns abstimmen?'],
-                'answer' => ['de' => 'Nach der ersten Umsetzung empfehle ich mindestens einen jährlichen Termin zur Überprüfung Ihrer Finanzstrategie. Bei größeren Lebensveränderungen wie Heirat, Nachwuchs oder Jobwechsel sollten wir uns zeitnah abstimmen. Darüber hinaus bin ich jederzeit für Ihre Fragen erreichbar - eine gute Betreuung bedeutet für mich, dass Sie sich jederzeit gut aufgehoben fühlen.'],
+                'question' => [
+                    'de' => 'Wie oft sollten wir uns abstimmen?',
+                    'ar' => 'كم مرة يجب أن نتواصل؟'
+                ],
+                'answer' => [
+                    'de' => 'Nach der ersten Umsetzung empfehle ich mindestens einen jährlichen Termin zur Überprüfung Ihrer Finanzstrategie. Bei größeren Lebensveränderungen wie Heirat, Nachwuchs oder Jobwechsel sollten wir uns zeitnah abstimmen. Darüber hinaus bin ich jederzeit für Ihre Fragen erreichbar - eine gute Betreuung bedeutet für mich, dass Sie sich jederzeit gut aufgehoben fühlen.',
+                    'ar' => 'بعد التنفيذ الأولي أوصي بعقد لقاء واحد على الأقل سنويًا لمراجعة استراتيجيتك المالية. عند حدوث تغييرات كبيرة في حياتك يجب أن نتواصل في الوقت المناسب. بالإضافة إلى ذلك فإنني متاح دائمًا للإجابة على أسئلتك - ما يهمني هو أن تشعر بالراحة والأمان دائمًا.'
+                ],
                 'order' => 7,
                 'is_active' => true
             ],
