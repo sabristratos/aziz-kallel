@@ -11,7 +11,7 @@
             <!-- Trust Signal - Rating -->
             @if($consultantRating)
                 <div class="flex flex-col items-center justify-center mb-4 animate-slide-up">
-                    <div class="flex items-center space-x-1 mb-1">
+                    <div class="flex items-center ltr:space-x-1 rtl:space-x-reverse rtl:space-x-1 mb-1">
                         @for($i = 1; $i <= 5; $i++)
                             <x-heroicon-s-star class="h-4 w-4 text-golden-amber-400" />
                         @endfor
@@ -35,29 +35,29 @@
             <!-- CTA Button -->
             <div class="flex justify-center mb-8 animate-scale">
                 <x-ui.button href="#contact" variant="golden" size="md">
-                    Beratung anfragen
+                    {{ __('Beratung anfragen') }}
                 </x-ui.button>
             </div>
 
             <!-- Benefits List -->
             <div class="space-y-4 sm:space-y-6">
-                <x-ui.heading level="4" color="white" class="text-center mb-4 animate-slide-left">Warum mich wählen?</x-ui.heading>
+                <x-ui.heading level="4" color="white" class="text-center mb-4 animate-slide-left">{{ __('Warum mich wählen?') }}</x-ui.heading>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 animate-stagger">
-                    <div class="flex items-center justify-center sm:justify-start space-x-3">
+                    <div class="flex items-center justify-center ltr:sm:justify-start rtl:sm:justify-end space-x-3 rtl:space-x-reverse">
                         <x-heroicon-o-currency-euro class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Kostenlose Erstberatung</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Kostenlose Erstberatung') }}</x-ui.text>
                     </div>
-                    <div class="flex items-center justify-center sm:justify-start space-x-3">
+                    <div class="flex items-center justify-center ltr:sm:justify-start rtl:sm:justify-end space-x-3 rtl:space-x-reverse">
                         <x-heroicon-o-academic-cap class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Über {{ \App\Models\Setting::where('key', 'consultant_experience')->first()?->value }} Jahre Erfahrung</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Über :experience Jahre Erfahrung in der Finanzberatung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}</x-ui.text>
                     </div>
-                    <div class="flex items-center justify-center sm:justify-start space-x-3">
+                    <div class="flex items-center justify-center ltr:sm:justify-start rtl:sm:justify-end space-x-3 rtl:space-x-reverse">
                         <x-heroicon-o-light-bulb class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Individuelle Lösungen für Ihre Ziele</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Individuelle Lösungen für Ihre Ziele') }}</x-ui.text>
                     </div>
-                    <div class="flex items-center justify-center sm:justify-start space-x-3">
+                    <div class="flex items-center justify-center ltr:sm:justify-start rtl:sm:justify-end space-x-3 rtl:space-x-reverse">
                         <x-heroicon-o-clock class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Terminflexibilität nach Ihren Wünschen</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Terminflexibilität nach Ihren Wünschen') }}</x-ui.text>
                     </div>
                 </div>
             </div>
@@ -76,11 +76,11 @@
     <!-- Desktop: Two column layout -->
     <div class="hidden lg:grid lg:grid-cols-2 gap-16 items-center pt-12">
         <!-- Left: Hero Copy -->
-        <div class="text-left flex flex-col justify-center z-10 relative pb-16 animate-fade-in">
+        <div class="ltr:text-left rtl:text-right flex flex-col justify-center z-10 relative pb-16 animate-fade-in">
             <!-- Trust Signal - Rating -->
             @if($consultantRating)
-                <div class="flex flex-col items-start justify-start mb-4 animate-slide-up">
-                    <div class="flex items-center space-x-1 mb-1">
+                <div class="flex flex-col ltr:items-start justify-start mb-4 animate-slide-up">
+                    <div class="flex items-center ltr:space-x-1 rtl:space-x-reverse rtl:space-x-1 mb-1">
                         @for($i = 1; $i <= 5; $i++)
                             <x-heroicon-s-star class="h-4 w-4 text-golden-amber-400" />
                         @endfor
@@ -102,31 +102,31 @@
             @endif
 
             <!-- CTA Button -->
-            <div class="flex justify-start mb-8 animate-scale">
+            <div class="flex ltr:justify-start mb-8 animate-scale">
                 <x-ui.button href="#contact" variant="golden" size="md">
-                    Beratung anfragen
+                    {{ __('Beratung anfragen') }}
                 </x-ui.button>
             </div>
 
             <!-- Benefits List -->
             <div class="space-y-6">
-                <x-ui.heading level="4" color="white" class="text-left mb-4 animate-slide-left">Warum mich wählen?</x-ui.heading>
+                <x-ui.heading level="4" color="white" class="ltr:text-left rtl:text-right mb-4 animate-slide-left">{{ __('Warum mich wählen?') }}</x-ui.heading>
                 <div class="grid grid-cols-2 gap-4 animate-stagger">
-                    <div class="flex items-center justify-start space-x-3">
+                    <div class="flex items-center ltr:justify-start gap-3 rtl:space-x-reverse">
                         <x-heroicon-o-currency-euro class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Kostenlose Erstberatung</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Kostenlose Erstberatung') }}</x-ui.text>
                     </div>
-                    <div class="flex items-center justify-start space-x-3">
+                    <div class="flex items-center ltr:justify-start gap-3 rtl:space-x-reverse">
                         <x-heroicon-o-academic-cap class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Über {{ \App\Models\Setting::where('key', 'consultant_experience')->first()?->value }} Jahre Erfahrung</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Über :experience Jahre Erfahrung in der Finanzberatung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}</x-ui.text>
                     </div>
-                    <div class="flex items-center justify-start space-x-3">
+                    <div class="flex items-center ltr:justify-start gap-3 rtl:space-x-reverse">
                         <x-heroicon-o-light-bulb class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Individuelle Lösungen für Ihre Ziele</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Individuelle Lösungen für Ihre Ziele') }}</x-ui.text>
                     </div>
-                    <div class="flex items-center justify-start space-x-3">
+                    <div class="flex items-center ltr:justify-start gap-3 rtl:space-x-reverse">
                         <x-heroicon-o-clock class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">Terminflexibilität nach Ihren Wünschen</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Terminflexibilität nach Ihren Wünschen') }}</x-ui.text>
                     </div>
                 </div>
             </div>

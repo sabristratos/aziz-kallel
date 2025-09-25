@@ -2,7 +2,7 @@
     @if(!$submitted)
         {{-- Progress Steps --}}
         <div class="mb-6 sm:mb-8">
-            <div class="flex justify-center items-center space-x-2 sm:space-x-4">
+            <div class="flex justify-center items-center ltr:space-x-2 ltr:sm:space-x-4 rtl:space-x-reverse rtl:space-x-2 rtl:sm:space-x-4">
                 @for($i = 1; $i <= $totalSteps; $i++)
                     <div class="flex items-center">
                         <div class="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full font-medium text-sm sm:text-base
@@ -10,7 +10,7 @@
                             {{ $i }}
                         </div>
                         @if($i < $totalSteps)
-                            <div class="w-6 sm:w-12 h-0.5 mx-1 sm:mx-2 
+                            <div class="w-6 sm:w-12 h-0.5 ltr:mx-1 ltr:sm:mx-2 rtl:mx-1 rtl:sm:mx-2
                                 {{ $i < $currentStep ? 'bg-golden-amber-500' : 'bg-gray-200' }}"></div>
                         @endif
                     </div>
@@ -57,7 +57,7 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
                         {{ __('Welche Themen interessieren Sie?') }} *
                     </label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 ltr:text-left rtl:text-right">
                         @foreach(['Altersvorsorge', 'Geldanlage', 'Versicherungen', 'Immobilienfinanzierung', 'Steueroptimierung', 'Vermögensaufbau'] as $topic)
                             <x-form.checkbox
                                 label="{{ __($topic) }}"
@@ -83,7 +83,7 @@
                             <label class="flex items-center">
                                 <input type="radio" wire:model="meetingType" value="{{ $type }}"
                                        class="text-golden-amber-500 focus:ring-golden-amber-500 focus:ring-offset-0">
-                                <span class="ml-2 text-sm text-gray-700">{{ __($type) }}</span>
+                                <span class="ltr:ml-2 rtl:mr-2 text-sm text-gray-700">{{ __($type) }}</span>
                             </label>
                         @endforeach
                     </div>

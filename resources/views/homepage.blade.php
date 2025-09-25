@@ -16,7 +16,7 @@
 
         <!-- Header -->
         <x-ui.section-header 
-            overline="Ihr Berater"
+            overline="{{ __('Ihr Berater') }}"
             title="{{ $aboutTitle }}"
             description="{{ $aboutDescription }}"
             layout="two-column"
@@ -28,14 +28,14 @@
                 <div class="flex flex-col gap-4 md:col-span-1">
                     <!-- Benefit 1 -->
                     <x-ui.benefit-card
-                        title="Expertise"
-                        description="Über {{ \App\Models\Setting::where('key', 'consultant_experience')->first()?->value }} Jahre Erfahrung in der Finanzberatung"
+                        title="{{ __('Expertise') }}"
+                        description="{{ __('Über :experience Jahre Erfahrung in der Finanzberatung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}"
                         icon="heroicon-o-academic-cap" />
 
                     <!-- Benefit 2 -->
                     <x-ui.benefit-card
-                        title="Vertrauen"
-                        description="Zertifizierter Berater bei der Deutschen Vermögensberatung"
+                        title="{{ __('Vertrauen') }}"
+                        description="{{ __('Zertifizierter Berater bei der Deutschen Vermögensberatung') }}"
                         icon="heroicon-o-shield-check" />
                 </div>
 
@@ -52,14 +52,14 @@
                 <div class="flex flex-col gap-4 md:col-span-1">
                     <!-- Benefit 3 -->
                     <x-ui.benefit-card
-                        title="Persönlich"
-                        description="Individuelle Beratung nach Ihren persönlichen Bedürfnissen"
+                        title="{{ __('Persönlich') }}"
+                        description="{{ __('Individuelle Beratung nach Ihren persönlichen Bedürfnissen') }}"
                         icon="heroicon-o-heart" />
 
                     <!-- Benefit 4 -->
                     <x-ui.benefit-card
-                        title="Flexibel"
-                        description="Termine nach Ihren Wünschen - bei Ihnen zu Hause oder im Büro"
+                        title="{{ __('Flexibel') }}"
+                        description="{{ __('Termine nach Ihren Wünschen - bei Ihnen zu Hause oder im Büro') }}"
                         icon="heroicon-o-clock" />
                 </div>
             </div>
@@ -69,21 +69,21 @@
     <x-section-wrapper id="contact" class="animate-fade-in">
         <!-- Header -->
         <x-ui.section-header 
-            overline="Kontakt"
+            overline="{{ __('Kontakt') }}"
             title="{{ __('Beratungstermin anfragen') }}"
-            description="Lassen Sie uns gemeinsam Ihre finanzielle Zukunft planen. Fordern Sie noch heute ein unverbindliches Beratungsgespräch an."
+            description="{{ __('Lassen Sie uns gemeinsam Ihre finanzielle Zukunft planen. Fordern Sie noch heute ein unverbindliches Beratungsgespräch an.') }}"
             layout="two-column"
             class="animate-slide-up" />
 
             <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-0 animate-stagger">
                 <!-- Left Column: Consultation Form -->
-                <div class="lg:pr-8 xl:pr-12 lg:border-r lg:border-gray-200 animate-slide-left">
+                <div class="ltr:lg:pr-8 ltr:xl:pr-12 rtl:lg:pl-8 rtl:xl:pl-12 ltr:lg:border-r rtl:lg:border-l lg:border-gray-200 animate-slide-left">
                     @livewire('consultation-booking')
                 </div>
 
                 <!-- Right Column: Contact Information -->
-                <div class="lg:pl-8 xl:pl-12 animate-slide-right">
-                    <x-ui.heading level="3" class="mb-4 sm:mb-6 text-lg sm:text-xl">Weitere Kontaktmöglichkeiten</x-ui.heading>
+                <div class="ltr:lg:pl-8 ltr:xl:pl-12 rtl:lg:pr-8 rtl:xl:pr-12 animate-slide-right">
+                    <x-ui.heading level="3" class="mb-4 sm:mb-6 text-lg sm:text-xl">{{ __('Weitere Kontaktmöglichkeiten') }}</x-ui.heading>
 
                     <!-- Direct Contact -->
                     <div class="space-y-4 sm:space-y-6 animate-stagger">
@@ -92,25 +92,25 @@
                         @endphp
                         @if($contactPhone)
                             <x-ui.contact-card
-                                title="Direkter Anruf"
-                                description="Rufen Sie mich gerne direkt an für eine sofortige Beratung."
+                                title="{{ __('Direkter Anruf') }}"
+                                description="{{ __('Rufen Sie mich gerne direkt an für eine sofortige Beratung.') }}"
                                 action="{{ $contactPhone }}"
                                 href="tel:{{ $contactPhone }}"
                                 icon="heroicon-o-phone" />
                         @endif
 
                         <x-ui.contact-card
-                            title="E-Mail Kontakt"
-                            description="Senden Sie mir eine E-Mail mit Ihren Fragen oder Terminwünschen."
+                            title="{{ __('E-Mail Kontakt') }}"
+                            description="{{ __('Senden Sie mir eine E-Mail mit Ihren Fragen oder Terminwünschen.') }}"
                             action="info@abdelaziz-kallel.de"
                             href="mailto:info@abdelaziz-kallel.de"
                             icon="heroicon-o-envelope" />
 
                         <x-ui.contact-card
-                            title="Persönliche Beratung"
-                            description="Ich komme gerne zu Ihnen nach Hause oder Sie besuchen mich in meinem Büro."
+                            title="{{ __('Persönliche Beratung') }}"
+                            description="{{ __('Ich komme gerne zu Ihnen nach Hause oder Sie besuchen mich in meinem Büro.') }}"
                             icon="heroicon-o-map-pin">
-                            <x-ui.text class="font-medium">Flexibel nach Ihren Wünschen</x-ui.text>
+                            <x-ui.text class="font-medium">{{ __('Flexibel nach Ihren Wünschen') }}</x-ui.text>
                         </x-ui.contact-card>
                     </div>
 
@@ -131,14 +131,14 @@
                 <!-- Left Column: Overline & Heading -->
                 <div class="animate-slide-left">
                     <div class="flex items-center gap-2 mb-2 sm:mb-3 justify-start text-left">
-                        <span class="text-xs font-semibold uppercase tracking-widest text-white">Häufige Fragen</span>
+                        <span class="text-xs font-semibold uppercase tracking-widest text-white">{{ __('Häufige Fragen') }}</span>
                         <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
                     </div>
-                    <x-ui.heading level="2" color="white" class="text-xl sm:text-2xl lg:text-3xl">Antworten auf Ihre wichtigsten Fragen</x-ui.heading>
+                    <x-ui.heading level="2" color="white" class="text-xl sm:text-2xl lg:text-3xl">{{ __('Antworten auf Ihre wichtigsten Fragen') }}</x-ui.heading>
                 </div>
                 <!-- Right Column: Description -->
                 <div class="animate-slide-right">
-                    <x-ui.text size="lead" color="white" class="text-sm sm:text-base lg:text-lg">Hier finden Sie die Antworten auf die am häufigsten gestellten Fragen zu meiner Finanzberatung.</x-ui.text>
+                    <x-ui.text size="lead" color="white" class="text-sm sm:text-base lg:text-lg">{{ __('Hier finden Sie die Antworten auf die am häufigsten gestellten Fragen zu meiner Finanzberatung.') }}</x-ui.text>
                 </div>
             </div>
 

@@ -24,7 +24,9 @@
       "mcp__laravel-boost__get-absolute-url",
       "Bash(cat:*)",
       "mcp__playwright__browser_tabs",
-      "mcp__playwright__browser_console_messages"
+      "mcp__playwright__browser_console_messages",
+      "mcp__laravel-boost__database-schema",
+      "mcp__laravel-boost__list-routes"
     ],
     "deny": [],
     "ask": []

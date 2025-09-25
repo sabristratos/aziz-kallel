@@ -8,7 +8,7 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
 @endphp
 
 <!-- Floating Action Dock -->
-<div class="fixed right-4 top-1/2 transform -translate-y-1/2 z-50 hidden lg:flex flex-col space-y-2 animate-slide-right">
+<div class="fixed ltr:right-4 rtl:left-4 top-1/2 transform -translate-y-1/2 z-50 hidden lg:flex flex-col space-y-2 ltr:animate-slide-right rtl:animate-slide-left">
     <!-- Call Button -->
     <div class="relative group animate-scale">
         <a href="tel:{{ $contactPhone }}" 
@@ -16,9 +16,9 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
             <x-heroicon-o-phone class="w-4 h-4" />
         </a>
         <!-- Tooltip -->
-        <div class="absolute right-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
-            <x-ui.text size="xs" color="white" as="span">Jetzt anrufen</x-ui.text>
-            <div class="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-gray-900"></div>
+        <div class="absolute ltr:right-12 rtl:left-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
+            <x-ui.text size="xs" color="white" as="span">{{ __('Jetzt anrufen') }}</x-ui.text>
+            <div class="absolute ltr:left-full rtl:right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent ltr:border-l-gray-900 rtl:border-r-gray-900"></div>
         </div>
     </div>
 
@@ -32,9 +32,9 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
             </svg>
         </a>
         <!-- Tooltip -->
-        <div class="absolute right-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
-            <x-ui.text size="xs" color="white" as="span">WhatsApp Nachricht</x-ui.text>
-            <div class="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-gray-900"></div>
+        <div class="absolute ltr:right-12 rtl:left-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
+            <x-ui.text size="xs" color="white" as="span">{{ __('WhatsApp Nachricht') }}</x-ui.text>
+            <div class="absolute ltr:left-full rtl:right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent ltr:border-l-gray-900 rtl:border-r-gray-900"></div>
         </div>
     </div>
 
@@ -46,9 +46,9 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
             <x-heroicon-o-arrow-down-tray class="w-4 h-4" />
         </a>
         <!-- Tooltip -->
-        <div class="absolute right-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
-            <x-ui.text size="xs" color="white" as="span">Kontakt speichern</x-ui.text>
-            <div class="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-gray-900"></div>
+        <div class="absolute ltr:right-12 rtl:left-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
+            <x-ui.text size="xs" color="white" as="span">{{ __('Kontakt speichern') }}</x-ui.text>
+            <div class="absolute ltr:left-full rtl:right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent ltr:border-l-gray-900 rtl:border-r-gray-900"></div>
         </div>
     </div>
 
@@ -60,16 +60,16 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
             <x-heroicon-o-exclamation-triangle class="w-4 h-4" />
         </a>
         <!-- Tooltip -->
-        <div class="absolute right-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
-            <x-ui.text size="xs" color="white" as="span">Notfallhilfe</x-ui.text>
-            <div class="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-gray-900"></div>
+        <div class="absolute ltr:right-12 rtl:left-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
+            <x-ui.text size="xs" color="white" as="span">{{ __('Notfallhilfe') }}</x-ui.text>
+            <div class="absolute ltr:left-full rtl:right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent ltr:border-l-gray-900 rtl:border-r-gray-900"></div>
         </div>
     </div>
 </div>
 
 <!-- Back to Top Button -->
-<div id="back-to-top" 
-     class="fixed bottom-4 left-4 z-40 opacity-0 transform translate-y-2 transition-all duration-300 pointer-events-none animate-scale">
+<div id="back-to-top"
+     class="fixed bottom-4 ltr:left-4 rtl:right-4 z-40 opacity-0 transform translate-y-2 transition-all duration-300 pointer-events-none animate-scale">
     <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
             class="flex items-center justify-center w-12 h-12 bg-slate-600/90 hover:bg-slate-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
         <x-heroicon-o-arrow-up class="w-5 h-5" />
@@ -77,7 +77,7 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
 </div>
 
 <!-- Mobile Floating Action Button -->
-<div class="fixed bottom-4 right-4 z-50 lg:hidden animate-scale">
+<div class="fixed bottom-4 ltr:right-4 rtl:left-4 z-50 lg:hidden animate-scale">
     <div class="relative" x-data="{ open: false }">
         <!-- Main FAB -->
         <button @click="open = !open"
@@ -95,7 +95,7 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
              x-transition:leave-start="opacity-100 transform scale-100"
              x-transition:leave-end="opacity-0 transform scale-95"
              x-cloak
-             class="absolute bottom-14 right-0 flex flex-col space-y-2">
+             class="absolute bottom-14 ltr:right-0 rtl:left-0 flex flex-col space-y-2">
             
             <!-- Call -->
             <a href="tel:{{ $contactPhone }}" 

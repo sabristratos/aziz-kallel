@@ -1,7 +1,10 @@
 @import 'tailwindcss';
+
 @import '../../vendor/livewire/flux/dist/flux.css';
 @import '@splidejs/splide/css';
 @import './fonts.css';
+
+@plugin "@tailwindcss/typography";
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -55,6 +58,8 @@
     /* Font Families */
     --font-family-heading: 'Lexend', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-body: 'Public Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-arabic-heading: 'Noto Sans Arabic', 'Lexend', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-arabic-body: 'Noto Sans Arabic', 'Public Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 
@@ -72,9 +77,59 @@
     .font-heading {
         font-family: var(--font-family-heading);
     }
-    
+
     .font-body {
         font-family: var(--font-family-body);
+    }
+
+    /* RTL-aware font utilities */
+    .rtl .font-heading {
+        font-family: var(--font-family-arabic-heading);
+    }
+
+    .rtl .font-body {
+        font-family: var(--font-family-arabic-body);
+    }
+
+    /* RTL utilities for better Arabic text rendering */
+    .rtl {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .ltr {
+        direction: ltr;
+        text-align: left;
+    }
+
+    /* Fix spacing for RTL layouts */
+    .rtl .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+        margin-left: 0.5rem;
+        margin-right: 0;
+    }
+
+    /* Better line height for Arabic text */
+    .rtl p,
+    .rtl span,
+    .rtl div {
+        line-height: 1.75;
+    }
+
+    /* RTL-aware margin and padding utilities */
+    .ms-auto {
+        margin-inline-start: auto;
+    }
+
+    .me-auto {
+        margin-inline-end: auto;
+    }
+
+    .ps-4 {
+        padding-inline-start: 1rem;
+    }
+
+    .pe-4 {
+        padding-inline-end: 1rem;
     }
 }
 
@@ -202,7 +257,7 @@ select:focus[data-flux-control] {
             width: 100% !important;
             margin: 0 !important;
         }
-        
+
         .testimonials-splide .splide__slide > div {
             width: 100%;
             max-width: none;

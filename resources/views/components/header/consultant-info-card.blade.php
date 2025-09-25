@@ -18,7 +18,7 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo');
 
 <x-ui.popover trigger-type="hover" position="bottom-left" width="w-80">
     <x-slot name="trigger">
-        <a href="{{ route('home') }}" class="flex items-center space-x-4 p-3 rounded-xl transition-all duration-200 cursor-pointer group">
+        <a href="{{ route('home') }}" class="flex items-center ltr:space-x-4 rtl:space-x-reverse rtl:space-x-4 p-3 rounded-xl transition-all duration-200 cursor-pointer group">
             <!-- Avatar -->
             <x-ui.avatar 
                 :src="$profilePhoto" 
@@ -65,40 +65,40 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo');
         <!-- Credentials and Experience -->
         <div class="space-y-3">
             @if($consultantCredentials)
-            <div class="flex items-start space-x-2">
+            <div class="flex items-start space-x-2 rtl:space-x-reverse">
                 <x-heroicon-o-academic-cap class="h-4 w-4 text-science-blue-600 mt-0.5 shrink-0" />
                 <div>
-                    <p class="text-xs text-slate-500">Qualifikation</p>
+                    <p class="text-xs text-slate-500">{{ __('Qualifikation') }}</p>
                     <p class="text-sm text-slate-900">{{ $consultantCredentials }}</p>
                 </div>
             </div>
             @endif
 
             @if($consultantExperience)
-            <div class="flex items-start space-x-2">
+            <div class="flex items-start space-x-2 rtl:space-x-reverse">
                 <x-heroicon-o-calendar-days class="h-4 w-4 text-science-blue-600 mt-0.5 shrink-0" />
                 <div>
-                    <p class="text-xs text-slate-500">Erfahrung</p>
+                    <p class="text-xs text-slate-500">{{ __('Erfahrung') }}</p>
                     <p class="text-sm text-slate-900">{{ $consultantExperience }}</p>
                 </div>
             </div>
             @endif
 
             @if($consultantTeam)
-            <div class="flex items-start space-x-2">
+            <div class="flex items-start space-x-2 rtl:space-x-reverse">
                 <x-heroicon-o-users class="h-4 w-4 text-science-blue-600 mt-0.5 shrink-0" />
                 <div>
-                    <p class="text-xs text-slate-500">Team</p>
+                    <p class="text-xs text-slate-500">{{ __('Team') }}</p>
                     <p class="text-sm text-slate-900">{{ $consultantTeam }}</p>
                 </div>
             </div>
             @endif
 
             @if($consultantRating)
-            <div class="flex items-start space-x-2">
+            <div class="flex items-start space-x-2 rtl:space-x-reverse">
                 <x-heroicon-s-star class="h-4 w-4 text-yellow-500 mt-0.5 shrink-0" />
                 <div>
-                    <p class="text-xs text-slate-500">Bewertung</p>
+                    <p class="text-xs text-slate-500">{{ __('Bewertung') }}</p>
                     <p class="text-sm text-slate-900">{{ $consultantRating }}</p>
                 </div>
             </div>
@@ -108,19 +108,19 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo');
         <!-- Contact Information -->
         @if($contactPhone || $contactEmail)
         <div class="pt-3 border-t border-slate-200">
-            <p class="text-xs text-slate-500 mb-2">Kontakt</p>
+            <p class="text-xs text-slate-500 mb-2">{{ __('Kontakt') }}</p>
             <div class="space-y-2">
                 @if($contactPhone)
-                <a href="tel:{{ $contactPhone }}" 
-                   class="flex items-center space-x-2 text-sm text-slate-900 hover:text-science-blue-600 transition-colors duration-200">
+                <a href="tel:{{ $contactPhone }}"
+                   class="flex items-center space-x-2 rtl:space-x-reverse text-sm text-slate-900 hover:text-science-blue-600 transition-colors duration-200">
                     <x-heroicon-o-phone class="h-4 w-4" />
                     <span>{{ $contactPhone }}</span>
                 </a>
                 @endif
                 
                 @if($contactEmail)
-                <a href="mailto:{{ $contactEmail }}" 
-                   class="flex items-center space-x-2 text-sm text-slate-900 hover:text-science-blue-600 transition-colors duration-200">
+                <a href="mailto:{{ $contactEmail }}"
+                   class="flex items-center space-x-2 rtl:space-x-reverse text-sm text-slate-900 hover:text-science-blue-600 transition-colors duration-200">
                     <x-heroicon-o-envelope class="h-4 w-4" />
                     <span>{{ $contactEmail }}</span>
                 </a>
@@ -132,8 +132,8 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo');
         <!-- CTA -->
         <div class="pt-2">
             <x-ui.button href="#contact" variant="golden" size="sm" class="w-full">
-                <x-heroicon-o-chat-bubble-left class="h-4 w-4 mr-2" />
-                Beratung anfragen
+                <x-heroicon-o-chat-bubble-left class="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+                {{ __('Beratung anfragen') }}
             </x-ui.button>
         </div>
     </div>

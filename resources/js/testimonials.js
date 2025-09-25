@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const splideElement = document.querySelector('.testimonials-splide');
     if (!splideElement) return;
 
+    // Check for RTL direction
+    const isRTL = document.documentElement.dir === 'rtl' || document.documentElement.classList.contains('rtl');
+
     const splide = new Splide('.testimonials-splide', {
         type: 'loop',
         perPage: 3,
@@ -16,12 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
         padding: 0,
         focus: 'center',
         trimSpace: false,
+        direction: isRTL ? 'rtl' : 'ltr',
         breakpoints: {
             1023: {
                 type: 'fade',
                 perPage: 1,
                 gap: 0,
-                padding: 0
+                padding: 0,
+                direction: isRTL ? 'rtl' : 'ltr'
             }
         }
     });

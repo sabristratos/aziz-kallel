@@ -42,7 +42,10 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'consultant_rating',
-                'value' => ['de' => '5,0/5,0 Sterne aus 118 Kundenbewertungen'],
+                'value' => [
+                    'de' => '5,0/5,0 Sterne aus 118 Kundenbewertungen',
+                    'ar' => '5.0/5.0 نجوم من 118 تقييم عملاء'
+                ],
                 'type' => 'string'
             ],
 
@@ -267,6 +270,40 @@ Mein Fokus liegt auf kundenorientierten Lösungen, die individuell auf Ihre Bed�
                 'value' => [
                     'de' => 'Zertifizierter Finanzberater',
                     'ar' => 'مستشار مالي معتمد'
+                ],
+                'type' => 'string'
+            ],
+
+            // Landing Page Settings
+            [
+                'key' => 'landing_headline',
+                'value' => [
+                    'de' => 'Kostenlose Finanzberatung vereinbaren',
+                    'ar' => 'احجز استشارة مالية مجانية'
+                ],
+                'type' => 'string'
+            ],
+            [
+                'key' => 'landing_lede',
+                'value' => [
+                    'de' => 'Professionelle Beratung für Ihre finanzielle Zukunft. Vereinbaren Sie jetzt ein unverbindliches Gespräch mit Ihrem persönlichen Finanzberater.',
+                    'ar' => 'استشارة مهنية لمستقبلك المالي. احجز الآن محادثة غير ملزمة مع مستشارك المالي الشخصي.'
+                ],
+                'type' => 'text'
+            ],
+            [
+                'key' => 'landing_meta_title',
+                'value' => [
+                    'de' => 'Kostenlose Finanzberatung | Abdelaziz Kallel - Deutsche Vermögensberatung',
+                    'ar' => 'استشارة مالية مجانية | عبد العزيز قلال - الاستشارات المالية الألمانية'
+                ],
+                'type' => 'string'
+            ],
+            [
+                'key' => 'landing_meta_description',
+                'value' => [
+                    'de' => 'Vereinbaren Sie eine kostenlose Finanzberatung mit IHK-zertifiziertem Finanzberater Abdelaziz Kallel. Unverbindlicher Termin in Schöneck oder online. ☎ +49 6187 9023048',
+                    'ar' => 'احجز استشارة مالية مجانية مع المستشار المالي المعتمد عبد العزيز قلال. موعد غير ملزم في شونيك أو عبر الإنترنت.'
                 ],
                 'type' => 'string'
             ],

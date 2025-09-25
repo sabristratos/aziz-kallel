@@ -28,12 +28,11 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb'
                     @endif
                     <div>
                         <h3 class="font-semibold text-lg text-slate-900">{{ $consultantName }}</h3>
-                        <p class="text-slate-600 text-sm">Vermögensberater</p>
+                        <p class="text-slate-600 text-sm">{{ __('Vermögensberater') }}</p>
                     </div>
                 </div>
                 <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                    Professionelle Finanzberatung mit über {{ $consultantExperience }} Jahren Erfahrung. 
-                    Individuelle Lösungen für Ihre finanziellen Ziele.
+                    {{ __('Professionelle Finanzberatung mit über :experience Jahren Erfahrung. Individuelle Lösungen für Ihre finanziellen Ziele.', ['experience' => $consultantExperience]) }}
                 </p>
                 
                 <!-- Social Media -->
@@ -52,26 +51,26 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb'
 
             <!-- Quick Links -->
             <div class="lg:col-span-1">
-                <h4 class="font-semibold text-slate-900 mb-4">Navigation</h4>
+                <h4 class="font-semibold text-slate-900 mb-4">{{ __('Navigation') }}</h4>
                 <nav class="space-y-3">
                     <a href="#about" class="block text-slate-600 hover:text-golden-amber-600 transition-colors duration-200 text-sm">
-                        Über mich
+                        {{ __('Über mich') }}
                     </a>
                     <a href="#testimonials" class="block text-slate-600 hover:text-golden-amber-600 transition-colors duration-200 text-sm">
-                        Referenzen
+                        {{ __('Referenzen') }}
                     </a>
                     <a href="#faq" class="block text-slate-600 hover:text-golden-amber-600 transition-colors duration-200 text-sm">
-                        Häufige Fragen
+                        {{ __('Häufige Fragen') }}
                     </a>
                     <a href="#contact" class="block text-slate-600 hover:text-golden-amber-600 transition-colors duration-200 text-sm">
-                        Kontakt
+                        {{ __('Kontakt') }}
                     </a>
                 </nav>
             </div>
 
             <!-- Contact Information -->
             <div class="lg:col-span-1">
-                <h4 class="font-semibold text-slate-900 mb-4">Kontakt</h4>
+                <h4 class="font-semibold text-slate-900 mb-4">{{ __('Kontakt') }}</h4>
                 <div class="space-y-3">
                     @if($contactPhone)
                         <a href="tel:{{ $contactPhone }}" 
@@ -101,33 +100,33 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb'
 
             <!-- Services & Legal -->
             <div class="lg:col-span-1">
-                <h4 class="font-semibold text-slate-900 mb-4">Service</h4>
+                <h4 class="font-semibold text-slate-900 mb-4">{{ __('Service') }}</h4>
                 <div class="space-y-3">
                     <div class="text-slate-600 text-sm">
                         <x-heroicon-o-shield-check class="w-4 h-4 inline mr-2 text-science-blue-600" />
-                        Deutsche Vermögensberatung
+                        {{ __('Deutsche Vermögensberatung') }}
                     </div>
                     <div class="text-slate-600 text-sm">
                         <x-heroicon-o-clock class="w-4 h-4 inline mr-2 text-science-blue-600" />
-                        Über {{ $consultantExperience }} Jahre Erfahrung
+                        {{ __('Über :experience Jahre Erfahrung', ['experience' => $consultantExperience]) }}
                     </div>
                     <div class="text-slate-600 text-sm">
                         <x-heroicon-o-heart class="w-4 h-4 inline mr-2 text-science-blue-600" />
-                        Persönliche Beratung
+                        {{ __('Persönliche Beratung') }}
                     </div>
                 </div>
 
                 <!-- Legal Links -->
                 <div class="mt-6 space-y-2">
                     <a href="/datenschutz" class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
-                        Datenschutz
+                        {{ __('Datenschutz') }}
                     </a>
                     <a href="/impressum" class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
-                        Impressum
+                        {{ __('Impressum') }}
                     </a>
                     <button onclick="window.dispatchEvent(new CustomEvent('edit-cookies'))" 
                             class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
-                        Cookies bearbeiten
+                        {{ __('Cookies bearbeiten') }}
                     </button>
                 </div>
             </div>
@@ -138,7 +137,7 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb'
         <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <!-- Copyright -->
             <div class="text-slate-600 text-sm">
-                &copy; {{ date('Y') }} {{ $consultantName }}. Alle Rechte vorbehalten.
+                &copy; {{ date('Y') }} {{ $consultantName }}. {{ __('Alle Rechte vorbehalten') }}.
             </div>
             
             <!-- Credits -->

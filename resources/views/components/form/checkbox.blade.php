@@ -5,7 +5,7 @@
     'checked' => false
 ])
 
-<label class="flex items-start space-x-3 cursor-pointer group">
+<label class="flex items-start cursor-pointer group">
     <div class="relative flex items-center justify-center">
         <input 
             type="checkbox"
@@ -30,8 +30,8 @@
     </div>
     
     @if($label)
-        <span class="text-sm text-gray-700 leading-5 select-none">{{ $label }}</span>
+        <span class="text-sm text-gray-700 leading-5 select-none ltr:ml-3 rtl:mr-3">{{ $label }}</span>
     @else
-        <span class="text-sm text-gray-700 leading-5 select-none">{{ $slot }}</span>
+        <span class="text-sm text-gray-700 leading-5 select-none ltr:ml-3 rtl:mr-3">{{ $slot }}</span>
     @endif
 </label>

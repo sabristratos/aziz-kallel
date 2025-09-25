@@ -20,27 +20,45 @@ class FaqSeeder extends Seeder
                     'ar' => 'كيف تتم الاستشارة المالية معك؟'
                 ],
                 'answer' => [
-                    'de' => 'Meine Finanzberatung erfolgt in einem strukturierten 5-Schritte-Prozess: Zunächst führen wir ein ausführliches Erstgespräch, in dem ich Ihre aktuelle Situation und Ihre Ziele analysiere. Anschließend bewerte ich Ihre bestehenden Finanzprodukte und entwickle eine individuelle Strategie für Sie. Nach der gemeinsamen Umsetzung der empfohlenen Lösungen begleite ich Sie kontinuierlich und passe die Strategie bei Bedarf an.',
-                    'ar' => 'تتم الاستشارة المالية لدي وفق عملية منظمة من خمس خطوات: في البداية نجري مقابلة أولية شاملة، أقوم خلالها بتحليل وضعك الحالي وأهدافك. بعد ذلك أقوم بتقييم منتجاتك المالية الحالية وأضع لك استراتيجية فردية. بعد تنفيذ الحلول الموصى بها معًا، أتابع معك بشكل مستمر وأقوم بتعديل الاستراتيجية. ما يهمني دائمًا هو التنويع المتوازن وضمان أنك تفهم خيارات الاستثمار وتشعر بالراحة معها'
+                    'de' => 'Die Finanzberatung bei mir läuft nach einem strukturierten Prozess in fünf Schritten ab: Zunächst führen wir ein umfassendes Erstgespräch, in dem ich Ihre aktuelle Situation und Ziele analysiere. Anschließend bewerte ich Ihre bestehenden Finanzprodukte und entwickle eine individuelle Strategie. Nach gemeinsamer Umsetzung der empfohlenen Lösungen begleite ich Sie kontinuierlich und passe die Strategie an. Dabei ist mir wichtig: ausgewogene Diversifikation und dass Sie Ihre Anlagemöglichkeiten verstehen und sich damit wohlfühlen.',
+                    'ar' => 'تقدم الاستشارة الأولى دون أي تكلفة أو التزام. في هذا اللقاء، نحلل وضعك المالي الحالي، ونناقش أهدافك، ونوضح كيف يمكنني مساعدتك. فقط إذا قررت أن تعمل معي، سنتابع التخطيط المفصل.'
                 ],
                 'order' => 1,
                 'is_active' => true
             ],
             [
-                'question' => ['de' => 'Welche Kosten entstehen für die Beratung?'],
-                'answer' => ['de' => 'Das Erstgespräch und die grundlegende Analyse Ihrer Finanzsituation sind für Sie kostenfrei. Als Vermögensberater der Deutschen Vermögensberatung erhalte ich meine Vergütung über die Produktpartner, sodass für Sie keine direkten Beratungskosten anfallen. Transparenz ist mir dabei sehr wichtig - Sie erfahren immer im Voraus, wie sich die Kosten zusammensetzen.'],
+                'question' => [
+                    'de' => 'Welche Kosten entstehen für die Beratung?',
+                    'ar' => 'ما هي التكاليف المترتبة على الاستشارة؟'
+                ],
+                'answer' => [
+                    'de' => 'Das Erstgespräch und die grundlegende Analyse Ihrer Finanzsituation sind für Sie kostenfrei. Als Vermögensberater der Deutschen Vermögensberatung erhalte ich meine Vergütung über die Produktpartner, sodass für Sie keine direkten Beratungskosten anfallen. Transparenz ist mir dabei sehr wichtig - Sie erfahren immer im Voraus, wie sich die Kosten zusammensetzen.',
+                    'ar' => 'كوني مستشار معتمد لدى شركة الاستشارات المالية الألمانية (DVAG)، أعمل حصريًا لصالح عملائي. أحصل على أجري من مقدمي المنتجات، وليس منك مباشرة، مما يعني أن خدماتي مجانية تمامًا لك. هذا النموذج يسمح لي بتقديم استشارة مستقلة دون تضارب في المصالح.'
+                ],
                 'order' => 2,
                 'is_active' => true
             ],
             [
-                'question' => ['de' => 'Welche Anlageformen empfehlen Sie?'],
-                'answer' => ['de' => 'Die Empfehlung der passenden Anlageform hängt von Ihrer individuellen Situation, Ihren Zielen und Ihrer Risikobereitschaft ab. Das Spektrum reicht von konservativen Sparformen über Investmentfonds und ETFs bis hin zu strukturierten Produkten. Wichtig ist mir dabei immer eine ausgewogene Diversifikation und dass Sie die gewählten Anlageformen verstehen und sich damit wohlfühlen.'],
+                'question' => [
+                    'de' => 'Welche Anlageformen empfehlen Sie?',
+                    'ar' => 'ما هي أشكال الاستثمار التي توصي بها؟'
+                ],
+                'answer' => [
+                    'de' => 'Die Empfehlung der passenden Anlageform hängt von Ihrer individuellen Situation, Ihren Zielen und Ihrer Risikobereitschaft ab. Das Spektrum reicht von konservativen Sparformen über Investmentfonds und ETFs bis hin zu strukturierten Produkten. Wichtig ist mir dabei immer eine ausgewogene Diversifikation und dass Sie die gewählten Anlageformen verstehen und sich damit wohlfühlen.',
+                    'ar' => 'نعم، أقدم الاستشارة في أي مكان يناسبك - سواء في منزلك، مكتبك، أو في مكتبي في شونيك. كما أقدم أيضًا استشارات عبر الفيديو عبر الإنترنت. المرونة في المواعيد والمكان مهمة جدًا بالنسبة لي لتناسب جدولك الزمني.'
+                ],
                 'order' => 3,
                 'is_active' => true
             ],
             [
-                'question' => ['de' => 'Wie plane ich meine Altersvorsorge optimal?'],
-                'answer' => ['de' => 'Eine optimale Altersvorsorge baut auf drei Säulen auf: der gesetzlichen Rente, der betrieblichen Altersvorsorge und der privaten Vorsorge. Je früher Sie beginnen, desto besser können Sie den Zinseszinseffekt nutzen. Ich analysiere Ihre aktuelle Versorgungssituation, berechnen die zu erwartende Rentenlücke und entwickeln gemeinsam mit Ihnen eine passende Strategie zur Schließung dieser Lücke.'],
+                'question' => [
+                    'de' => 'Wie plane ich meine Altersvorsorge optimal?',
+                    'ar' => 'كيف أخطط لتقاعدي بشكل مثالي؟'
+                ],
+                'answer' => [
+                    'de' => 'Eine optimale Altersvorsorge baut auf drei Säulen auf: der gesetzlichen Rente, der betrieblichen Altersvorsorge und der privaten Vorsorge. Je früher Sie beginnen, desto besser können Sie den Zinseszinseffekt nutzen. Ich analysiere Ihre aktuelle Versorgungssituation, berechnen die zu erwartende Rentenlücke und entwickeln gemeinsam mit Ihnen eine passende Strategie zur Schließung dieser Lücke.',
+                    'ar' => 'أقدم خدمات شاملة في مجال الاستشارات المالية: التخطيط للتقاعد، الاستثمارات، التأمينات، تمويل العقارات، تحسين الضرائب، وبناء الثروة. كل استشارة مصممة خصيصًا حسب وضعك الشخصي وأهدافك المالية.'
+                ],
                 'order' => 4,
                 'is_active' => true
             ],
@@ -57,8 +75,14 @@ class FaqSeeder extends Seeder
                 'is_active' => true
             ],
             [
-                'question' => ['de' => 'Beraten Sie auch Firmenkunden?'],
-                'answer' => ['de' => 'Ja, ich berate auch Unternehmer und Firmenkunden. Dazu gehören Themen wie betriebliche Altersvorsorge, Firmenversicherungen, Liquiditätsplanung und die private Absicherung von Geschäftsführern und Selbstständigen. Als Unternehmer haben Sie oft spezielle Anforderungen, die eine maßgeschneiderte Beratung erfordern.'],
+                'question' => [
+                    'de' => 'Beraten Sie auch Firmenkunden?',
+                    'ar' => 'هل تقدم الاستشارة للشركات أيضًا؟'
+                ],
+                'answer' => [
+                    'de' => 'Ja, ich berate auch Unternehmer und Firmenkunden. Dazu gehören Themen wie betriebliche Altersvorsorge, Firmenversicherungen, Liquiditätsplanung und die private Absicherung von Geschäftsführern und Selbstständigen. Als Unternehmer haben Sie oft spezielle Anforderungen, die eine maßgeschneiderte Beratung erfordern.',
+                    'ar' => 'نعم، أقدم الاستشارة أيضًا للشركات ورجال الأعمال. يشمل ذلك مواضيع مثل تقاعد الشركات، تأمينات الشركات، تخطيط السيولة والحماية الشخصية للمديرين وأصحاب الأعمال الحرة. بصفتك رجل أعمال فإن لديك عادةً متطلبات خاصة تتطلب استشارة مخصصة.'
+                ],
                 'order' => 6,
                 'is_active' => true
             ],
@@ -75,8 +99,14 @@ class FaqSeeder extends Seeder
                 'is_active' => true
             ],
             [
-                'question' => ['de' => 'Was unterscheidet Sie von anderen Finanzberatern?'],
-                'answer' => ['de' => 'Als IHK-zertifizierter Finanzanlagenfachmann mit über 15 Jahren Erfahrung kenne ich den Markt und die Produkte sehr gut. Besonders wichtig ist mir die persönliche, langfristige Betreuung meiner Kunden. Ich arbeite mit einem kleinen, erfahrenen Team zusammen, sodass Sie immer einen direkten Ansprechpartner haben. Mein Fokus liegt auf individuellen, kundenorientierten Lösungen statt Standardprodukten.'],
+                'question' => [
+                    'de' => 'Was unterscheidet Sie von anderen Finanzberatern?',
+                    'ar' => 'ما الذي يميزك عن المستشارين الماليين الآخرين؟'
+                ],
+                'answer' => [
+                    'de' => 'Als IHK-zertifizierter Finanzanlagenfachmann mit über 15 Jahren Erfahrung kenne ich den Markt und die Produkte sehr gut. Besonders wichtig ist mir die persönliche, langfristige Betreuung meiner Kunden. Ich arbeite mit einem kleinen, erfahrenen Team zusammen, sodass Sie immer einen direkten Ansprechpartner haben. Mein Fokus liegt auf individuellen, kundenorientierten Lösungen statt Standardprodukten.',
+                    'ar' => 'بصفتي متخصص في الاستثمارات المالية معتمد من غرفة الصناعة والتجارة مع أكثر من 15 عامًا من الخبرة، فإنني أعرف السوق والمنتجات جيدًا. ما يهمني بشكل خاص هو الرعاية الشخصية طويلة المدى لعملائي. أعمل مع فريق صغير ذو خبرة، بحيث يكون لديك دائمًا شخص مرجعي مباشر. تركيزي ينصب على الحلول الفردية الموجهة للعميل بدلًا من المنتجات القياسية.'
+                ],
                 'order' => 8,
                 'is_active' => true
             ]

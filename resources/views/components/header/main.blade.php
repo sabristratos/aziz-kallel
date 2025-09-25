@@ -10,7 +10,7 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
         <div class="flex items-center justify-between h-16 lg:h-20">
 
             <!-- Left: Consultant Info Card (Desktop) / Logo (Mobile) -->
-            <div class="flex items-center animate-slide-left">
+            <div class="flex items-center animate-slide-left ltr:order-1 rtl:order-3">
                 <!-- Desktop: Consultant Info Card -->
                 <div class="hidden lg:block">
                     <x-header.consultant-info-card />
@@ -18,35 +18,41 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
 
                 <!-- Mobile: Simple Logo/Name -->
                 <div class="lg:hidden">
-                    <a href="#hero" class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 rounded-lg p-1">
-                        <div class="flex flex-col">
+                    <a href="{{ route('home') }}" class="flex items-center ltr:space-x-2 rtl:space-x-reverse rtl:space-x-2 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 rounded-lg p-1">
+                        <div class="flex flex-col rtl:text-right">
                             <span class="font-semibold text-white text-base">{{ $consultantName }}</span>
-                            <span class="text-xs text-white/80">Vermögensberater</span>
+                            <span class="text-xs text-white/80">{{ __('Vermögensberater') }}</span>
                         </div>
                     </a>
                 </div>
             </div>
 
             <!-- Center: Main Navigation (Desktop Only) -->
-            <div class="hidden lg:flex flex-1 justify-center animate-fade-in">
+            <div class="hidden lg:flex flex-1 justify-center animate-fade-in ltr:order-2 rtl:order-2">
                 <x-header.navigation :current-section="$currentSection" />
             </div>
 
-            <!-- Right: CTA Button (Desktop) / Mobile Menu (Mobile) -->
-            <div class="flex items-center space-x-4 animate-slide-right">
+            <!-- Right: CTA Button + Language Switcher (Desktop) / Mobile Menu (Mobile) -->
+            <div class="flex items-center ltr:space-x-4 rtl:space-x-reverse rtl:space-x-4 animate-slide-right ltr:order-3 rtl:order-1">
+                <!-- Language Switcher -->
+                <div class="hidden lg:block">
+                    <x-language-switcher />
+                </div>
+
                 <!-- Desktop CTA -->
                 <div class="hidden lg:block">
-                    <x-ui.button href="#contact" variant="golden" size="md">
-                        <x-heroicon-o-chat-bubble-left class="h-4 w-4 mr-2" />
-                        Beratung anfragen
+                    <x-ui.button href="{{ route('home') }}#contact" variant="golden" size="md">
+                        <x-heroicon-o-chat-bubble-left class="h-4 w-4 ltr:mr-2 rtl:ml-2" />
+                        {{ __('Beratung anfragen') }}
                     </x-ui.button>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="lg:hidden">
+                <!-- Mobile: Language Switcher + Menu Button -->
+                <div class="lg:hidden flex items-center ltr:space-x-2 rtl:space-x-reverse rtl:space-x-2">
+                    <x-language-switcher />
                     <button @click="$dispatch('toggle-mobile-menu')"
                             class="p-2 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20 transition-colors duration-200 animate-scale"
-                            aria-label="Hauptmenü öffnen">
+                            aria-label="{{ __('Hauptmenü öffnen') }}">
                         <x-heroicon-o-bars-3 class="h-6 w-6 text-white" />
                     </button>
                 </div>

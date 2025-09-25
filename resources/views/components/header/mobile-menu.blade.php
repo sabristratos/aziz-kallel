@@ -6,22 +6,22 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
 $navigationItems = [
     [
         'label' => 'Über mich',
-        'href' => '#about',
+        'href' => route('home') . '#about',
         'section' => 'about'
     ],
     [
         'label' => 'Referenzen',
-        'href' => '#testimonials',
+        'href' => route('home') . '#testimonials',
         'section' => 'testimonials'
     ],
     [
         'label' => 'Häufige Fragen',
-        'href' => '#faq',
+        'href' => route('home') . '#faq',
         'section' => 'faq'
     ],
     [
         'label' => 'Kontakt',
-        'href' => '#contact',
+        'href' => route('home') . '#contact',
         'section' => 'contact'
     ]
 ];
@@ -100,8 +100,8 @@ $navigationItems = [
 
             <!-- Mobile CTA Section -->
             <div class="px-4 pt-6 mt-6 border-t border-slate-200">
-                <x-ui.button href="#contact" 
-                           variant="golden" 
+                <x-ui.button href="{{ route('home') }}#contact"
+                           variant="golden"
                            class="w-full mb-3"
                            @click="mobileMenuOpen = false">
                     <x-heroicon-o-chat-bubble-left class="h-4 w-4 mr-2" />

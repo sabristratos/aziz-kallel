@@ -23,7 +23,7 @@
         @if($placeholder) placeholder="{{ $placeholder }}" @endif
         @if($required) required @endif
         {{ $attributes->merge([
-            'class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-golden-amber-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400'
+            'class' => 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-golden-amber-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400 rtl:text-right'
         ]) }}
     />
     
