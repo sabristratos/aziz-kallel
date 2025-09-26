@@ -16,32 +16,18 @@ class LocaleMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $availableLocales = config('app.available_locales', []);
-        $defaultLocale = config('app.locale', 'ar');
+        $defaultLocale = config('app.locale', 'de');
 
-        // Check for locale in session first
-        $locale = session('locale');
+        // Get locale from route parameter
+        $locale = $request->route('locale');
 
-        // If no locale in session, use browser preferences
+        // If no locale in route (non-localized routes), use default
         if (!$locale) {
-            $preferredLanguages = $request->getLanguages();
-            foreach ($preferredLanguages as $lang) {
-                // Check both full locale (e.g., 'en-US') and language code (e.g., 'en')
-                if (array_key_exists($lang, $availableLocales)) {
-                    $locale = $lang;
-                    break;
-                }
-
-                // Check just the language part (e.g., 'en' from 'en-US')
-                $langCode = substr($lang, 0, 2);
-                if (array_key_exists($langCode, $availableLocales)) {
-                    $locale = $langCode;
-                    break;
-                }
-            }
+            $locale = $defaultLocale;
         }
 
         // Validate locale and fallback to default
-        if (!$locale || !array_key_exists($locale, $availableLocales)) {
+        if (!array_key_exists($locale, $availableLocales)) {
             $locale = $defaultLocale;
         }
 

@@ -13,6 +13,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->enforceSecureUrls();
+
+        // Load helpers file
+        require_once app_path('helpers.php');
     }
 
     /**

@@ -5,23 +5,20 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'homepage')->name('home');
-Route::view('/landing', 'landing')->name('landing');
+// Root redirect to default locale
+Route::get('/', function () {
+    return redirect('/de');
+});
 
-// Language switching
-Route::get('/locale/{locale}', function ($locale) {
-    $availableLocales = config('app.available_locales', []);
+// Localized routes
+Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'de|ar']], function () {
+    Route::view('/', 'homepage')->name('home');
+    Route::view('/landing', 'landing')->name('landing');
 
-    if (array_key_exists($locale, $availableLocales)) {
-        session(['locale' => $locale]);
-    }
-
-    return redirect()->back();
-})->name('locale.switch');
-
-// Legal pages
-Route::view('/datenschutz', 'legal.datenschutz')->name('privacy');
-Route::view('/impressum', 'legal.impressum')->name('imprint');
+    // Legal pages
+    Route::view('/datenschutz', 'legal.datenschutz')->name('privacy');
+    Route::view('/impressum', 'legal.impressum')->name('imprint');
+});
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
