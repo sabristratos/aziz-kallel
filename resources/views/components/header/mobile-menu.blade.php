@@ -6,22 +6,22 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
 $navigationItems = [
     [
         'label' => 'Über mich',
-        'href' => route('home') . '#about',
+        'href' => localized_route('home') . '#about',
         'section' => 'about'
     ],
     [
         'label' => 'Referenzen',
-        'href' => route('home') . '#testimonials',
+        'href' => localized_route('home') . '#testimonials',
         'section' => 'testimonials'
     ],
     [
         'label' => 'Häufige Fragen',
-        'href' => route('home') . '#faq',
+        'href' => localized_route('home') . '#faq',
         'section' => 'faq'
     ],
     [
         'label' => 'Kontakt',
-        'href' => route('home') . '#contact',
+        'href' => localized_route('home') . '#contact',
         'section' => 'contact'
     ]
 ];
@@ -100,7 +100,7 @@ $navigationItems = [
 
             <!-- Mobile CTA Section -->
             <div class="px-4 pt-6 mt-6 border-t border-slate-200">
-                <x-ui.button href="{{ route('home') }}#contact"
+                <x-ui.button href="{{ localized_route('home') }}#contact"
                            variant="golden"
                            class="w-full mb-3"
                            @click="mobileMenuOpen = false">

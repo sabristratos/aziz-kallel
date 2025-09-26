@@ -18,7 +18,7 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo');
 
 <x-ui.popover trigger-type="hover" position="bottom-left" width="w-80">
     <x-slot name="trigger">
-        <a href="{{ route('home') }}" class="flex items-center ltr:space-x-4 rtl:space-x-reverse rtl:space-x-4 p-3 rounded-xl transition-all duration-200 cursor-pointer group">
+        <a href="{{ localized_route('home') }}" class="flex items-center ltr:space-x-4 rtl:space-x-reverse rtl:space-x-4 p-3 rounded-xl transition-all duration-200 cursor-pointer group">
             <!-- Avatar -->
             <x-ui.avatar 
                 :src="$profilePhoto" 

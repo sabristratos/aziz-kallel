@@ -18,7 +18,7 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
 
                 <!-- Mobile: Simple Logo/Name -->
                 <div class="lg:hidden">
-                    <a href="{{ route('home') }}" class="flex items-center ltr:space-x-2 rtl:space-x-reverse rtl:space-x-2 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 rounded-lg p-1">
+                    <a href="{{ localized_route('home') }}" class="flex items-center ltr:space-x-2 rtl:space-x-reverse rtl:space-x-2 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 rounded-lg p-1">
                         <div class="flex flex-col rtl:text-right">
                             <span class="font-semibold text-white text-base">{{ $consultantName }}</span>
                             <span class="text-xs text-white/80">{{ __('Vermögensberater') }}</span>
@@ -41,7 +41,7 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
 
                 <!-- Desktop CTA -->
                 <div class="hidden lg:block">
-                    <x-ui.button href="{{ route('home') }}#contact" variant="golden" size="md">
+                    <x-ui.button href="{{ localized_route('home') }}#contact" variant="golden" size="md">
                         <x-heroicon-o-chat-bubble-left class="h-4 w-4 ltr:mr-2 rtl:ml-2" />
                         {{ __('Beratung anfragen') }}
                     </x-ui.button>
