@@ -12,12 +12,22 @@ Route::get('/', function () {
 
 // Localized routes
 Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'de|ar']], function () {
-    Route::view('/', 'homepage')->name('home');
-    Route::view('/landing', 'landing')->name('landing');
+    Route::get('/', function () {
+        return view('homepage');
+    })->name('home');
+
+    Route::get('/landing', function () {
+        return view('landing');
+    })->name('landing');
 
     // Legal pages
-    Route::view('/datenschutz', 'legal.datenschutz')->name('privacy');
-    Route::view('/impressum', 'legal.impressum')->name('imprint');
+    Route::get('/datenschutz', function () {
+        return view('legal.datenschutz');
+    })->name('privacy');
+
+    Route::get('/impressum', function () {
+        return view('legal.impressum');
+    })->name('imprint');
 });
 
 Route::view('dashboard', 'dashboard')
