@@ -11,10 +11,13 @@ $consultantRating = Setting::get('consultant_rating');
 $contactPhone = Setting::get('contact_phone');
 $contactEmail = Setting::get('contact_email');
 
-// Get header avatar with fallback to original image
+// Get logo or header avatar with fallback to original image
+$logoSetting = Setting::where('key', 'site_logo')->first();
 $headerAvatarSetting = Setting::where('key', 'header_dropdown_avatar')->first();
 
-$profilePhoto = $headerAvatarSetting?->getFirstMediaUrl('header_dropdown_avatar', 'avatar') ?: asset('abdelaziz-kallel-2.png');
+$profilePhoto = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-md')
+    ?: $headerAvatarSetting?->getFirstMediaUrl('header_dropdown_avatar', 'avatar')
+    ?: asset('abdelaziz-logo.jpg');
 @endphp
 
 <x-ui.popover trigger-type="hover" position="bottom-left" width="w-80">

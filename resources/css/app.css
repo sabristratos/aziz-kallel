@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
 @import 'tailwindcss';
 
 @import '../../vendor/livewire/flux/dist/flux.css';
@@ -117,7 +119,7 @@
 
     /* Arabic text scaling for better readability */
     .rtl .text-xs {
-        font-size: 0.85rem; /* slightly larger than default 0.75rem */
+        font-size: 0.9rem; /* slightly larger than default 0.75rem */
     }
 
     .rtl .text-sm {
@@ -141,7 +143,7 @@
     }
 
     .rtl .text-3xl {
-        font-size: 2.125rem; /* larger than default 1.875rem */
+        font-size: 3rem; /* larger than default 1.875rem */
     }
 
     /* Global base font size increase for Arabic */

@@ -107,7 +107,7 @@
                                 type="button"
                                 wire:click="$set('consulting_rating', {{ $i }})"
                                 wire:key="consulting-star-{{ $i }}"
-                                class="text-3xl transition-colors {{ $consulting_rating >= $i ? 'text-yellow-400' : 'text-gray-300' }} hover:text-yellow-400"
+                                class="text-lg transition-colors {{ $consulting_rating >= $i ? 'text-yellow-400' : 'text-gray-300' }} hover:text-yellow-400"
                             >
                                 ★
                             </button>
@@ -127,7 +127,7 @@
                                 type="button"
                                 wire:click="$set('satisfaction_rating', {{ $i }})"
                                 wire:key="satisfaction-star-{{ $i }}"
-                                class="text-3xl transition-colors {{ $satisfaction_rating >= $i ? 'text-yellow-400' : 'text-gray-300' }} hover:text-yellow-400"
+                                class="text-lg transition-colors {{ $satisfaction_rating >= $i ? 'text-yellow-400' : 'text-gray-300' }} hover:text-yellow-400"
                             >
                                 ★
                             </button>
@@ -147,7 +147,7 @@
                                 type="button"
                                 wire:click="$set('service_rating', {{ $i }})"
                                 wire:key="service-star-{{ $i }}"
-                                class="text-3xl transition-colors {{ $service_rating >= $i ? 'text-yellow-400' : 'text-gray-300' }} hover:text-yellow-400"
+                                class="text-lg transition-colors {{ $service_rating >= $i ? 'text-yellow-400' : 'text-gray-300' }} hover:text-yellow-400"
                             >
                                 ★
                             </button>

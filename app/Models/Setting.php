@@ -24,8 +24,8 @@ class Setting extends Model implements HasMedia
     public static function get(string $key, mixed $default = null, ?string $locale = null): mixed
     {
         $setting = static::where('key', $key)->first();
-        
-        if (!$setting) {
+
+        if (! $setting) {
             return $default;
         }
 
@@ -65,9 +65,13 @@ class Setting extends Model implements HasMedia
         $this->addMediaCollection('profile_photo')
             ->singleFile()
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+
+        $this->addMediaCollection('site_logo')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']);
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->width(300)
@@ -85,5 +89,25 @@ class Setting extends Model implements HasMedia
             ->sharpen(10)
             ->quality(90)
             ->format('png');
+
+        // Logo conversions
+        $this->addMediaConversion('logo-sm')
+            ->width(80)
+            ->height(80)
+            ->sharpen(10)
+            ->keepOriginalImageFormat();
+
+        $this->addMediaConversion('logo-md')
+            ->width(150)
+            ->height(150)
+            ->sharpen(10)
+            ->keepOriginalImageFormat();
+
+        $this->addMediaConversion('logo-lg')
+            ->width(300)
+            ->height(300)
+            ->sharpen(10)
+            ->quality(95)
+            ->keepOriginalImageFormat();
     }
 }

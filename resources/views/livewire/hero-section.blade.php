@@ -49,7 +49,7 @@
                     </div>
                     <div class="flex items-center justify-center ltr:sm:justify-start rtl:sm:justify-end space-x-3 rtl:space-x-reverse">
                         <x-heroicon-o-academic-cap class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">{{ __('Über :experience Jahre Erfahrung in der Finanzberatung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Über :experience Jahre Erfahrung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}</x-ui.text>
                     </div>
                     <div class="flex items-center justify-center ltr:sm:justify-start rtl:sm:justify-end space-x-3 rtl:space-x-reverse">
                         <x-heroicon-o-light-bulb class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
@@ -118,7 +118,7 @@
                     </div>
                     <div class="flex items-center ltr:justify-start gap-3 rtl:space-x-reverse">
                         <x-heroicon-o-academic-cap class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />
-                        <x-ui.text color="white" as="span" size="small">{{ __('Über :experience Jahre Erfahrung in der Finanzberatung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}</x-ui.text>
+                        <x-ui.text color="white" as="span" size="small">{{ __('Über :experience Jahre Erfahrung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}</x-ui.text>
                     </div>
                     <div class="flex items-center ltr:justify-start gap-3 rtl:space-x-reverse">
                         <x-heroicon-o-light-bulb class="w-5 h-5 text-golden-amber-300 flex-shrink-0" />

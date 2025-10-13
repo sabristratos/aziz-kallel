@@ -9,9 +9,9 @@ $contactAddressStreet = Setting::where('key', 'contact_address_street')->first()
 $contactAddressCity = Setting::where('key', 'contact_address_city')->first()?->value;
 $consultantExperience = Setting::where('key', 'consultant_experience')->first()?->value;
 
-// Get profile photo for branding with fallback
-$profilePhotoSetting = Setting::where('key', 'consultant_profile_photo')->first();
-$profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb') ?: asset('abdelaziz-kallel-2.png');
+// Get logo URL with fallback (same as header)
+$logoSetting = Setting::where('key', 'site_logo')->first();
+$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
 @endphp
 
 <x-section-wrapper class="bg-slate-100 rounded-3xl mt-16 animate-fade-in">
@@ -20,11 +20,9 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb'
             <!-- Brand Column -->
             <div class="lg:col-span-1">
                 <div class="flex items-center space-x-3 mb-4">
-                    @if($profilePhoto)
-                        <img src="{{ $profilePhoto }}" 
-                             alt="{{ $consultantName }}" 
-                             class="w-12 h-12 rounded-full object-cover" />
-                    @endif
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg overflow-hidden bg-white">
+                        <img src="{{ $logoUrl }}" alt="{{ $consultantName }} Logo" class="w-full h-full object-contain" />
+                    </div>
                     <div>
                         <h3 class="font-semibold text-lg text-slate-900">{{ $consultantName }}</h3>
                         <p class="text-slate-600 text-sm">{{ __('Vermögensberater') }}</p>

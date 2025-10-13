@@ -3,6 +3,10 @@
 @php
 use App\Models\Setting;
 $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
+
+// Get logo URL with fallback
+$logoSetting = Setting::where('key', 'site_logo')->first();
+$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
 @endphp
 
 <header class="z-30 animate-slide-up" x-data="{}">
@@ -19,6 +23,9 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
                 <!-- Mobile: Simple Logo/Name -->
                 <div class="lg:hidden">
                     <a href="{{ localized_route('home') }}" class="flex items-center ltr:space-x-2 rtl:space-x-reverse rtl:space-x-2 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 rounded-lg p-1">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg overflow-hidden bg-white">
+                            <img src="{{ $logoUrl }}" alt="{{ $consultantName }} Logo" class="w-full h-full object-contain" />
+                        </div>
                         <div class="flex flex-col rtl:text-right">
                             <span class="font-semibold text-white text-base">{{ $consultantName }}</span>
                             <span class="text-xs text-white/80">{{ __('Vermögensberater') }}</span>

@@ -38,8 +38,8 @@ class SettingsSeeder extends Seeder
             [
                 'key' => 'consultant_experience',
                 'value' => [
-                    'de' => 'Seit 2009',
-                    'ar' => 'منذ 2009',
+                    'de' => '15+',
+                    'ar' => '15+',
                 ],
                 'type' => 'string',
             ],
@@ -215,6 +215,11 @@ class SettingsSeeder extends Seeder
             ],
 
             // Image Settings (Media Library)
+            [
+                'key' => 'site_logo',
+                'value' => null,
+                'type' => 'media',
+            ],
             [
                 'key' => 'hero_section_image',
                 'value' => null,

@@ -88,6 +88,44 @@ class Testimonial extends Model implements HasMedia
     }
 
     /**
+     * Get content with fallback to German if Arabic is empty
+     */
+    public function getContentAttribute(): ?string
+    {
+        $currentLocale = app()->getLocale();
+        $translations = json_decode($this->attributes['content'] ?? '{}', true);
+
+        // Get content for current locale
+        $content = $translations[$currentLocale] ?? null;
+
+        // If current locale is Arabic and content is empty, fallback to German
+        if ($currentLocale === 'ar' && empty($content)) {
+            return $translations['de'] ?? null;
+        }
+
+        return $content;
+    }
+
+    /**
+     * Get title with fallback to German if Arabic is empty
+     */
+    public function getTitleAttribute(): ?string
+    {
+        $currentLocale = app()->getLocale();
+        $translations = json_decode($this->attributes['title'] ?? '{}', true);
+
+        // Get title for current locale
+        $title = $translations[$currentLocale] ?? null;
+
+        // If current locale is Arabic and title is empty, fallback to German
+        if ($currentLocale === 'ar' && empty($title)) {
+            return $translations['de'] ?? null;
+        }
+
+        return $title;
+    }
+
+    /**
      * Calculate average rating from individual ratings
      */
     public function getAverageRatingAttribute(): ?int
