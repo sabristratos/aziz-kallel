@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use App\Notifications\NewConsultationRequest;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Notification;
 
 class ConsultationRequest extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'phone',
         'preferred_contact_method',
@@ -26,6 +32,20 @@ class ConsultationRequest extends Model
         'preferred_dates' => 'array',
     ];
 
+    protected static function booted(): void
+    {
+        static::created(function (ConsultationRequest $consultationRequest) {
+            // Get contact email from settings
+            $contactEmail = Setting::where('key', 'contact_email')->first()?->value;
+
+            if ($contactEmail) {
+                // Send notification to the contact email
+                Notification::route('mail', $contactEmail)
+                    ->notify(new NewConsultationRequest($consultationRequest));
+            }
+        });
+    }
+
     public function scopePending($query)
     {
         return $query->where('status', 'pending');
@@ -34,5 +54,15 @@ class ConsultationRequest extends Model
     public function scopeConfirmed($query)
     {
         return $query->where('status', 'confirmed');
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where('status', 'cancelled');
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', 'completed');
     }
 }

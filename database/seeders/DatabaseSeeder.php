@@ -13,10 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user
-        User::factory()->create([
+        // Create hardcoded admin user
+        User::create([
             'name' => 'Abdelaziz Kallel',
-            'email' => 'abdelaziz.kallel@dvag.de',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
         ]);
 
         // Seed financial consultant data

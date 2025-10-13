@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -10,23 +11,35 @@ use Spatie\Translatable\HasTranslations;
 
 class Testimonial extends Model implements HasMedia
 {
+    use HasFactory;
     use HasTranslations;
     use InteractsWithMedia;
 
     protected $fillable = [
         'client_name',
+        'title',
         'content',
         'rating',
+        'consulting_rating',
+        'satisfaction_rating',
+        'service_rating',
+        'customer_since',
+        'status',
+        'submitted_at',
         'is_active',
         'order',
     ];
 
-    public array $translatable = ['content'];
+    public array $translatable = ['content', 'title'];
 
     protected $casts = [
         'is_active' => 'boolean',
         'rating' => 'integer',
+        'consulting_rating' => 'integer',
+        'satisfaction_rating' => 'integer',
+        'service_rating' => 'integer',
         'order' => 'integer',
+        'submitted_at' => 'datetime',
     ];
 
     public function registerMediaCollections(): void
@@ -36,7 +49,7 @@ class Testimonial extends Model implements HasMedia
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->width(150)
@@ -57,5 +70,38 @@ class Testimonial extends Model implements HasMedia
     public function scopeOrdered($query)
     {
         return $query->orderBy('order');
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', 'rejected');
+    }
+
+    /**
+     * Calculate average rating from individual ratings
+     */
+    public function getAverageRatingAttribute(): ?int
+    {
+        $ratings = array_filter([
+            $this->consulting_rating,
+            $this->satisfaction_rating,
+            $this->service_rating,
+        ]);
+
+        if (empty($ratings)) {
+            return null;
+        }
+
+        return (int) round(array_sum($ratings) / count($ratings));
     }
 }

@@ -1,24 +1,25 @@
 @extends('components.layouts.public')
 
 @section('content')
-    <!-- Testimonials Section -->
-    <x-testimonials.carousel id="testimonials" class="animate-fade-in" />
+    <!-- Testimonials Section with Review Submission -->
+    @livewire('submit-review')
 
     <!-- About Section -->
     <x-section-wrapper id="about" class="bg-slate-100 rounded-3xl !pb-8 animate-fade-in">
         @php
-            $aboutTitle = \App\Models\Setting::where('key', 'about_title')->first()?->value ?? 'Über mich';
-            $aboutDescription = \App\Models\Setting::where('key', 'about_description')->first()?->value ?? 'Erfahren Sie mehr über meine Expertise und wie ich Ihnen bei Ihren finanziellen Zielen helfen kann.';
             $consultantName = \App\Models\Setting::where('key', 'consultant_name')->first()?->value;
-            $profilePhotoSetting = \App\Models\Setting::where('key', 'consultant_profile_photo')->first();
-            $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'high_quality');
+
+            // Get about section image with fallback to original image
+            $aboutImageSetting = \App\Models\Setting::where('key', 'about_section_image')->first();
+
+            $profilePhoto = $aboutImageSetting?->getFirstMediaUrl('about_section_image', 'high_quality') ?: asset('abdelaziz-kallel-2.png');
         @endphp
 
         <!-- Header -->
-        <x-ui.section-header 
+        <x-ui.section-header
             overline="{{ __('Ihr Berater') }}"
-            title="{{ $aboutTitle }}"
-            description="{{ $aboutDescription }}"
+            title="{{ __('Über mich') }}"
+            description="{{ __('Erfahren Sie mehr über meine Expertise und wie ich Ihnen bei Ihren finanziellen Zielen helfen kann.') }}"
             layout="two-column"
             class="animate-slide-left" />
 
@@ -89,6 +90,8 @@
                     <div class="space-y-4 sm:space-y-6 animate-stagger">
                         @php
                             $contactPhone = \App\Models\Setting::where('key', 'contact_phone')->first()?->value;
+                            $contactMobile = \App\Models\Setting::where('key', 'contact_mobile')->first()?->value;
+                            $contactEmail = \App\Models\Setting::where('key', 'contact_email')->first()?->value;
                         @endphp
                         @if($contactPhone)
                             <x-ui.contact-card
@@ -99,12 +102,23 @@
                                 icon="heroicon-o-phone" />
                         @endif
 
-                        <x-ui.contact-card
-                            title="{{ __('E-Mail Kontakt') }}"
-                            description="{{ __('Senden Sie mir eine E-Mail mit Ihren Fragen oder Terminwünschen.') }}"
-                            action="info@abdelaziz-kallel.de"
-                            href="mailto:info@abdelaziz-kallel.de"
-                            icon="heroicon-o-envelope" />
+                        @if($contactMobile)
+                            <x-ui.contact-card
+                                title="{{ __('Mobil') }}"
+                                description="{{ __('Erreichen Sie mich auch mobil für eine schnelle Kontaktaufnahme.') }}"
+                                action="{{ $contactMobile }}"
+                                href="tel:{{ $contactMobile }}"
+                                icon="heroicon-o-device-phone-mobile" />
+                        @endif
+
+                        @if($contactEmail)
+                            <x-ui.contact-card
+                                title="{{ __('E-Mail Kontakt') }}"
+                                description="{{ __('Senden Sie mir eine E-Mail mit Ihren Fragen oder Terminwünschen.') }}"
+                                action="{{ $contactEmail }}"
+                                href="mailto:{{ $contactEmail }}"
+                                icon="heroicon-o-envelope" />
+                        @endif
 
                         <x-ui.contact-card
                             title="{{ __('Persönliche Beratung') }}"

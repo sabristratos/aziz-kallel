@@ -1,3 +1,305 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+This is a professional brochure website for Abdelaziz Kallel, a financial consultant with Deutsche Vermögensberatung (DVAG). The project is a one-page website with multilingual support (German primary, Arabic secondary) and a separate admin dashboard.
+
+**Tech Stack:**
+- Laravel 12 with streamlined structure (no app/Http/Middleware/, middleware registered in bootstrap/app.php)
+- Livewire 3 with Volt (functional/class-based components)
+- Livewire Flux 2.3.2 (Free Edition)
+- Spatie Media Library 11 (for images with conversions)
+- Spatie Translatable 6 (for multilingual content)
+- Tailwind CSS 4 (uses `@import` syntax, not `@tailwind` directives)
+- GSAP for animations
+- Splide for testimonial carousels
+- Pest 4 for testing (with browser testing capabilities)
+
+## Core Architecture
+
+### Translation System
+- **Framework:** Spatie Translatable with JSON column structure: `['de' => 'content', 'ar' => 'content']`
+- **Usage:** Direct property access - `$model->property` automatically returns the current locale's value
+- **Never:** Use `getTranslation()` manually unless dealing with specific locale overrides
+- **Locale Management:** LocaleMiddleware handles route-based locale (`/{locale}/`) and sets app locale
+- **Available Locales:** German (de) - primary, Arabic (ar) - secondary
+
+### Models & Data Structure
+
+**Setting Model** (app/Models/Setting.php):
+- Key-value configuration with translatable `value` field
+- Integrated with Media Library for profile photos
+- Static `get()` and `set()` methods for easy access
+- Media conversions: thumb (300x300), avatar (150x150), high_quality (1000x1000)
+- Example: `Setting::get('hero_title')` returns localized content automatically
+
+**Testimonial Model** (app/Models/Testimonial.php):
+- Translatable `content` field (client_name is not translatable)
+- Media collection: 'avatar' with conversions (thumb: 150x150, avatar: 80x80)
+- Scopes: `active()`, `ordered()`
+- Rating system (1-5 stars)
+
+**FAQ Model** (app/Models/Faq.php):
+- Translatable `question` and `answer` fields
+- Scopes: `active()`, `ordered()`
+
+**ConsultationRequest Model** (app/Models/ConsultationRequest.php):
+- Handles contact form submissions
+- JSON fields: `financial_topics`, `preferred_dates`
+- Scopes: `pending()`, `confirmed()`
+
+### Frontend Architecture
+
+**Layouts:**
+- `components.layouts.public` - Main public layout with header, footer, and navigation
+- `components.layouts.app` - Admin dashboard layout
+- `components.layouts.auth` - Authentication pages
+- `components.layouts.landing` - Standalone landing page layout
+- `components.layouts.legal` - Legal pages (Datenschutz, Impressum)
+
+**Component Organization:**
+- `resources/views/components/ui/` - Reusable UI components (heading, text, button, etc.)
+- `resources/views/components/header/` - Navigation and header components
+- `resources/views/components/footer/` - Footer components
+- `resources/views/components/testimonials/` - Testimonial carousel
+- `resources/views/components/faqs/` - FAQ accordion
+- `resources/views/components/form/` - Custom form inputs
+
+**Key Custom Components:**
+- `<x-section-wrapper>` - Standard page section container
+- `<x-ui.section-header>` - Section headers with overline/title/description
+- `<x-ui.benefit-card>` - Feature/benefit cards with icons
+- `<x-ui.contact-card>` - Contact information cards
+- `<x-testimonials.carousel>` - Splide-powered testimonial carousel
+- `<x-faqs.section>` - FAQ accordion section
+- `<x-floating-dock>` - Floating action buttons
+- `<x-language-switcher>` - Language toggle (de/ar)
+
+### Livewire Components
+
+**ConsultationBooking** (app/Livewire/ConsultationBooking.php):
+- Multi-step consultation booking form (4 steps)
+- Per-step validation
+- Creates ConsultationRequest records
+
+**HeroSection** (app/Livewire/HeroSection.php):
+- Dynamic hero section on homepage
+
+### Routing Structure
+
+All public routes use locale prefix `/{locale}/` where locale is `de|ar`:
+- `/{locale}/` - Homepage (view: homepage.blade.php)
+- `/{locale}/landing` - Alternative landing page
+- `/{locale}/datenschutz` - Privacy policy
+- `/{locale}/impressum` - Imprint
+
+Root `/` redirects to `/de` by default.
+
+Admin routes (auth required):
+- `/dashboard` - Main admin dashboard
+- `/settings/profile` - Profile settings
+- `/settings/password` - Password change
+- `/settings/appearance` - Appearance settings
+
+### Custom Blade Directives & Patterns
+
+**RTL Support:**
+- Use `.rtl` class for Arabic text (automatically applied by middleware)
+- Logical properties: `.ms-auto`, `.me-auto`, `.ps-4`, `.pe-4`
+- Custom fonts: Arabic text uses 'Noto Sans Arabic', German uses 'Lexend'/'Public Sans'
+
+**Animation Classes:**
+- `.animate-fade-in`, `.animate-slide-up`, `.animate-slide-left`, `.animate-slide-right`
+- Progressive enhancement: visible by default, GSAP hides with `.gsap-ready` class
+- Respects `prefers-reduced-motion`
+
+**Custom Tailwind Theme:**
+- Brand colors: `science-blue-*` (primary), `golden-amber-*` (accent)
+- Custom font families: `font-heading`, `font-body` (RTL-aware)
+
+## Development Commands
+
+### Running the Application
+```bash
+# Start all services (Laravel server, queue worker, Vite)
+composer run dev
+
+# Or manually:
+php artisan serve
+npm run dev
+php artisan queue:listen --tries=1
+```
+
+### Testing
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test file
+php artisan test tests/Feature/ExampleTest.php
+
+# Run tests matching a filter
+php artisan test --filter=testName
+
+# Browser tests (Pest 4)
+php artisan test tests/Browser/
+```
+
+### Code Quality
+```bash
+# Format code (run before committing)
+vendor/bin/pint --dirty
+
+# Or format all files
+vendor/bin/pint
+```
+
+### Database
+```bash
+# Run migrations
+php artisan migrate
+
+# Seed database with real DVAG data
+php artisan db:seed
+
+# Fresh migration with seeding
+php artisan migrate:fresh --seed
+```
+
+### Building Assets
+```bash
+# Development build with watch
+npm run dev
+
+# Production build
+npm run build
+```
+
+### Artisan Commands
+```bash
+# Create Livewire component
+php artisan make:livewire ComponentName
+
+# Create Volt component (preferred for this project)
+php artisan make:volt component-name
+
+# Create model with migration, factory, seeder
+php artisan make:model ModelName -mfs
+
+# Create test
+php artisan make:test FeatureTest --pest
+php artisan make:test UnitTest --pest --unit
+```
+
+## Project-Specific Guidelines
+
+### Content Loading Pattern
+**Always** prepare data in Livewire mount/computed properties or Blade component attributes, not in blade templates:
+
+```php
+// ✅ Good - In Livewire component
+public function mount(): void
+{
+    $this->heroTitle = Setting::get('hero_title');
+    $this->testimonials = Testimonial::active()->ordered()->get();
+}
+
+// ❌ Bad - In Blade template
+@php
+    $heroTitle = Setting::where('key', 'hero_title')->first()?->value;
+@endphp
+```
+
+### Blade Component Attributes
+**Never** use Blade directives inside component attributes due to parsing issues:
+
+```blade
+{{-- ❌ Bad --}}
+<x-ui.button :disabled="@if($condition) 'true' @endif">
+
+{{-- ✅ Good - Prepare data beforehand --}}
+@php
+    $isDisabled = $condition ? true : false;
+@endphp
+<x-ui.button :disabled="$isDisabled">
+
+{{-- ✅ Good - Use ternary in attribute --}}
+<x-ui.button :disabled="$condition ? true : false">
+```
+
+### Translation Access Pattern
+```php
+// ✅ Direct access (Spatie handles locale automatically)
+$setting->value  // Returns German if locale is 'de'
+$testimonial->content
+$faq->question
+
+// ❌ Don't do this unless you need a specific locale
+$setting->getTranslation('value', 'de')
+```
+
+### Media Library Usage
+```php
+// Attach media
+$setting->addMedia($request->file('photo'))
+    ->toMediaCollection('profile_photo');
+
+// Retrieve media URLs
+$setting->getFirstMediaUrl('profile_photo'); // Original
+$setting->getFirstMediaUrl('profile_photo', 'thumb'); // Conversion
+$setting->getFirstMediaUrl('profile_photo', 'avatar'); // Conversion
+```
+
+### Flux UI Component Usage
+This project uses **Flux Free Edition**. Available components: avatar, badge, brand, breadcrumbs, button, callout, checkbox, dropdown, field, heading, icon, input, modal, navbar, profile, radio, select, separator, switch, text, textarea, tooltip.
+
+```blade
+<flux:button variant="primary">Save</flux:button>
+<flux:input wire:model="name" label="Name" />
+<flux:field>
+    <flux:label>Email</flux:label>
+    <flux:input type="email" wire:model="email" />
+    <flux:error name="email" />
+</flux:field>
+```
+
+### Creating New Features Checklist
+1. **Models:** Use `php artisan make:model -mfs` to create model, migration, factory, seeder
+2. **Translatable Fields:** Add `use HasTranslations` and define `public array $translatable = ['field'];`
+3. **Media:** Implement `HasMedia`, define `registerMediaCollections()` and `registerMediaConversions()`
+4. **Livewire:** Use Volt class-based components for interactive features
+5. **Components:** Check existing components in `resources/views/components/` before creating new ones
+6. **Tests:** Write Pest tests for all new features
+7. **Seeding:** Create seeders with real, production-like data
+8. **Formatting:** Run `vendor/bin/pint --dirty` before committing
+
+## Testing Strategy
+
+- **Feature Tests:** Primary testing approach for application functionality
+- **Unit Tests:** For isolated logic and utilities
+- **Browser Tests:** Use Pest 4 browser testing for critical user flows (consultation form, navigation)
+- **Factory Usage:** Always use factories in tests, check for custom states before manual setup
+- **Assertions:** Use specific methods (`assertForbidden`, `assertNotFound`) over generic `assertStatus()`
+
+## Windows-Specific Notes
+
+- **Always** use `cmd //c` prefix for running PHP commands on Windows
+- Development server runs automatically via Laravel Herd, no need to restart
+- Asset building via Vite may require `npm run build` if changes aren't reflected
+
+## Important Architecture Decisions
+
+1. **No Complex Blade Logic:** Avoid nested if statements in templates; use Livewire component methods or ternary operators
+2. **Progressive Enhancement:** Animations use GSAP but content is visible by default
+3. **Accessibility First:** All interactive elements have proper ARIA attributes and keyboard navigation
+4. **Mobile-First Responsive:** Components adapt from mobile to desktop (not desktop-down)
+5. **Performance:** Media conversions reduce image sizes, Splide handles lazy loading
+6. **SEO-Ready:** Proper meta tags, semantic HTML, clean URLs with locale prefixes
+
+===
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
@@ -12,6 +314,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/framework (LARAVEL) - v12
 - laravel/prompts (PROMPTS) - v0
 - livewire/flux (FLUXUI_FREE) - v2
+- livewire/flux-pro (FLUXUI_PRO) - v2
 - livewire/livewire (LIVEWIRE) - v3
 - livewire/volt (VOLT) - v1
 - laravel/pint (PINT) - v1
@@ -204,11 +507,35 @@ avatar, badge, brand, breadcrumbs, button, callout, checkbox, dropdown, field, h
 </available-flux-components>
 
 
+=== fluxui-pro/core rules ===
+
+## Flux UI Pro
+
+- This project is using the Pro version of Flux UI. It has full access to the free components and variants, as well as full access to the Pro components and variants.
+- Flux UI is a component library for Livewire. Flux is a robust, hand-crafted, UI component library for your Livewire applications. It's built using Tailwind CSS and provides a set of components that are easy to use and customize.
+- You should use Flux UI components when available.
+- Fallback to standard Blade components if Flux is unavailable.
+- If available, use Laravel Boost's `search-docs` tool to get the exact documentation and code snippets available for this project.
+- Flux UI components look like this:
+
+<code-snippet name="Flux UI component usage example" lang="blade">
+    <flux:button variant="primary"/>
+</code-snippet>
+
+
+### Available Components
+This is correct as of Boost installation, but there may be additional components within the codebase.
+
+<available-flux-components>
+accordion, autocomplete, avatar, badge, brand, breadcrumbs, button, calendar, callout, card, chart, checkbox, command, context, date-picker, dropdown, editor, field, heading, icon, input, modal, navbar, pagination, popover, profile, radio, select, separator, switch, table, tabs, text, textarea, toast, tooltip
+</available-flux-components>
+
+
 === livewire/core rules ===
 
 ## Livewire Core
 - Use the `search-docs` tool to find exact version specific documentation for how to write Livewire & Livewire tests.
-- Use the `php artisan make:livewire [Posts\\CreatePost]` artisan command to create new components
+- Use the `php artisan make:livewire [Posts\CreatePost]` artisan command to create new components
 - State should live on the server, with the UI reflecting it.
 - All Livewire requests hit the Laravel backend, they're like regular HTTP requests. Always validate form data, and run authorization checks in Livewire actions.
 

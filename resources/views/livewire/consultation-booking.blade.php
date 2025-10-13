@@ -23,151 +23,125 @@
             {{-- Step 1: Contact & Financial Topics --}}
             @if($currentStep === 1)
                 <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">{{ __('Kontakt & Interessen') }}</h3>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-                    <x-form.input 
-                        label="{{ __('Vor- und Nachname') }}"
-                        placeholder="Max Mustermann"
-                        required="true"
-                        wireModel="name"
-                        :error="$errors->first('name')"
-                    />
 
-                    <x-form.input 
-                        type="email"
-                        label="{{ __('E-Mail-Adresse') }}"
-                        placeholder="max.mustermann@beispiel.de"
-                        required="true"
-                        wireModel="email"
-                        :error="$errors->first('email')"
-                    />
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+                    <flux:field>
+                        <flux:label>{{ __('Vorname') }} *</flux:label>
+                        <flux:input wire:model="first_name" placeholder="Max" />
+                        <flux:error name="first_name" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>{{ __('Nachname') }} *</flux:label>
+                        <flux:input wire:model="last_name" placeholder="Mustermann" />
+                        <flux:error name="last_name" />
+                    </flux:field>
                 </div>
 
-                <x-form.input 
-                    type="tel"
-                    label="{{ __('Telefonnummer') }}"
-                    placeholder="+49 123 456 7890"
-                    required="true"
-                    wireModel="phone"
-                    :error="$errors->first('phone')"
-                    class="mb-6"
-                />
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+                    <flux:field>
+                        <flux:label>{{ __('E-Mail-Adresse') }} *</flux:label>
+                        <flux:input type="email" wire:model="email" placeholder="max.mustermann@beispiel.de" />
+                        <flux:error name="email" />
+                    </flux:field>
 
-                <div class="mb-4 sm:mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
-                        {{ __('Welche Themen interessieren Sie?') }} *
-                    </label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 ltr:text-left rtl:text-right">
-                        @foreach(['Altersvorsorge', 'Geldanlage', 'Versicherungen', 'Immobilienfinanzierung', 'Steueroptimierung', 'Vermögensaufbau'] as $topic)
-                            <x-form.checkbox
-                                label="{{ __($topic) }}"
-                                value="{{ $topic }}"
-                                wireModel="financialTopics"
-                            />
+                    <flux:field>
+                        <flux:label>{{ __('Telefonnummer') }} *</flux:label>
+                        <flux:input type="tel" wire:model="phone" placeholder="+49 123 456 7890" />
+                        <flux:error name="phone" />
+                    </flux:field>
+                </div>
+
+                <flux:checkbox.group wire:model="financialTopics" label="{{ __('Welche Themen interessieren Sie?') }} *" class="mb-4 sm:mb-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                        @foreach(['Kennenlernentermin', 'Altersvorsorge', 'Geldanlage', 'Absicherung', 'Immobilienfinanzierung', 'Steueroptimierung', 'Vermögensaufbau', 'Sonstiges'] as $topic)
+                            <flux:checkbox value="{{ $topic }}" label="{{ __($topic) }}" />
                         @endforeach
                     </div>
-                    @error('financialTopics') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                </div>
+                </flux:checkbox.group>
+                <flux:error name="financialTopics" />
             @endif
 
             {{-- Step 2: Meeting Preferences --}}
             @if($currentStep === 2)
                 <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">{{ __('Beratungsart') }}</h3>
-                
-                <div class="mb-4 sm:mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-3">
-                        {{ __('Wie möchten Sie beraten werden?') }} *
-                    </label>
-                    <div class="space-y-3">
-                        @foreach(['Bei Ihnen zu Hause', 'In unserem Büro', 'Online per Video'] as $type)
-                            <label class="flex items-center">
-                                <input type="radio" wire:model="meetingType" value="{{ $type }}"
-                                       class="text-golden-amber-500 focus:ring-golden-amber-500 focus:ring-offset-0">
-                                <span class="ltr:ml-2 rtl:mr-2 text-sm text-gray-700">{{ __($type) }}</span>
-                            </label>
-                        @endforeach
-                    </div>
-                    @error('meetingType') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                </div>
+
+                <flux:radio.group wire:model="meetingType" label="{{ __('Wie möchten Sie beraten werden?') }} *" class="mb-4 sm:mb-6">
+                    @foreach(['Bei Ihnen zu Hause', 'In unserem Büro', 'Online per Video'] as $type)
+                        <flux:radio value="{{ $type }}" label="{{ __($type) }}" />
+                    @endforeach
+                </flux:radio.group>
+                <flux:error name="meetingType" />
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-                    <x-form.select
-                        label="{{ __('Bevorzugte Kontaktaufnahme') }}"
-                        wireModel="preferredContactMethod"
-                        :options="[
-                            'email' => __('E-Mail'),
-                            'phone' => __('Telefon'),
-                            'both' => __('Beides')
-                        ]"
-                    />
+                    <flux:field>
+                        <flux:label>{{ __('Bevorzugte Kontaktaufnahme') }}</flux:label>
+                        <flux:select wire:model="preferredContactMethod" variant="listbox">
+                            <flux:select.option value="email">{{ __('E-Mail') }}</flux:select.option>
+                            <flux:select.option value="phone">{{ __('Telefon') }}</flux:select.option>
+                            <flux:select.option value="both">{{ __('Beides') }}</flux:select.option>
+                        </flux:select>
+                    </flux:field>
 
-                    <x-form.select
-                        label="{{ __('Wann passt es Ihnen am besten?') }}"
-                        placeholder="Auswählen..."
-                        wireModel="timePreference"
-                        :options="[
-                            'morning' => __('Vormittags'),
-                            'afternoon' => __('Nachmittags'),
-                            'evening' => __('Abends')
-                        ]"
-                    />
+                    <flux:field>
+                        <flux:label>{{ __('Wann passt es Ihnen am besten?') }}</flux:label>
+                        <flux:select wire:model="timePreference" variant="listbox" placeholder="{{ __('Auswählen...') }}">
+                            <flux:select.option value="morning">{{ __('Vormittags') }}</flux:select.option>
+                            <flux:select.option value="afternoon">{{ __('Nachmittags') }}</flux:select.option>
+                            <flux:select.option value="evening">{{ __('Abends') }}</flux:select.option>
+                        </flux:select>
+                    </flux:field>
                 </div>
             @endif
 
             {{-- Step 3: Details & Goals --}}
             @if($currentStep === 3)
                 <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">{{ __('Details & Ziele') }}</h3>
-                
+
                 <div class="space-y-6">
-                    <x-form.textarea
-                        label="{{ __('Aktuelle finanzielle Situation') }}"
-                        placeholder="z.B. Angestellter mit 3000€ Netto, 50.000€ Erspartes, bestehende Lebensversicherung..."
-                        rows="4"
-                        wireModel="currentSituation"
-                    />
+                    <flux:field>
+                        <flux:label>{{ __('Aktuelle finanzielle Situation') }}</flux:label>
+                        <flux:textarea wire:model="currentSituation" rows="4" placeholder="z.B. Angestellter mit 3000€ Netto, 50.000€ Erspartes, bestehende Lebensversicherung..." />
+                    </flux:field>
 
-                    <x-form.textarea
-                        label="{{ __('Ihre konkreten Ziele und Wünsche') }}"
-                        placeholder="z.B. Eigenheim in 5 Jahren, 1000€ monatliche Rente ab 65, Absicherung der Familie..."
-                        rows="4"
-                        wireModel="specificGoals"
-                    />
+                    <flux:field>
+                        <flux:label>{{ __('Ihre konkreten Ziele und Wünsche') }}</flux:label>
+                        <flux:textarea wire:model="specificGoals" rows="4" placeholder="z.B. Eigenheim in 5 Jahren, 1000€ monatliche Rente ab 65, Absicherung der Familie..." />
+                    </flux:field>
 
-                    <x-form.textarea
-                        label="{{ __('Sonstige Anmerkungen') }}"
-                        placeholder="z.B. bevorzugte Termine, besondere Wünsche zur Beratung..."
-                        rows="3"
-                        wireModel="additionalNotes"
-                    />
+                    <flux:field>
+                        <flux:label>{{ __('Sonstige Anmerkungen') }}</flux:label>
+                        <flux:textarea wire:model="additionalNotes" rows="3" placeholder="z.B. bevorzugte Termine, besondere Wünsche zur Beratung..." />
+                    </flux:field>
                 </div>
             @endif
 
             {{-- Step 4: Review & Confirmation --}}
             @if($currentStep === 4)
                 <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">{{ __('Zusammenfassung Ihrer Angaben') }}</h3>
-                
+
                 <div class="bg-gray-50 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                         <div>
-                            <h4 class="font-semibold text-gray-900 mb-2">Kontaktdaten</h4>
-                            <p class="text-sm text-gray-600">{{ $name }}</p>
+                            <h4 class="font-semibold text-gray-900 mb-2">{{ __('Kontaktdaten') }}</h4>
+                            <p class="text-sm text-gray-600">{{ $first_name }} {{ $last_name }}</p>
                             <p class="text-sm text-gray-600">{{ $email }}</p>
                             <p class="text-sm text-gray-600">{{ $phone }}</p>
                         </div>
 
                         <div>
-                            <h4 class="font-semibold text-gray-900 mb-2">Beratungsart</h4>
+                            <h4 class="font-semibold text-gray-900 mb-2">{{ __('Beratungsart') }}</h4>
                             <p class="text-sm text-gray-600">{{ __($meetingType) }}</p>
-                            <p class="text-sm text-gray-600">Kontakt: {{ __($preferredContactMethod) }}</p>
+                            <p class="text-sm text-gray-600">{{ __('Kontakt') }}: {{ __($preferredContactMethod) }}</p>
                             @if($timePreference)
-                                <p class="text-sm text-gray-600">Zeit: {{ __($timePreference) }}</p>
+                                <p class="text-sm text-gray-600">{{ __('Zeit') }}: {{ __($timePreference) }}</p>
                             @endif
                         </div>
                     </div>
 
                     @if(count($financialTopics) > 0)
                         <div class="mt-4">
-                            <h4 class="font-semibold text-gray-900 mb-2">Interessensgebiete</h4>
+                            <h4 class="font-semibold text-gray-900 mb-2">{{ __('Interessensgebiete') }}</h4>
                             <div class="flex flex-wrap gap-2">
                                 @foreach($financialTopics as $topic)
                                     <span class="px-3 py-1 bg-golden-amber-500 text-white text-xs rounded-full">
@@ -180,11 +154,8 @@
                 </div>
 
                 <div class="mb-6">
-                    <x-form.checkbox
-                        label="{{ __('Ich stimme der Datenschutzerklärung zu') }} *"
-                        wireModel="agreeToTerms"
-                        :error="$errors->first('agreeToTerms')"
-                    />
+                    <flux:checkbox wire:model="agreeToTerms" label="{{ __('Ich stimme den Nutzungsbedingungen zu') }} *" />
+                    <flux:error name="agreeToTerms" />
                 </div>
             @endif
 

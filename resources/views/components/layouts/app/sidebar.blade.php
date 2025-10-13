@@ -15,6 +15,19 @@
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                 </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Content Management')" class="grid">
+                    <flux:navlist.item icon="chat-bubble-left-right" :href="route('admin.testimonials')" :current="request()->routeIs('admin.testimonials')" wire:navigate>{{ __('Testimonials') }}</flux:navlist.item>
+                    <flux:navlist.item icon="question-mark-circle" :href="route('admin.faqs')" :current="request()->routeIs('admin.faqs')" wire:navigate>{{ __('FAQs') }}</flux:navlist.item>
+                </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Requests')" class="grid">
+                    <flux:navlist.item icon="calendar-days" :href="route('admin.consultation-requests')" :current="request()->routeIs('admin.consultation-requests')" wire:navigate>{{ __('Consultation Requests') }}</flux:navlist.item>
+                </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Website')" class="grid">
+                    <flux:navlist.item icon="cog" :href="route('admin.settings')" :current="request()->routeIs('admin.settings')" wire:navigate>{{ __('Website Settings') }}</flux:navlist.item>
+                </flux:navlist.group>
             </flux:navlist>
 
             <flux:spacer />
@@ -126,6 +139,8 @@
         </flux:header>
 
         {{ $slot }}
+
+        <flux:toast />
 
         @fluxScripts
     </body>

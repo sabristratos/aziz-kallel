@@ -20,23 +20,27 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'de|ar']], functio
         return view('landing');
     })->name('landing');
 
-    // Legal pages
-    Route::get('/datenschutz', function () {
-        return view('legal.datenschutz');
-    })->name('privacy');
+    Route::get('/bewertung', \App\Livewire\SubmitReview::class)->name('review.submit');
 
+    // Legal pages
     Route::get('/impressum', function () {
         return view('legal.impressum');
     })->name('imprint');
 });
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', \App\Livewire\Dashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+    // Admin routes
+    Route::get('admin/settings', \App\Livewire\Admin\Settings\Index::class)->name('admin.settings');
+    Route::get('admin/testimonials', \App\Livewire\Admin\Testimonials\Index::class)->name('admin.testimonials');
+    Route::get('admin/faqs', \App\Livewire\Admin\Faqs\Index::class)->name('admin.faqs');
+    Route::get('admin/consultation-requests', \App\Livewire\Admin\ConsultationRequests\Index::class)->name('admin.consultation-requests');
 
+    // User settings routes
+    Route::redirect('settings', 'settings/profile');
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');

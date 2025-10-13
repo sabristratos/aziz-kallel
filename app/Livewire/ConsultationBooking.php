@@ -8,22 +8,32 @@ use Livewire\Component;
 class ConsultationBooking extends Component
 {
     public $currentStep = 1;
+
     public $totalSteps = 4;
 
     // Step 1: Contact & Financial Topics
-    public $name = '';
+    public $first_name = '';
+
+    public $last_name = '';
+
     public $email = '';
+
     public $phone = '';
+
     public $financialTopics = [];
 
     // Step 2: Meeting Preferences
     public $meetingType = '';
+
     public $preferredContactMethod = 'email';
+
     public $timePreference = '';
 
     // Step 3: Details & Goals
     public $currentSituation = '';
+
     public $specificGoals = '';
+
     public $additionalNotes = '';
 
     // Step 4: Terms
@@ -33,7 +43,8 @@ class ConsultationBooking extends Component
     public $submitted = false;
 
     protected $rules = [
-        'name' => 'required|min:2',
+        'first_name' => 'required|min:2',
+        'last_name' => 'required|min:2',
         'email' => 'required|email',
         'phone' => 'required|min:10',
         'financialTopics' => 'required|array|min:1',
@@ -41,20 +52,24 @@ class ConsultationBooking extends Component
         'agreeToTerms' => 'accepted',
     ];
 
-    protected $messages = [
-        'name.required' => 'Das Feld Vor- und Nachname ist erforderlich.',
-        'email.required' => 'Das Feld E-Mail-Adresse ist erforderlich.',
-        'email.email' => 'Das Feld E-Mail-Adresse muss eine gültige E-Mail-Adresse sein.',
-        'phone.required' => 'Das Feld Telefonnummer ist erforderlich.',
-        'financialTopics.required' => 'Bitte wählen Sie mindestens ein Thema aus.',
-        'meetingType.required' => 'Bitte wählen Sie eine Beratungsart aus.',
-        'agreeToTerms.accepted' => 'Bitte stimmen Sie der Datenschutzerklärung zu.',
-    ];
+    protected function messages()
+    {
+        return [
+            'first_name.required' => __('Das Feld Vorname ist erforderlich.'),
+            'last_name.required' => __('Das Feld Nachname ist erforderlich.'),
+            'email.required' => __('Das Feld E-Mail-Adresse ist erforderlich.'),
+            'email.email' => __('Das Feld E-Mail-Adresse muss eine gültige E-Mail-Adresse sein.'),
+            'phone.required' => __('Das Feld Telefonnummer ist erforderlich.'),
+            'financialTopics.required' => __('Bitte wählen Sie mindestens ein Thema aus.'),
+            'meetingType.required' => __('Bitte wählen Sie eine Beratungsart aus.'),
+            'agreeToTerms.accepted' => __('Bitte stimmen Sie den Nutzungsbedingungen zu.'),
+        ];
+    }
 
     public function nextStep()
     {
         $this->validateCurrentStep();
-        
+
         if ($this->currentStep < $this->totalSteps) {
             $this->currentStep++;
         }
@@ -77,11 +92,12 @@ class ConsultationBooking extends Component
     private function validateCurrentStep()
     {
         $rules = [];
-        
+
         switch ($this->currentStep) {
             case 1:
                 $rules = [
-                    'name' => 'required|min:2',
+                    'first_name' => 'required|min:2',
+                    'last_name' => 'required|min:2',
                     'email' => 'required|email',
                     'phone' => 'required|min:10',
                     'financialTopics' => 'required|array|min:1',
@@ -102,7 +118,7 @@ class ConsultationBooking extends Component
                 break;
         }
 
-        if (!empty($rules)) {
+        if (! empty($rules)) {
             $this->validate($rules);
         }
     }
@@ -112,7 +128,8 @@ class ConsultationBooking extends Component
         $this->validate();
 
         ConsultationRequest::create([
-            'name' => $this->name,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'email' => $this->email,
             'phone' => $this->phone,
             'preferred_contact_method' => $this->preferredContactMethod,
@@ -126,7 +143,7 @@ class ConsultationBooking extends Component
         ]);
 
         $this->submitted = true;
-        $this->reset(['currentStep', 'name', 'email', 'phone', 'financialTopics', 'meetingType', 'preferredContactMethod', 'timePreference', 'currentSituation', 'specificGoals', 'additionalNotes', 'agreeToTerms']);
+        $this->reset(['currentStep', 'first_name', 'last_name', 'email', 'phone', 'financialTopics', 'meetingType', 'preferredContactMethod', 'timePreference', 'currentSituation', 'specificGoals', 'additionalNotes', 'agreeToTerms']);
     }
 
     public function render()

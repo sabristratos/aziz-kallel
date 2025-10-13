@@ -115,6 +115,41 @@
         line-height: 1.75;
     }
 
+    /* Arabic text scaling for better readability */
+    .rtl .text-xs {
+        font-size: 0.85rem; /* slightly larger than default 0.75rem */
+    }
+
+    .rtl .text-sm {
+        font-size: 0.975rem; /* larger than default 0.875rem */
+    }
+
+    .rtl .text-base {
+        font-size: 1.125rem; /* larger than default 1rem */
+    }
+
+    .rtl .text-lg {
+        font-size: 1.3rem; /* larger than default 1.125rem */
+    }
+
+    .rtl .text-xl {
+        font-size: 1.45rem; /* larger than default 1.25rem */
+    }
+
+    .rtl .text-2xl {
+        font-size: 1.75rem; /* larger than default 1.5rem */
+    }
+
+    .rtl .text-3xl {
+        font-size: 2.125rem; /* larger than default 1.875rem */
+    }
+
+    /* Global base font size increase for Arabic */
+    .rtl body,
+    .rtl {
+        font-size: 1.075em; /* 7.5% larger base for all text */
+    }
+
     /* RTL-aware margin and padding utilities */
     .ms-auto {
         margin-inline-start: auto;

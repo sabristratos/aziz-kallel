@@ -4,15 +4,14 @@ use App\Models\Setting;
 // Get footer information from settings
 $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? 'Abdelaziz Kallel';
 $contactPhone = Setting::where('key', 'contact_phone')->first()?->value;
-$contactEmail = Setting::where('key', 'contact_email')->first()?->value ?? 'info@abdelaziz-kallel.de';
-$consultantAddress = Setting::where('key', 'consultant_address')->first()?->value;
-$consultantCity = Setting::where('key', 'consultant_city')->first()?->value;
-$consultantPostalCode = Setting::where('key', 'consultant_postal_code')->first()?->value;
+$contactEmail = Setting::where('key', 'contact_email')->first()?->value;
+$contactAddressStreet = Setting::where('key', 'contact_address_street')->first()?->value;
+$contactAddressCity = Setting::where('key', 'contact_address_city')->first()?->value;
 $consultantExperience = Setting::where('key', 'consultant_experience')->first()?->value;
 
-// Get profile photo for branding
+// Get profile photo for branding with fallback
 $profilePhotoSetting = Setting::where('key', 'consultant_profile_photo')->first();
-$profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb');
+$profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb') ?: asset('abdelaziz-kallel-2.png');
 @endphp
 
 <x-section-wrapper class="bg-slate-100 rounded-3xl mt-16 animate-fade-in">
@@ -80,18 +79,20 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb'
                         </a>
                     @endif
                     
-                    <a href="mailto:{{ $contactEmail }}" 
-                       class="flex items-center space-x-3 text-slate-600 hover:text-golden-amber-600 transition-colors duration-200 text-sm">
-                        <x-heroicon-o-envelope class="w-4 h-4 flex-shrink-0" />
-                        <span>{{ $contactEmail }}</span>
-                    </a>
-                    
-                    @if($consultantAddress && $consultantCity && $consultantPostalCode)
+                    @if($contactEmail)
+                        <a href="mailto:{{ $contactEmail }}"
+                           class="flex items-center space-x-3 text-slate-600 hover:text-golden-amber-600 transition-colors duration-200 text-sm">
+                            <x-heroicon-o-envelope class="w-4 h-4 flex-shrink-0" />
+                            <span>{{ $contactEmail }}</span>
+                        </a>
+                    @endif
+
+                    @if($contactAddressStreet && $contactAddressCity)
                         <div class="flex items-start space-x-3 text-slate-600 text-sm">
                             <x-heroicon-o-map-pin class="w-4 h-4 flex-shrink-0 mt-0.5" />
                             <div>
-                                <div>{{ $consultantAddress }}</div>
-                                <div>{{ $consultantPostalCode }} {{ $consultantCity }}</div>
+                                <div>{{ $contactAddressStreet }}</div>
+                                <div>{{ $contactAddressCity }}</div>
                             </div>
                         </div>
                     @endif
@@ -118,13 +119,10 @@ $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'thumb'
 
                 <!-- Legal Links -->
                 <div class="mt-6 space-y-2">
-                    <a href="/datenschutz" class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
-                        {{ __('Datenschutz') }}
-                    </a>
                     <a href="/impressum" class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
                         {{ __('Impressum') }}
                     </a>
-                    <button onclick="window.dispatchEvent(new CustomEvent('edit-cookies'))" 
+                    <button onclick="window.dispatchEvent(new CustomEvent('edit-cookies'))"
                             class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
                         {{ __('Cookies bearbeiten') }}
                     </button>

@@ -15,9 +15,10 @@ class HeroSection extends Component
         $consultantName = Setting::where('key', 'consultant_name')->first()?->value;
         $consultantRating = Setting::where('key', 'consultant_rating')->first()?->value;
 
-        // Get profile photo
-        $profilePhotoSetting = Setting::where('key', 'consultant_profile_photo')->first();
-        $profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'high_quality');
+        // Get hero image with fallback to original image
+        $heroImageSetting = Setting::where('key', 'hero_section_image')->first();
+
+        $profilePhoto = $heroImageSetting?->getFirstMediaUrl('hero_section_image', 'high_quality') ?: asset('abdelaziz-kallel-2.png');
 
         return view('livewire.hero-section', [
             'heroTitle' => $heroTitle,

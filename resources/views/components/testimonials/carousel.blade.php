@@ -37,7 +37,7 @@ $testimonials = Testimonial::where('is_active', true)
                                 <!-- Testimonial Content -->
                                 <blockquote class="mb-3 sm:mb-4">
                                     <x-ui.text size="small" color="secondary" as="span" class="text-xs sm:text-sm">
-                                        {{ is_array($testimonial->content) ? $testimonial->content['de'] ?? $testimonial->content : $testimonial->content }}
+                                        {{ $testimonial->content }}
                                     </x-ui.text>
                                 </blockquote>
 
