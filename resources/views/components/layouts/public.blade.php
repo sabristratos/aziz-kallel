@@ -48,7 +48,6 @@ $direction = $isRtl ? 'rtl' : 'ltr';
         <!-- Styles & Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        @fluxAppearance
     </head>
     <body class="min-h-screen max-w-7xl mx-auto px-2 pt-6 lg:px-8 lg:pt-8 bg-slate-50 text-slate-900 antialiased">
         <!-- Header and Hero with Gradient -->

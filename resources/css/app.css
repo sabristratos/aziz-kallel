@@ -2,9 +2,12 @@
 
 @import 'tailwindcss';
 
+
 @import '../../vendor/livewire/flux/dist/flux.css';
 @import '@splidejs/splide/css';
 @import './fonts.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @plugin "@tailwindcss/typography";
 
@@ -13,7 +16,7 @@
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
-@custom-variant dark (&:where(.dark, .dark *));
+
 
 @theme {
     /* Science Blue Brand Colors */
