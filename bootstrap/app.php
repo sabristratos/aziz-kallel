@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\LocaleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,9 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web([
-            \App\Http\Middleware\LocaleMiddleware::class,
+            LocaleMiddleware::class,
         ]);
         $middleware->trustProxies('*');
+        $middleware->validateCsrfTokens(except: [
+            'livewire/*',  // Fix 419 errors for Livewire behind Cloudflare proxy
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
