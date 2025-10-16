@@ -27,7 +27,10 @@
       "mcp__playwright__browser_console_messages",
       "mcp__laravel-boost__database-schema",
       "mcp__laravel-boost__list-routes",
-      "mcp__laravel-boost__get-config"
+      "mcp__laravel-boost__get-config",
+      "Bash(powershell -Command \"php artisan db:query \"\"SELECT key, value FROM settings WHERE key IN (''contact_phone'', ''contact_mobile'', ''contact_email'') ORDER BY key\"\"\")",
+      "Bash(powershell -Command \"php artisan db:seed --class=SettingsSeeder\")",
+      "Bash(powershell -Command:*)"
     ],
     "deny": [],
     "ask": []

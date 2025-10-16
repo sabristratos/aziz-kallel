@@ -73,17 +73,26 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'contact_phone',
-                'value' => ['de' => '+49 6187 9023048'],
+                'value' => [
+                    'de' => '+49 6187 9023048',
+                    'ar' => '+49 6187 9023048',
+                ],
                 'type' => 'string',
             ],
             [
                 'key' => 'contact_mobile',
-                'value' => ['de' => '+49 171 7421462'],
+                'value' => [
+                    'de' => '+49 171 7421462',
+                    'ar' => '+49 171 7421462',
+                ],
                 'type' => 'string',
             ],
             [
                 'key' => 'contact_email',
-                'value' => ['de' => 'Abdelaziz.Kallel@dvag.de'],
+                'value' => [
+                    'de' => 'Abdelaziz.Kallel@dvag.de',
+                    'ar' => 'Abdelaziz.Kallel@dvag.de',
+                ],
                 'type' => 'string',
             ],
 

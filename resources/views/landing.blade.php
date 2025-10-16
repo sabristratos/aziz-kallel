@@ -22,40 +22,13 @@
             </div>
 
             <!-- Headline Section -->
-            <div class="text-center mb-8 sm:mb-10">
+            <div class="text-center">
                 <x-ui.heading level="1" color="white" class="mb-4 animate-slide-up">
                     {{ $landingHeadline }}
                 </x-ui.heading>
                 <x-ui.text size="lead" color="white" class="max-w-2xl mx-auto animate-slide-up">
                     {{ $landingLede }}
                 </x-ui.text>
-            </div>
-
-            <!-- Trust Indicators -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 animate-stagger">
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-3">
-                        <x-heroicon-o-shield-check class="w-6 h-6 text-white" />
-                    </div>
-                    <x-ui.text color="white" class="font-medium mb-1">{{ __('Zertifiziert') }}</x-ui.text>
-                    <x-ui.text size="small" color="white" class="opacity-90">{{ $consultantCredentials }}</x-ui.text>
-                </div>
-
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-3">
-                        <x-heroicon-o-clock class="w-6 h-6 text-white" />
-                    </div>
-                    <x-ui.text color="white" class="font-medium mb-1">{{ __('Erfahren') }}</x-ui.text>
-                    <x-ui.text size="small" color="white" class="opacity-90">{{ $consultantExperience }}</x-ui.text>
-                </div>
-
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-3">
-                        <x-heroicon-o-heart class="w-6 h-6 text-white" />
-                    </div>
-                    <x-ui.text color="white" class="font-medium mb-1">{{ __('Persönlich') }}</x-ui.text>
-                    <x-ui.text size="small" color="white" class="opacity-90">{{ __('Individuelle Beratung') }}</x-ui.text>
-                </div>
             </div>
         </div>
     </div>
@@ -65,6 +38,35 @@
         <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
             <div class="max-w-2xl mx-auto">
                 @livewire('consultation-booking')
+            </div>
+        </div>
+    </div>
+
+    <!-- Trust Indicators -->
+    <div class="max-w-4xl mx-auto px-4 pb-12 sm:pb-16">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            <div class="flex flex-col items-center text-center">
+                <div class="w-14 h-14 bg-science-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <x-heroicon-o-shield-check class="w-7 h-7 text-science-blue-600" />
+                </div>
+                <x-ui.text class="font-semibold mb-1 text-gray-900">{{ __('Zertifiziert') }}</x-ui.text>
+                <x-ui.text size="small" class="text-gray-600">{{ $consultantCredentials }}</x-ui.text>
+            </div>
+
+            <div class="flex flex-col items-center text-center">
+                <div class="w-14 h-14 bg-science-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <x-heroicon-o-clock class="w-7 h-7 text-science-blue-600" />
+                </div>
+                <x-ui.text class="font-semibold mb-1 text-gray-900">{{ __('Erfahren') }}</x-ui.text>
+                <x-ui.text size="small" class="text-gray-600">{{ $consultantExperience }}</x-ui.text>
+            </div>
+
+            <div class="flex flex-col items-center text-center">
+                <div class="w-14 h-14 bg-science-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <x-heroicon-o-heart class="w-7 h-7 text-science-blue-600" />
+                </div>
+                <x-ui.text class="font-semibold mb-1 text-gray-900">{{ __('Persönlich') }}</x-ui.text>
+                <x-ui.text size="small" class="text-gray-600">{{ __('Individuelle Beratung') }}</x-ui.text>
             </div>
         </div>
     </div>

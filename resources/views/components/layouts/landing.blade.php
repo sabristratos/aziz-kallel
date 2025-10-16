@@ -8,10 +8,13 @@ $metaTitle = $title ?? Setting::where('key', 'landing_meta_title')->first()?->va
 $metaDescription = $description ?? Setting::where('key', 'landing_meta_description')->first()?->value ?? Setting::where('key', 'meta_description')->first()?->value ?? 'Professional financial consulting services';
 $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? 'Financial Consultant';
 
-// Get profile photo for favicon and header
+// Get profile photo for favicon
 $profilePhotoSetting = Setting::where('key', 'consultant_profile_photo')->first();
 $faviconUrl = $profilePhotoSetting?->getFirstMediaUrl('profile_photo') ?? '/favicon.ico';
-$profilePhoto = $profilePhotoSetting?->getFirstMediaUrl('profile_photo', 'high_quality');
+
+// Get logo for header
+$logoSetting = Setting::where('key', 'site_logo')->first();
+$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
 
 // RTL support
 $currentLocale = app()->getLocale();
@@ -46,24 +49,23 @@ $direction = $isRtl ? 'rtl' : 'ltr';
         <!-- Styles & Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        @fluxAppearance
     </head>
     <body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
         <!-- Minimal Header -->
         <header class="bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-center items-center py-6">
-                    @if($profilePhoto)
-                        <div class="flex items-center {{ $isRtl ? 'space-x-reverse space-x-6' : 'space-x-6' }}">
-                            <img src="{{ $profilePhoto }}"
-                                 alt="{{ $consultantName }}"
-                                 class="w-16 h-16 sm:w-18 sm:h-18 rounded-full object-cover shadow-md border-2 border-white" />
-                            <div class="{{ $isRtl ? 'text-right' : 'text-center sm:text-left' }}">
-                                <h1 class="font-semibold text-gray-900 text-base sm:text-lg">{{ $consultantName }}</h1>
-                                <p class="text-sm sm:text-base text-gray-600">{{ __('Deutsche Vermögensberatung') }}</p>
-                            </div>
+                    <div class="flex items-center {{ $isRtl ? 'space-x-reverse gap-6' : 'gap-6' }}">
+                        <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                            <img src="{{ $logoUrl }}"
+                                 alt="{{ $consultantName }} Logo"
+                                 class="w-full h-full object-contain" />
                         </div>
-                    @endif
+                        <div class="{{ $isRtl ? 'text-right' : 'text-center sm:text-left' }}">
+                            <h1 class="font-semibold text-gray-900 text-base sm:text-lg">{{ $consultantName }}</h1>
+                            <p class="text-sm sm:text-base text-gray-600">{{ __('Deutsche Vermögensberatung') }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
