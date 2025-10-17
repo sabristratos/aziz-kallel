@@ -26,7 +26,7 @@ class Login extends Component
     /**
      * Handle an incoming authentication request.
      */
-    public function login(): void
+    public function login()
     {
         \Log::info('Login attempt started', ['email' => $this->email, 'remember' => $this->remember]);
 
@@ -59,8 +59,9 @@ class Login extends Component
             'user_id' => Auth::id(),
         ]);
 
-        $this->redirectIntended(default: route('dashboard'));
-        \Log::info('Redirect called to dashboard');
+        \Log::info('Returning HTTP redirect to dashboard');
+
+        return redirect()->intended('dashboard');
     }
 
     /**
