@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             TestimonialsSeeder::class,
             FaqSeeder::class,
             ProfilePhotoSeeder::class,
+            LogoSeeder::class,
         ]);
     }
 }

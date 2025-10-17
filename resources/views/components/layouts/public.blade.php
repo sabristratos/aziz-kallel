@@ -10,9 +10,9 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
 $contactPhone = Setting::where('key', 'contact_phone')->first()?->value ?? '';
 $contactEmail = Setting::where('key', 'contact_email')->first()?->value ?? '';
 
-// Get profile photo for favicon
-$profilePhotoSetting = Setting::where('key', 'consultant_profile_photo')->first();
-$faviconUrl = $profilePhotoSetting?->getFirstMediaUrl('profile_photo') ?? '/favicon.ico';
+// Get logo for favicon
+$logoSetting = Setting::where('key', 'site_logo')->first();
+$faviconUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'favicon') ?? '/favicon.ico';
 
 // RTL support
 $currentLocale = app()->getLocale();

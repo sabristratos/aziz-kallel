@@ -91,6 +91,12 @@ class Setting extends Model implements HasMedia
             ->format('png');
 
         // Logo conversions
+        $this->addMediaConversion('favicon')
+            ->width(32)
+            ->height(32)
+            ->sharpen(10)
+            ->format('png');
+
         $this->addMediaConversion('logo-sm')
             ->width(80)
             ->height(80)

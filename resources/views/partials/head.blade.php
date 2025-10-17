@@ -3,9 +3,15 @@
 
 <title>{{ $title ?? config('app.name') }}</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+@php
+use App\Models\Setting;
+
+$logoSetting = Setting::where('key', 'site_logo')->first();
+$faviconUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'favicon') ?? '/favicon.ico';
+@endphp
+
+<link rel="icon" href="{{ $faviconUrl }}" sizes="any">
+<link rel="apple-touch-icon" href="{{ $faviconUrl }}">
 
 <link rel="preconnect" href="https://fonts.bunny.net">
 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />

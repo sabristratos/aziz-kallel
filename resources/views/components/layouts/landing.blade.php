@@ -8,12 +8,9 @@ $metaTitle = $title ?? Setting::where('key', 'landing_meta_title')->first()?->va
 $metaDescription = $description ?? Setting::where('key', 'landing_meta_description')->first()?->value ?? Setting::where('key', 'meta_description')->first()?->value ?? 'Professional financial consulting services';
 $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? 'Financial Consultant';
 
-// Get profile photo for favicon
-$profilePhotoSetting = Setting::where('key', 'consultant_profile_photo')->first();
-$faviconUrl = $profilePhotoSetting?->getFirstMediaUrl('profile_photo') ?? '/favicon.ico';
-
-// Get logo for header
+// Get logo for favicon and header
 $logoSetting = Setting::where('key', 'site_logo')->first();
+$faviconUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'favicon') ?? '/favicon.ico';
 $logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
 
 // RTL support

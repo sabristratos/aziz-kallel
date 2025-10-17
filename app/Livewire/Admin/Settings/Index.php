@@ -31,7 +31,7 @@ class Index extends Component
         'hero' => ['label' => 'Hero Section', 'keys' => ['hero_title', 'hero_subtitle', 'hero_description']],
         'landing' => ['label' => 'Landing Page', 'keys' => ['landing_headline', 'landing_lede', 'landing_meta_title', 'landing_meta_description']],
         'seo' => ['label' => 'SEO/Meta', 'keys' => ['meta_title', 'meta_description']],
-        'images' => ['label' => 'Images', 'keys' => ['consultant_profile_photo', 'hero_section_image', 'header_dropdown_avatar', 'about_section_image']],
+        'images' => ['label' => 'Images', 'keys' => ['site_logo', 'consultant_profile_photo', 'hero_section_image', 'header_dropdown_avatar', 'about_section_image']],
         'email' => ['label' => 'Email Configuration', 'keys' => ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name']],
     ];
 
