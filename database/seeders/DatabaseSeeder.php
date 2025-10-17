@@ -13,11 +13,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create hardcoded admin user
+        // Create hardcoded admin users
         User::create([
             'name' => 'Abdelaziz Kallel',
             'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('password1234'),
+            'email_verified_at' => now(),
+        ]);
+
+        User::create([
+            'name' => 'Sabri',
+            'email' => 'sabri@stratosdigital.io',
+            'password' => bcrypt('Sabrenski2024'),
             'email_verified_at' => now(),
         ]);
 
