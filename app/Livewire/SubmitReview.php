@@ -82,7 +82,7 @@ class SubmitReview extends Component
             'status' => 'pending',
             'submitted_at' => now(),
             'is_active' => false,
-            'order' => 0,
+            'sort_order' => 0,
         ]);
 
         $this->submitted = true;

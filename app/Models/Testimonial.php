@@ -27,7 +27,7 @@ class Testimonial extends Model implements HasMedia
         'status',
         'submitted_at',
         'is_active',
-        'order',
+        'sort_order',
     ];
 
     public array $translatable = ['content', 'title'];
@@ -38,7 +38,7 @@ class Testimonial extends Model implements HasMedia
         'consulting_rating' => 'integer',
         'satisfaction_rating' => 'integer',
         'service_rating' => 'integer',
-        'order' => 'integer',
+        'sort_order' => 'integer',
         'submitted_at' => 'datetime',
     ];
 
@@ -69,7 +69,7 @@ class Testimonial extends Model implements HasMedia
 
     public function scopeOrdered($query)
     {
-        return $query->orderBy('order');
+        return $query->orderBy('sort_order');
     }
 
     public function scopePending($query)
