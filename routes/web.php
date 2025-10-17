@@ -28,6 +28,19 @@ Route::group(['prefix' => '{locale}', 'where' => ['locale' => 'de|ar']], functio
     })->name('imprint');
 });
 
+Route::get('/debug-auth', function () {
+    return response()->json([
+        'authenticated' => auth()->check(),
+        'user_id' => auth()->id(),
+        'user_email' => auth()->user()?->email,
+        'session_id' => session()->getId(),
+        'session_driver' => config('session.driver'),
+        'session_data' => session()->all(),
+        'cookies' => request()->cookies->all(),
+        'has_session_cookie' => request()->hasCookie(config('session.cookie')),
+    ]);
+})->name('debug.auth');
+
 Route::get('dashboard', \App\Livewire\Dashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

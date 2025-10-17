@@ -39,9 +39,35 @@
         <flux:checkbox wire:model="remember" :label="__('Remember me')" />
 
         <div class="flex items-center justify-end">
-            <flux:button wire:click="login" variant="primary" class="w-full">{{ __('Log in') }}</flux:button>
+            <flux:button
+                wire:click="login"
+                variant="primary"
+                class="w-full"
+                x-on:click="console.log('Login button clicked', { email: $wire.email, remember: $wire.remember })"
+            >
+                <span wire:loading.remove>{{ __('Log in') }}</span>
+                <span wire:loading>{{ __('Logging in...') }}</span>
+            </flux:button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            console.log('Livewire initialized on login page');
+
+            Livewire.on('redirect', (url) => {
+                console.log('Livewire redirect event:', url);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Login page loaded', {
+                cookies: document.cookie,
+                sessionStorage: Object.keys(sessionStorage),
+                localStorage: Object.keys(localStorage)
+            });
+        });
+    </script>
 
     @if (Route::has('register'))
         <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">

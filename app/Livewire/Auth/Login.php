@@ -28,11 +28,16 @@ class Login extends Component
      */
     public function login(): void
     {
+        \Log::info('Login attempt started', ['email' => $this->email, 'remember' => $this->remember]);
+
         $this->validate();
+        \Log::info('Validation passed');
 
         $this->ensureIsNotRateLimited();
+        \Log::info('Rate limit check passed');
 
         if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+            \Log::warning('Auth attempt failed', ['email' => $this->email]);
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -40,10 +45,22 @@ class Login extends Component
             ]);
         }
 
+        \Log::info('Auth attempt succeeded', [
+            'user_id' => Auth::id(),
+            'session_id_before' => session()->getId(),
+        ]);
+
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
+        \Log::info('Session regenerated', [
+            'session_id_after' => session()->getId(),
+            'auth_check' => Auth::check(),
+            'user_id' => Auth::id(),
+        ]);
+
         $this->redirectIntended(default: route('dashboard'));
+        \Log::info('Redirect called to dashboard');
     }
 
     /**
