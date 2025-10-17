@@ -16,9 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             LocaleMiddleware::class,
         ]);
         $middleware->trustProxies('*');
-        $middleware->validateCsrfTokens(except: [
-            'livewire/*',  // Fix 419 errors for Livewire behind Cloudflare proxy
-        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
