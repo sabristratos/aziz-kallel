@@ -11,7 +11,6 @@ cmds = [
     "chmod -R 775 /app/storage /app/bootstrap/cache",
     "chown -R www-data:www-data /app/storage /app/bootstrap/cache",
     "npm run build",
-    "php artisan migrate --force",
     "sudo chown -R www-data:www-data storage/",
     "sudo chown -R www-data:www-data database/",
     "sudo chmod -R 775 database/",
