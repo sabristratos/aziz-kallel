@@ -12,7 +12,7 @@
         <x-ui.text color="secondary" class="mb-2 text-xs sm:text-sm">{{ $description }}</x-ui.text>
         @if($action)
             <x-ui.link href="{{ $href }}">
-                {{ $action }}
+                <span dir="ltr">{{ $action }}</span>
             </x-ui.link>
         @else
             {{ $slot }}

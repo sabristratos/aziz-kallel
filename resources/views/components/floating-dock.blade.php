@@ -17,7 +17,7 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
         </a>
         <!-- Tooltip -->
         <div class="absolute ltr:right-12 rtl:left-12 top-1/2 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap px-2 py-1">
-            <x-ui.text size="xs" color="white" as="span">{{ __('Jetzt anrufen') }}</x-ui.text>
+            <x-ui.text size="xs" color="white" as="span" dir="ltr">{{ __('Jetzt anrufen') }}</x-ui.text>
             <div class="absolute ltr:left-full rtl:right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent ltr:border-l-gray-900 rtl:border-r-gray-900"></div>
         </div>
     </div>

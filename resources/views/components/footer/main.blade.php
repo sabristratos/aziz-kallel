@@ -70,10 +70,10 @@ $logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abd
                 <h4 class="font-semibold text-slate-900 mb-4">{{ __('Kontakt') }}</h4>
                 <div class="space-y-3">
                     @if($contactPhone)
-                        <a href="tel:{{ $contactPhone }}" 
+                        <a href="tel:{{ $contactPhone }}"
                            class="flex items-center space-x-3 text-slate-600 hover:text-golden-amber-600 transition-colors duration-200 text-sm">
                             <x-heroicon-o-phone class="w-4 h-4 flex-shrink-0" />
-                            <span>{{ $contactPhone }}</span>
+                            <span dir="ltr">{{ $contactPhone }}</span>
                         </a>
                     @endif
                     

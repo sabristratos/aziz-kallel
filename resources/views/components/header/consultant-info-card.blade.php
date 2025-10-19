@@ -118,7 +118,7 @@ $profilePhoto = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-md')
                 <a href="tel:{{ $contactPhone }}"
                    class="flex items-center space-x-2 rtl:space-x-reverse text-sm text-slate-900 hover:text-science-blue-600 transition-colors duration-200">
                     <x-heroicon-o-phone class="h-4 w-4" />
-                    <span>{{ $contactPhone }}</span>
+                    <span dir="ltr">{{ $contactPhone }}</span>
                 </a>
                 @endif
                 

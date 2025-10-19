@@ -17,7 +17,7 @@ $contactEmail = Setting::where('key', 'contact_email')->first()?->value ?? 'info
                     <a href="tel:{{ $contactPhone }}"
                        class="flex items-center space-x-2 hover:text-golden-amber-600 transition-colors duration-200">
                         <x-heroicon-o-phone class="w-4 h-4" />
-                        <span>{{ $contactPhone }}</span>
+                        <span dir="ltr">{{ $contactPhone }}</span>
                     </a>
                 @endif
 

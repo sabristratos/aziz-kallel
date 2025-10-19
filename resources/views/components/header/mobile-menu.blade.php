@@ -116,11 +116,11 @@ $navigationItems = [
                 @if($contactPhone || $contactEmail)
                 <div class="space-y-2">
                     @if($contactPhone)
-                    <a href="tel:{{ $contactPhone }}" 
+                    <a href="tel:{{ $contactPhone }}"
                        class="flex items-center space-x-3 p-2 hover:bg-slate-50 rounded-lg transition-colors duration-200"
                        @click="mobileMenuOpen = false">
                         <x-heroicon-o-phone class="h-4 w-4" />
-                        <x-ui.text size="small" color="muted" as="span">{{ $contactPhone }}</x-ui.text>
+                        <x-ui.text size="small" color="muted" as="span" dir="ltr">{{ $contactPhone }}</x-ui.text>
                     </a>
                     @endif
                     
