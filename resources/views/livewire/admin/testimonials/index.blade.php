@@ -63,7 +63,7 @@
                         </flux:table.cell>
 
                         <flux:table.cell>
-                            <flux:badge size="sm" color="zinc">{{ $testimonial->order }}</flux:badge>
+                            <flux:badge size="sm" color="zinc">{{ $testimonial->sort_order }}</flux:badge>
                         </flux:table.cell>
 
                         <flux:table.cell>
@@ -127,8 +127,8 @@
 
                 <flux:field>
                     <flux:label>{{ __('Order') }}</flux:label>
-                    <flux:input type="number" wire:model="order" min="0" required />
-                    <flux:error name="order" />
+                    <flux:input type="number" wire:model="sort_order" min="0" required />
+                    <flux:error name="sort_order" />
                 </flux:field>
             </div>
 
@@ -186,8 +186,8 @@
 
                 <flux:field>
                     <flux:label>{{ __('Order') }}</flux:label>
-                    <flux:input type="number" wire:model="order" min="0" required />
-                    <flux:error name="order" />
+                    <flux:input type="number" wire:model="sort_order" min="0" required />
+                    <flux:error name="sort_order" />
                 </flux:field>
             </div>
 

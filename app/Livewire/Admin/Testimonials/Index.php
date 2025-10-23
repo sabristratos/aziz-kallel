@@ -30,7 +30,7 @@ class Index extends Component
 
     public bool $is_active = true;
 
-    public int $order = 0;
+    public int $sort_order = 0;
 
     public $avatar;
 
@@ -38,17 +38,17 @@ class Index extends Component
     public function testimonials()
     {
         return Testimonial::query()
-            ->orderBy('order')
+            ->orderBy('sort_order')
             ->orderByDesc('created_at')
             ->get();
     }
 
     public function openCreateModal(): void
     {
-        $this->reset(['client_name', 'content', 'rating', 'is_active', 'order', 'avatar']);
+        $this->reset(['client_name', 'content', 'rating', 'is_active', 'sort_order', 'avatar']);
         $this->rating = 5;
         $this->is_active = true;
-        $this->order = Testimonial::max('order') + 1;
+        $this->sort_order = Testimonial::max('sort_order') + 1;
         $this->showCreateModal = true;
     }
 
@@ -61,7 +61,7 @@ class Index extends Component
         $this->content = $testimonial->getTranslations('content');
         $this->rating = $testimonial->rating;
         $this->is_active = $testimonial->is_active;
-        $this->order = $testimonial->order;
+        $this->sort_order = $testimonial->sort_order;
 
         $this->showEditModal = true;
     }
@@ -74,7 +74,7 @@ class Index extends Component
             'content.ar' => 'nullable|string',
             'rating' => 'required|integer|min:1|max:5',
             'is_active' => 'boolean',
-            'order' => 'required|integer|min:0',
+            'sort_order' => 'required|integer|min:0',
             'avatar' => 'nullable|image|max:2048',
         ]);
 
@@ -83,7 +83,7 @@ class Index extends Component
             'content' => $this->content,
             'rating' => $this->rating,
             'is_active' => $this->is_active,
-            'order' => $this->order,
+            'sort_order' => $this->sort_order,
         ]);
 
         if ($this->avatar) {
@@ -94,7 +94,7 @@ class Index extends Component
         }
 
         $this->showCreateModal = false;
-        $this->reset(['client_name', 'content', 'rating', 'is_active', 'order', 'avatar']);
+        $this->reset(['client_name', 'content', 'rating', 'is_active', 'sort_order', 'avatar']);
 
         Flux::toast(variant: 'success', text: __('Testimonial created successfully'));
     }
@@ -107,7 +107,7 @@ class Index extends Component
             'content.ar' => 'nullable|string',
             'rating' => 'required|integer|min:1|max:5',
             'is_active' => 'boolean',
-            'order' => 'required|integer|min:0',
+            'sort_order' => 'required|integer|min:0',
             'avatar' => 'nullable|image|max:2048',
         ]);
 
@@ -118,7 +118,7 @@ class Index extends Component
             'content' => $this->content,
             'rating' => $this->rating,
             'is_active' => $this->is_active,
-            'order' => $this->order,
+            'sort_order' => $this->sort_order,
         ]);
 
         if ($this->avatar) {
@@ -129,7 +129,7 @@ class Index extends Component
         }
 
         $this->showEditModal = false;
-        $this->reset(['editingId', 'client_name', 'content', 'rating', 'is_active', 'order', 'avatar']);
+        $this->reset(['editingId', 'client_name', 'content', 'rating', 'is_active', 'sort_order', 'avatar']);
 
         Flux::toast(variant: 'success', text: __('Testimonial updated successfully'));
     }
@@ -159,28 +159,28 @@ class Index extends Component
     public function moveUp(int $id): void
     {
         $testimonial = Testimonial::findOrFail($id);
-        $previousTestimonial = Testimonial::where('order', '<', $testimonial->order)
-            ->orderBy('order', 'desc')
+        $previousTestimonial = Testimonial::where('sort_order', '<', $testimonial->sort_order)
+            ->orderBy('sort_order', 'desc')
             ->first();
 
         if ($previousTestimonial) {
-            $tempOrder = $testimonial->order;
-            $testimonial->update(['order' => $previousTestimonial->order]);
-            $previousTestimonial->update(['order' => $tempOrder]);
+            $tempOrder = $testimonial->sort_order;
+            $testimonial->update(['sort_order' => $previousTestimonial->sort_order]);
+            $previousTestimonial->update(['sort_order' => $tempOrder]);
         }
     }
 
     public function moveDown(int $id): void
     {
         $testimonial = Testimonial::findOrFail($id);
-        $nextTestimonial = Testimonial::where('order', '>', $testimonial->order)
-            ->orderBy('order', 'asc')
+        $nextTestimonial = Testimonial::where('sort_order', '>', $testimonial->sort_order)
+            ->orderBy('sort_order', 'asc')
             ->first();
 
         if ($nextTestimonial) {
-            $tempOrder = $testimonial->order;
-            $testimonial->update(['order' => $nextTestimonial->order]);
-            $nextTestimonial->update(['order' => $tempOrder]);
+            $tempOrder = $testimonial->sort_order;
+            $testimonial->update(['sort_order' => $nextTestimonial->sort_order]);
+            $nextTestimonial->update(['sort_order' => $tempOrder]);
         }
     }
 
