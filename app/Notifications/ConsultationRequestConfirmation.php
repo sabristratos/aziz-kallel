@@ -40,24 +40,47 @@ class ConsultationRequestConfirmation extends Notification implements ShouldQueu
         $contactEmail = Setting::get('contact_email', 'info@abdelaziz-kallel.de');
         $contactPhone = Setting::get('contact_phone', '');
 
+        // Get customizable email content from settings
+        $subject = Setting::get('email_consultation_subject', 'Vielen Dank für Ihre Anfrage');
+        $bodyTemplate = Setting::get('email_consultation_body');
+        $footer = Setting::get('email_consultation_footer', 'Mit freundlichen Grüßen,');
+
+        // Prepare placeholders
+        $fullName = $this->consultationRequest->first_name.' '.$this->consultationRequest->last_name;
         $financialTopics = collect($this->consultationRequest->financial_topics)
             ->map(fn ($topic) => __($topic))
             ->join(', ');
 
-        return (new MailMessage)
-            ->subject(__('Vielen Dank für Ihre Anfrage'))
-            ->greeting(__('Guten Tag :name,', ['name' => $this->consultationRequest->first_name.' '.$this->consultationRequest->last_name]))
-            ->line(__('vielen Dank für Ihr Interesse an einer persönlichen Finanzberatung. Ihre Anfrage ist bei uns eingegangen.'))
-            ->line(__('**Ihre ausgewählten Themen:**'))
-            ->line($financialTopics)
-            ->line(__('Ich werde mich innerhalb der nächsten 24-48 Stunden bei Ihnen melden, um einen passenden Termin für ein unverbindliches Beratungsgespräch zu vereinbaren.'))
-            ->line(__('In diesem Gespräch können wir Ihre finanzielle Situation und Ihre Ziele ausführlich besprechen und gemeinsam die beste Lösung für Sie entwickeln.'))
-            ->lineIf($this->consultationRequest->additional_notes, __('**Ihre Anmerkungen:** :notes', ['notes' => $this->consultationRequest->additional_notes]))
-            ->line(__('Sollten Sie vorab Fragen haben, können Sie mich gerne kontaktieren:'))
-            ->line(__('E-Mail: :email', ['email' => $contactEmail]))
-            ->lineIf($contactPhone, __('Telefon: :phone', ['phone' => $contactPhone]))
-            ->line(__('Ich freue mich auf unser Gespräch!'))
-            ->salutation(__('Mit freundlichen Grüßen,').' '.$consultantName);
+        $notesText = '';
+        if ($this->consultationRequest->additional_notes) {
+            $notesText = '**'.__('Ihre Anmerkungen').':** '.$this->consultationRequest->additional_notes;
+        }
+
+        $phoneText = $contactPhone ? __('Telefon').': '.$contactPhone : '';
+
+        // Replace placeholders in body template
+        $placeholders = [
+            '{name}' => $fullName,
+            '{topics}' => $financialTopics,
+            '{notes}' => $notesText,
+            '{email}' => $contactEmail,
+            '{phone}' => $phoneText,
+        ];
+
+        $body = str_replace(array_keys($placeholders), array_values($placeholders), $bodyTemplate);
+
+        // Split body into lines and build mail message
+        $mailMessage = (new MailMessage)->subject($subject);
+
+        foreach (explode("\n", $body) as $line) {
+            if (trim($line) !== '') {
+                $mailMessage->line($line);
+            }
+        }
+
+        $mailMessage->salutation($footer.' '.$consultantName);
+
+        return $mailMessage;
     }
 
     /**

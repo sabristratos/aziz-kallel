@@ -33,16 +33,19 @@ class Index extends Component
         'seo' => ['label' => 'SEO/Meta', 'keys' => ['meta_title', 'meta_description']],
         'images' => ['label' => 'Images', 'keys' => ['site_logo', 'consultant_profile_photo', 'hero_section_image', 'header_dropdown_avatar', 'about_section_image']],
         'legal' => ['label' => 'Legal Content', 'keys' => ['impressum_content']],
-        'email' => ['label' => 'Email Configuration', 'keys' => ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name']],
+        'email' => ['label' => 'Email Configuration', 'keys' => ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name', 'email_consultation_subject', 'email_consultation_body', 'email_consultation_footer']],
     ];
 
     public function mount(): void
     {
         // Initialize edit values for all settings
-        foreach (Setting::all() as $setting) {
-            $isEmailSetting = in_array($setting->key, $this->categories['email']['keys']);
+        $emailCustomizationKeys = ['email_consultation_subject', 'email_consultation_body', 'email_consultation_footer'];
+        $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
 
-            if ($isEmailSetting) {
+        foreach (Setting::all() as $setting) {
+            $isMailConfig = in_array($setting->key, $mailConfigKeys);
+
+            if ($isMailConfig) {
                 $this->editValues[$setting->key] = $setting->value ?? '';
             } else {
                 $this->editValues[$setting->key] = $setting->getTranslations('value');
@@ -60,14 +63,15 @@ class Index extends Component
     public function categorySettings()
     {
         $keys = $this->categories[$this->selectedCategory]['keys'] ?? [];
+        $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
 
-        return $this->settings->filter(fn ($setting) => in_array($setting->key, $keys))->map(function ($setting) {
+        return $this->settings->filter(fn ($setting) => in_array($setting->key, $keys))->map(function ($setting) use ($mailConfigKeys) {
             return [
                 'key' => $setting->key,
                 'type' => $setting->type,
                 'value' => $setting->value,
                 'translations' => $setting->getTranslations('value'),
-                'isEmail' => in_array($setting->key, $this->categories['email']['keys']),
+                'isMailConfig' => in_array($setting->key, $mailConfigKeys),
                 'isMedia' => $setting->type === 'media',
                 'setting' => $setting,
             ];
@@ -87,7 +91,8 @@ class Index extends Component
     public function saveSetting(string $key): void
     {
         $setting = Setting::where('key', $key)->firstOrFail();
-        $isEmailSetting = in_array($key, $this->categories['email']['keys']);
+        $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
+        $isMailConfig = in_array($key, $mailConfigKeys);
         $isMediaSetting = $setting->type === 'media';
 
         // Validate based on setting type
@@ -98,7 +103,7 @@ class Index extends Component
                     "mediaFiles.{$key}" => 'required|image|max:10240', // max 10MB
                 ]);
             }
-        } elseif ($isEmailSetting) {
+        } elseif ($isMailConfig) {
             $this->validate([
                 "editValues.{$key}" => 'required|string',
             ]);

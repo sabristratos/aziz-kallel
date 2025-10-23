@@ -223,6 +223,32 @@ class SettingsSeeder extends Seeder
                 'type' => 'string',
             ],
 
+            // Email Customization
+            [
+                'key' => 'email_consultation_subject',
+                'value' => [
+                    'de' => 'Vielen Dank für Ihre Anfrage',
+                    'ar' => 'شكراً لاستفسارك',
+                ],
+                'type' => 'string',
+            ],
+            [
+                'key' => 'email_consultation_body',
+                'value' => [
+                    'de' => "Guten Tag {name},\n\nvielen Dank für Ihr Interesse an einer persönlichen Finanzberatung. Ihre Anfrage ist bei uns eingegangen.\n\n**Ihre ausgewählten Themen:**\n{topics}\n\nIch werde mich innerhalb der nächsten 24-48 Stunden bei Ihnen melden, um einen passenden Termin für ein unverbindliches Beratungsgespräch zu vereinbaren.\n\nIn diesem Gespräch können wir Ihre finanzielle Situation und Ihre Ziele ausführlich besprechen und gemeinsam die beste Lösung für Sie entwickeln.\n\n{notes}\n\nSollten Sie vorab Fragen haben, können Sie mich gerne kontaktieren:\n\nE-Mail: {email}\n{phone}\n\nIch freue mich auf unser Gespräch!",
+                    'ar' => "مرحباً {name},\n\nشكراً لاهتمامك بالاستشارة المالية الشخصية. لقد استلمنا استفسارك.\n\n**المواضيع المحددة:**\n{topics}\n\nسأتواصل معك خلال 24-48 ساعة القادمة لترتيب موعد مناسب لاستشارة غير ملزمة.\n\nفي هذا الاجتماع، يمكننا مناقشة وضعك المالي وأهدافك بالتفصيل وتطوير أفضل حل لك معاً.\n\n{notes}\n\nإذا كان لديك أي أسئلة مسبقة، يمكنك التواصل معي:\n\nالبريد الإلكتروني: {email}\n{phone}\n\nأتطلع للقائك!",
+                ],
+                'type' => 'text',
+            ],
+            [
+                'key' => 'email_consultation_footer',
+                'value' => [
+                    'de' => 'Mit freundlichen Grüßen,',
+                    'ar' => 'مع أطيب التحيات،',
+                ],
+                'type' => 'string',
+            ],
+
             // Image Settings (Media Library)
             [
                 'key' => 'site_logo',

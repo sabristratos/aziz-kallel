@@ -93,8 +93,8 @@
                                         </flux:table.cell>
 
                                         <flux:table.cell>
-                                            @if($item['isEmail'])
-                                                {{-- Email Settings (Non-translatable) --}}
+                                            @if($item['isMailConfig'])
+                                                {{-- Mail Configuration Settings (Non-translatable) --}}
                                                 @if($item['key'] === 'mail_password')
                                                     <flux:input type="password" wire:model="editValues.{{ $item['key'] }}" />
                                                 @else
@@ -136,6 +136,7 @@
                                                 @php
                                                     $model = "editValues.{$item['key']}.{$currentLanguage}";
                                                     $isRichText = $item['key'] === 'impressum_content';
+                                                    $isEmailCustomization = in_array($item['key'], ['email_consultation_subject', 'email_consultation_body', 'email_consultation_footer']);
                                                 @endphp
                                                 @if($isRichText)
                                                     <div wire:ignore>
@@ -146,6 +147,11 @@
                                                     </div>
                                                 @elseif($item['type'] === 'text' || $item['type'] === 'json')
                                                     <flux:textarea wire:model="{{ $model }}" rows="4" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
+                                                    @if($isEmailCustomization && $item['key'] === 'email_consultation_body')
+                                                        <flux:text size="sm" class="mt-1 text-neutral-500">
+                                                            {{ __('Available placeholders: {name}, {topics}, {notes}, {email}, {phone}') }}
+                                                        </flux:text>
+                                                    @endif
                                                 @else
                                                     <flux:input wire:model="{{ $model }}" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                 @endif
