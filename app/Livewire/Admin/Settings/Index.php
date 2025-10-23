@@ -32,6 +32,7 @@ class Index extends Component
         'landing' => ['label' => 'Landing Page', 'keys' => ['landing_headline', 'landing_lede', 'landing_meta_title', 'landing_meta_description']],
         'seo' => ['label' => 'SEO/Meta', 'keys' => ['meta_title', 'meta_description']],
         'images' => ['label' => 'Images', 'keys' => ['site_logo', 'consultant_profile_photo', 'hero_section_image', 'header_dropdown_avatar', 'about_section_image']],
+        'legal' => ['label' => 'Legal Content', 'keys' => ['impressum_content']],
         'email' => ['label' => 'Email Configuration', 'keys' => ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name']],
     ];
 
@@ -148,24 +149,22 @@ class Index extends Component
     protected function reloadMailConfig(): void
     {
         // Override mail configuration with database values
-        $mailSettings = [
-            'mail_mailer' => 'default',
-            'mail_host' => 'host',
-            'mail_port' => 'port',
-            'mail_username' => 'username',
-            'mail_password' => 'password',
-            'mail_encryption' => 'encryption',
-            'mail_from_address' => 'from.address',
-            'mail_from_name' => 'from.name',
+        $mailConfigMap = [
+            'mail_mailer' => 'mail.default',
+            'mail_host' => 'mail.mailers.smtp.host',
+            'mail_port' => 'mail.mailers.smtp.port',
+            'mail_username' => 'mail.mailers.smtp.username',
+            'mail_password' => 'mail.mailers.smtp.password',
+            'mail_encryption' => 'mail.mailers.smtp.encryption',
+            'mail_from_address' => 'mail.from.address',
+            'mail_from_name' => 'mail.from.name',
         ];
 
-        foreach ($mailSettings as $key => $configPath) {
-            $value = Setting::get($key);
-            if ($value) {
-                config()->set("mail.mailers.smtp.{$configPath}", $value);
-                if ($key === 'mail_mailer') {
-                    config()->set('mail.default', $value);
-                }
+        foreach ($mailConfigMap as $settingKey => $configPath) {
+            $value = Setting::get($settingKey);
+
+            if ($value !== null && $value !== '') {
+                config()->set($configPath, $value);
             }
         }
     }

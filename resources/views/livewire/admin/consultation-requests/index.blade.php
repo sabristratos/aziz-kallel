@@ -85,7 +85,6 @@
                 <flux:table.column>{{ __('Client') }}</flux:table.column>
                 <flux:table.column>{{ __('Contact') }}</flux:table.column>
                 <flux:table.column>{{ __('Topics') }}</flux:table.column>
-                <flux:table.column>{{ __('Meeting Type') }}</flux:table.column>
                 <flux:table.column>{{ __('Date') }}</flux:table.column>
                 <flux:table.column>{{ __('Status') }}</flux:table.column>
                 <flux:table.column align="end">{{ __('Actions') }}</flux:table.column>
@@ -95,7 +94,7 @@
                 @foreach($this->requests as $request)
                     <flux:table.row :key="$request->id">
                         <flux:table.cell variant="strong">
-                            {{ $request->name }}
+                            {{ $request->first_name }} {{ $request->last_name }}
                         </flux:table.cell>
 
                         <flux:table.cell class="max-w-xs">
@@ -108,13 +107,9 @@
                         <flux:table.cell class="max-w-xs">
                             <div class="flex flex-wrap gap-1">
                                 @foreach($request->financial_topics ?? [] as $topic)
-                                    <flux:badge size="sm" color="zinc">{{ ucfirst($topic) }}</flux:badge>
+                                    <flux:badge size="sm" color="zinc">{{ $topic }}</flux:badge>
                                 @endforeach
                             </div>
-                        </flux:table.cell>
-
-                        <flux:table.cell>
-                            <flux:badge size="sm" color="zinc">{{ ucfirst($request->meeting_type) }}</flux:badge>
                         </flux:table.cell>
 
                         <flux:table.cell class="whitespace-nowrap">
@@ -152,8 +147,12 @@
                     <flux:heading size="sm" class="mb-3">{{ __('Client Information') }}</flux:heading>
                     <div class="grid gap-4 sm:grid-cols-2">
                         <div>
-                            <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Name') }}</flux:text>
-                            <flux:text class="mt-1">{{ $this->viewingRequest->name }}</flux:text>
+                            <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('First Name') }}</flux:text>
+                            <flux:text class="mt-1">{{ $this->viewingRequest->first_name }}</flux:text>
+                        </div>
+                        <div>
+                            <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Last Name') }}</flux:text>
+                            <flux:text class="mt-1">{{ $this->viewingRequest->last_name }}</flux:text>
                         </div>
                         <div>
                             <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Email') }}</flux:text>
@@ -163,33 +162,6 @@
                             <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Phone') }}</flux:text>
                             <flux:text class="mt-1">{{ $this->viewingRequest->phone }}</flux:text>
                         </div>
-                        <div>
-                            <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Preferred Contact') }}</flux:text>
-                            <flux:text class="mt-1">{{ ucfirst($this->viewingRequest->preferred_contact_method) }}</flux:text>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Meeting Preferences --}}
-                <div>
-                    <flux:heading size="sm" class="mb-3">{{ __('Meeting Preferences') }}</flux:heading>
-                    <div class="grid gap-4 sm:grid-cols-2">
-                        <div>
-                            <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Meeting Type') }}</flux:text>
-                            <flux:text class="mt-1">{{ ucfirst($this->viewingRequest->meeting_type) }}</flux:text>
-                        </div>
-                        <div>
-                            <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Time Preference') }}</flux:text>
-                            <flux:text class="mt-1">{{ ucfirst($this->viewingRequest->time_preference) }}</flux:text>
-                        </div>
-                        <div class="sm:col-span-2">
-                            <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Preferred Dates') }}</flux:text>
-                            <div class="mt-1 flex flex-wrap gap-2">
-                                @foreach($this->viewingRequest->preferred_dates ?? [] as $date)
-                                    <flux:badge size="sm" color="zinc">{{ $date }}</flux:badge>
-                                @endforeach
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -198,20 +170,9 @@
                     <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Financial Topics') }}</flux:text>
                     <div class="mt-2 flex flex-wrap gap-2">
                         @foreach($this->viewingRequest->financial_topics ?? [] as $topic)
-                            <flux:badge color="blue">{{ ucfirst($topic) }}</flux:badge>
+                            <flux:badge color="blue">{{ $topic }}</flux:badge>
                         @endforeach
                     </div>
-                </div>
-
-                {{-- Goals & Situation --}}
-                <div>
-                    <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Current Situation') }}</flux:text>
-                    <flux:text class="mt-1">{{ $this->viewingRequest->current_situation }}</flux:text>
-                </div>
-
-                <div>
-                    <flux:text class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">{{ __('Specific Goals') }}</flux:text>
-                    <flux:text class="mt-1">{{ $this->viewingRequest->specific_goals }}</flux:text>
                 </div>
 
                 @if($this->viewingRequest->additional_notes)

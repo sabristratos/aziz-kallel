@@ -17,6 +17,11 @@ This is a professional brochure website for Abdelaziz Kallel, a financial consul
 - Splide for testimonial carousels
 - Pest 4 for testing (with browser testing capabilities)
 
+**Deployment:**
+- Configured for Coolify deployment with Nixpacks
+- See [DEPLOYMENT.md](./DEPLOYMENT.md) for deployment instructions
+- Production-ready configuration with queue workers and task scheduler
+
 ## Core Architecture
 
 ### Translation System

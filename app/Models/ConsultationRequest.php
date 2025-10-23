@@ -16,20 +16,13 @@ class ConsultationRequest extends Model
         'last_name',
         'email',
         'phone',
-        'preferred_contact_method',
         'financial_topics',
-        'meeting_type',
-        'preferred_dates',
-        'time_preference',
-        'current_situation',
-        'specific_goals',
         'additional_notes',
         'status',
     ];
 
     protected $casts = [
         'financial_topics' => 'array',
-        'preferred_dates' => 'array',
     ];
 
     protected static function booted(): void
@@ -39,10 +32,14 @@ class ConsultationRequest extends Model
             $contactEmail = Setting::where('key', 'contact_email')->first()?->value;
 
             if ($contactEmail) {
-                // Send notification to the contact email
+                // Send notification to the contact email (admin)
                 Notification::route('mail', $contactEmail)
                     ->notify(new NewConsultationRequest($consultationRequest));
             }
+
+            // Send confirmation email to the user
+            Notification::route('mail', $consultationRequest->email)
+                ->notify(new \App\Notifications\ConsultationRequestConfirmation($consultationRequest));
         });
     }
 

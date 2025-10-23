@@ -13,7 +13,7 @@
         </div>
 
         {{-- Language Switcher --}}
-        @if($selectedCategory !== 'email')
+        @if(!in_array($selectedCategory, ['email', 'images']))
             <div class="flex gap-2">
                 <flux:button
                     size="sm"
@@ -135,8 +135,16 @@
                                                 {{-- Translatable Settings --}}
                                                 @php
                                                     $model = "editValues.{$item['key']}.{$currentLanguage}";
+                                                    $isRichText = $item['key'] === 'impressum_content';
                                                 @endphp
-                                                @if($item['type'] === 'text' || $item['type'] === 'json')
+                                                @if($isRichText)
+                                                    <div wire:ignore>
+                                                        <flux:editor
+                                                            wire:model="{{ $model }}"
+                                                            :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'"
+                                                        />
+                                                    </div>
+                                                @elseif($item['type'] === 'text' || $item['type'] === 'json')
                                                     <flux:textarea wire:model="{{ $model }}" rows="4" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                 @else
                                                     <flux:input wire:model="{{ $model }}" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />

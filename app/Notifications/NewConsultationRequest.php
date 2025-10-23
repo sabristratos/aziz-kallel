@@ -43,15 +43,10 @@ class NewConsultationRequest extends Notification implements ShouldQueue
             ->subject(__('Neue Beratungsanfrage'))
             ->greeting(__('Neue Beratungsanfrage erhalten'))
             ->line(__('Sie haben eine neue Beratungsanfrage erhalten:'))
-            ->line('**'.__('Name').':** '.$this->consultationRequest->name)
+            ->line('**'.__('Name').':** '.$this->consultationRequest->first_name.' '.$this->consultationRequest->last_name)
             ->line('**'.__('E-Mail').':** '.$this->consultationRequest->email)
             ->line('**'.__('Telefon').':** '.$this->consultationRequest->phone)
-            ->line('**'.__('Bevorzugte Kontaktmethode').':** '.__(ucfirst($this->consultationRequest->preferred_contact_method)))
-            ->line('**'.__('Beratungsart').':** '.__(ucfirst($this->consultationRequest->meeting_type)))
             ->line('**'.__('Finanzthemen').':** '.$financialTopics)
-            ->lineIf($this->consultationRequest->time_preference, '**'.__('Zeitpräferenz').':** '.$this->consultationRequest->time_preference)
-            ->lineIf($this->consultationRequest->current_situation, '**'.__('Aktuelle Situation').':** '.$this->consultationRequest->current_situation)
-            ->lineIf($this->consultationRequest->specific_goals, '**'.__('Spezifische Ziele').':** '.$this->consultationRequest->specific_goals)
             ->lineIf($this->consultationRequest->additional_notes, '**'.__('Zusätzliche Notizen').':** '.$this->consultationRequest->additional_notes)
             ->action(__('Anfrage ansehen'), route('admin.consultation-requests'))
             ->line(__('Bitte antworten Sie dem Kunden so schnell wie möglich.'));
@@ -66,7 +61,7 @@ class NewConsultationRequest extends Notification implements ShouldQueue
     {
         return [
             'consultation_request_id' => $this->consultationRequest->id,
-            'name' => $this->consultationRequest->name,
+            'name' => $this->consultationRequest->first_name.' '.$this->consultationRequest->last_name,
             'email' => $this->consultationRequest->email,
         ];
     }
