@@ -117,7 +117,7 @@ $logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abd
 
                 <!-- Legal Links -->
                 <div class="mt-6 space-y-2">
-                    <a href="/impressum" class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
+                    <a href="{{ localized_route('imprint') }}" class="block text-slate-500 hover:text-golden-amber-600 transition-colors duration-200 text-xs">
                         {{ __('Impressum') }}
                     </a>
                     <button onclick="window.dispatchEvent(new CustomEvent('edit-cookies'))"

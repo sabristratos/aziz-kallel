@@ -13,20 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create hardcoded admin users
-        User::create([
-            'name' => 'Abdelaziz Kallel',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password1234'),
-            'email_verified_at' => now(),
-        ]);
-
-        User::create([
-            'name' => 'Sabri',
-            'email' => 'sabri@stratosdigital.io',
-            'password' => bcrypt('Sabrenski2024'),
-            'email_verified_at' => now(),
-        ]);
+        // Create admin user from environment variables
+        if (env('ADMIN_EMAIL') && env('ADMIN_PASSWORD')) {
+            User::create([
+                'name' => env('ADMIN_NAME', 'Admin'),
+                'email' => env('ADMIN_EMAIL'),
+                'password' => bcrypt(env('ADMIN_PASSWORD')),
+                'email_verified_at' => now(),
+            ]);
+        }
 
         // Seed financial consultant data
         $this->call([

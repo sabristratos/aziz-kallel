@@ -39,7 +39,7 @@ $contactEmail = Setting::where('key', 'contact_email')->first()?->value ?? 'info
 
                 <!-- Legal Links -->
                 <div class="flex items-center space-x-4 text-xs text-gray-500">
-                    <a href="/impressum" class="hover:text-golden-amber-600 transition-colors duration-200">
+                    <a href="{{ localized_route('imprint') }}" class="hover:text-golden-amber-600 transition-colors duration-200">
                         {{ __('Impressum') }}
                     </a>
                 </div>
