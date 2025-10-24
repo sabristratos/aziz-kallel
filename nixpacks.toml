@@ -7,6 +7,9 @@ cmds = [
     "cp /assets/worker-*.conf /etc/supervisor/conf.d/",
     "cp /assets/supervisord.conf /etc/supervisord.conf",
     "chmod +x /assets/start.sh",
+    "php artisan migrate --force",
+    "php artisan storage:link",
+    "php artisan optimize",
     "..."
 ]
 
