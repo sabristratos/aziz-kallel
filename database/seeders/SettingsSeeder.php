@@ -189,22 +189,22 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'mail_host',
-                'value' => 'smtp.mailtrap.io',
+                'value' => 'smtp.gmail.com',
                 'type' => 'string',
             ],
             [
                 'key' => 'mail_port',
-                'value' => '2525',
+                'value' => '587',
                 'type' => 'string',
             ],
             [
                 'key' => 'mail_username',
-                'value' => '',
+                'value' => 'Rosa Media Team',
                 'type' => 'string',
             ],
             [
                 'key' => 'mail_password',
-                'value' => '',
+                'value' => 'gqheusdeykxanyqr',
                 'type' => 'string',
             ],
             [
@@ -214,12 +214,12 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'mail_from_address',
-                'value' => 'hello@example.com',
+                'value' => 'abdelkader.gueddana@rosa-media.com',
                 'type' => 'string',
             ],
             [
                 'key' => 'mail_from_name',
-                'value' => 'Abdelaziz Kallel',
+                'value' => 'Rosa Media Team',
                 'type' => 'string',
             ],
 
