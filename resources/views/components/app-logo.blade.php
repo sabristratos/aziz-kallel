@@ -2,7 +2,7 @@
     use App\Models\Setting;
 
     $logoSetting = Setting::where('key', 'site_logo')->first();
-    $logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
+    $logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-lg') ?: asset('abdelaziz-logo.jpg');
 @endphp
 
 <div class="flex aspect-square size-8 items-center justify-center rounded-lg overflow-hidden bg-white dark:bg-white">

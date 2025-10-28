@@ -6,7 +6,7 @@ $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
 
 // Get logo URL with fallback
 $logoSetting = Setting::where('key', 'site_logo')->first();
-$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
+$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-lg') ?: asset('abdelaziz-logo.jpg');
 @endphp
 
 <header class="z-30 animate-slide-up" x-data="{}">

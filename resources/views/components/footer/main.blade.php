@@ -11,7 +11,7 @@ $consultantExperience = Setting::where('key', 'consultant_experience')->first()?
 
 // Get logo URL with fallback (same as header)
 $logoSetting = Setting::where('key', 'site_logo')->first();
-$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
+$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-lg') ?: asset('abdelaziz-logo.jpg');
 @endphp
 
 <x-section-wrapper class="bg-slate-100 rounded-3xl mt-16 animate-fade-in">

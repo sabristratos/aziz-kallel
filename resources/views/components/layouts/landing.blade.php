@@ -11,7 +11,7 @@ $consultantName = Setting::where('key', 'consultant_name')->first()?->value ?? '
 // Get logo for favicon and header
 $logoSetting = Setting::where('key', 'site_logo')->first();
 $faviconUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'favicon') ?? '/favicon.ico';
-$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-sm') ?: asset('abdelaziz-logo.jpg');
+$logoUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-lg') ?: asset('abdelaziz-logo.jpg');
 
 // RTL support
 $currentLocale = app()->getLocale();

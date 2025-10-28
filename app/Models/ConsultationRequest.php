@@ -28,8 +28,8 @@ class ConsultationRequest extends Model
     protected static function booted(): void
     {
         static::created(function (ConsultationRequest $consultationRequest) {
-            // Get contact email from settings
-            $contactEmail = Setting::where('key', 'contact_email')->first()?->value;
+            // Get contact email from settings (always use 'de' locale for system emails)
+            $contactEmail = Setting::get('contact_email', null, 'de');
 
             if ($contactEmail) {
                 // Send notification to the contact email (admin)

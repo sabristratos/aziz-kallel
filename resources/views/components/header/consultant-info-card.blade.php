@@ -15,7 +15,7 @@ $contactEmail = Setting::get('contact_email');
 $logoSetting = Setting::where('key', 'site_logo')->first();
 $headerAvatarSetting = Setting::where('key', 'header_dropdown_avatar')->first();
 
-$profilePhoto = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-md')
+$profilePhoto = $logoSetting?->getFirstMediaUrl('site_logo', 'logo-lg')
     ?: $headerAvatarSetting?->getFirstMediaUrl('header_dropdown_avatar', 'avatar')
     ?: asset('abdelaziz-logo.jpg');
 @endphp
