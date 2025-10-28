@@ -29,6 +29,7 @@ class Index extends Component
         'contact' => ['label' => 'Contact Information', 'keys' => ['contact_address_street', 'contact_address_city', 'contact_phone', 'contact_mobile', 'contact_email']],
         'company' => ['label' => 'Company Information', 'keys' => ['company_name']],
         'hero' => ['label' => 'Hero Section', 'keys' => ['hero_title', 'hero_subtitle', 'hero_description']],
+        'about' => ['label' => 'About Section', 'keys' => ['about_benefit_1_title', 'about_benefit_1_description', 'about_benefit_2_title', 'about_benefit_2_description', 'about_benefit_3_title', 'about_benefit_3_description', 'about_benefit_4_title', 'about_benefit_4_description']],
         'landing' => ['label' => 'Landing Page', 'keys' => ['landing_headline', 'landing_lede', 'landing_meta_title', 'landing_meta_description']],
         'seo' => ['label' => 'SEO/Meta', 'keys' => ['meta_title', 'meta_description']],
         'images' => ['label' => 'Images', 'keys' => ['site_logo', 'consultant_profile_photo', 'hero_section_image', 'header_dropdown_avatar', 'about_section_image']],
