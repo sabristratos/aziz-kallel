@@ -29,14 +29,14 @@
                 <div class="flex flex-col gap-4 md:col-span-1">
                     <!-- Benefit 1 -->
                     <x-ui.benefit-card
-                        title="{{ __('Expertise') }}"
-                        description="{{ __('Über :experience Jahre Erfahrung in der Finanzberatung', ['experience' => \App\Models\Setting::where('key', 'consultant_experience')->first()?->value]) }}"
+                        :title="\App\Models\Setting::get('about_benefit_1_title')"
+                        :description="\App\Models\Setting::get('about_benefit_1_description')"
                         icon="heroicon-o-academic-cap" />
 
                     <!-- Benefit 2 -->
                     <x-ui.benefit-card
-                        title="{{ __('Vertrauen') }}"
-                        description="{{ __('Zertifizierter Berater bei der Deutschen Vermögensberatung') }}"
+                        :title="\App\Models\Setting::get('about_benefit_2_title')"
+                        :description="\App\Models\Setting::get('about_benefit_2_description')"
                         icon="heroicon-o-shield-check" />
                 </div>
 
@@ -53,14 +53,14 @@
                 <div class="flex flex-col gap-4 md:col-span-1">
                     <!-- Benefit 3 -->
                     <x-ui.benefit-card
-                        title="{{ __('Persönlich') }}"
-                        description="{{ __('Individuelle Beratung nach Ihren persönlichen Bedürfnissen') }}"
+                        :title="\App\Models\Setting::get('about_benefit_3_title')"
+                        :description="\App\Models\Setting::get('about_benefit_3_description')"
                         icon="heroicon-o-heart" />
 
                     <!-- Benefit 4 -->
                     <x-ui.benefit-card
-                        title="{{ __('Flexibel') }}"
-                        description="{{ __('Termine nach Ihren Wünschen - bei Ihnen zu Hause oder im Büro') }}"
+                        :title="\App\Models\Setting::get('about_benefit_4_title')"
+                        :description="\App\Models\Setting::get('about_benefit_4_description')"
                         icon="heroicon-o-clock" />
                 </div>
             </div>

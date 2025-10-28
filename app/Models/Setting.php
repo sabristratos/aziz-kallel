@@ -69,6 +69,18 @@ class Setting extends Model implements HasMedia
         $this->addMediaCollection('site_logo')
             ->singleFile()
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']);
+
+        $this->addMediaCollection('hero_section_image')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+
+        $this->addMediaCollection('header_dropdown_avatar')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+
+        $this->addMediaCollection('about_section_image')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 
     public function registerMediaConversions(?Media $media = null): void
@@ -89,6 +101,15 @@ class Setting extends Model implements HasMedia
             ->sharpen(10)
             ->quality(90)
             ->format('png');
+
+        $this->addMediaConversion('social')
+            ->width(1200)
+            ->height(630)
+            ->background('#1d4587')
+            ->fit('contain', 1200, 630)
+            ->sharpen(10)
+            ->quality(90)
+            ->format('jpg');
 
         // Logo conversions
         $this->addMediaConversion('favicon')

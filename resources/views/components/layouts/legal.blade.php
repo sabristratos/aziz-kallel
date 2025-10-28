@@ -13,6 +13,13 @@ $contactEmail = Setting::where('key', 'contact_email')->first()?->value ?? '';
 // Get logo for favicon
 $logoSetting = Setting::where('key', 'site_logo')->first();
 $faviconUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'favicon') ?? '/favicon.ico';
+
+// Get social sharing image (consultant photo or logo fallback)
+$consultantPhotoSetting = Setting::where('key', 'consultant_profile_photo')->first();
+$socialImageUrl = $consultantPhotoSetting?->getFirstMediaUrl('profile_photo', 'social')
+    ?? $logoSetting?->getFirstMediaUrl('site_logo', 'social')
+    ?? url(asset('abdelaziz-kallel-2.png'));
+$socialImageAlt = $consultantName . ' - ' . config('app.name');
 @endphp
 
 <!DOCTYPE html>
@@ -27,13 +34,20 @@ $faviconUrl = $logoSetting?->getFirstMediaUrl('site_logo', 'favicon') ?? '/favic
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:title" content="{{ $metaTitle }}">
         <meta property="og:description" content="{{ $metaDescription }}">
+        <meta property="og:image" content="{{ $socialImageUrl }}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:alt" content="{{ $socialImageAlt }}">
 
         <!-- Twitter -->
-        <meta property="twitter:card" content="summary">
+        <meta property="twitter:card" content="summary_large_image">
         <meta property="twitter:title" content="{{ $metaTitle }}">
         <meta property="twitter:description" content="{{ $metaDescription }}">
+        <meta property="twitter:image" content="{{ $socialImageUrl }}">
+        <meta property="twitter:image:alt" content="{{ $socialImageAlt }}">
 
         <!-- Favicon -->
         <link rel="icon" href="{{ $faviconUrl }}" sizes="any">
