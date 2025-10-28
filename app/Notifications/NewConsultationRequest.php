@@ -35,6 +35,9 @@ class NewConsultationRequest extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
+        // Always send admin notifications in German
+        app()->setLocale('de');
+
         $financialTopics = collect($this->consultationRequest->financial_topics)
             ->map(fn ($topic) => __($topic))
             ->join(', ');

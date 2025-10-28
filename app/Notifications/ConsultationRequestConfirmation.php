@@ -36,6 +36,10 @@ class ConsultationRequestConfirmation extends Notification implements ShouldQueu
      */
     public function toMail(object $notifiable): MailMessage
     {
+        // Set locale for user confirmation email (default to German)
+        // TODO: Store user's locale preference in consultation_request and use it here
+        app()->setLocale('de');
+
         $consultantName = Setting::get('consultant_name', 'Abdelaziz Kallel');
         $contactEmail = Setting::get('contact_email', 'info@abdelaziz-kallel.de');
         $contactPhone = Setting::get('contact_phone', '');
