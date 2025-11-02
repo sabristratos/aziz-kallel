@@ -30,7 +30,8 @@
       "mcp__laravel-boost__get-config",
       "Bash(powershell -Command \"php artisan db:query \"\"SELECT key, value FROM settings WHERE key IN (''contact_phone'', ''contact_mobile'', ''contact_email'') ORDER BY key\"\"\")",
       "Bash(powershell -Command \"php artisan db:seed --class=SettingsSeeder\")",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []

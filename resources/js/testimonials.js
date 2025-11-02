@@ -22,10 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
         direction: isRTL ? 'rtl' : 'ltr',
         breakpoints: {
             1023: {
-                type: 'fade',
                 perPage: 1,
                 gap: 0,
                 padding: 0,
+                autoplay: true,
+                interval: 5000,
                 direction: isRTL ? 'rtl' : 'ltr'
             }
         }
