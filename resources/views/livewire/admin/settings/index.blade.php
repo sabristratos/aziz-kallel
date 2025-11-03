@@ -164,6 +164,13 @@
                                                             :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'"
                                                         />
                                                     </div>
+
+                                                    {{-- Hidden inputs to preserve other locales --}}
+                                                    @foreach(['de', 'ar'] as $locale)
+                                                        @if($locale !== $currentLanguage)
+                                                            <input type="hidden" wire:model="editValues.{{ $item['key'] }}.{{ $locale }}">
+                                                        @endif
+                                                    @endforeach
                                                 @elseif($item['type'] === 'text' || $item['type'] === 'json')
                                                     <flux:textarea wire:model="{{ $model }}" rows="4" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                     @if($isEmailCustomization && $item['key'] === 'email_consultation_body')
@@ -171,9 +178,23 @@
                                                             {{ __('Available placeholders: {name}, {topics}, {notes}, {email}, {phone}') }}
                                                         </flux:text>
                                                     @endif
+
+                                                    {{-- Hidden inputs to preserve other locales --}}
+                                                    @foreach(['de', 'ar'] as $locale)
+                                                        @if($locale !== $currentLanguage)
+                                                            <input type="hidden" wire:model="editValues.{{ $item['key'] }}.{{ $locale }}">
+                                                        @endif
+                                                    @endforeach
                                                 @else
                                                     <flux:input wire:model="{{ $model }}" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                 @endif
+
+                                                {{-- Hidden inputs to preserve other locales during wire:model sync --}}
+                                                @foreach(['de', 'ar'] as $locale)
+                                                    @if($locale !== $currentLanguage)
+                                                        <input type="hidden" wire:model="editValues.{{ $item['key'] }}.{{ $locale }}">
+                                                    @endif
+                                                @endforeach
                                             @endif
                                             @error("editValues.{$item['key']}")
                                                 <flux:text size="sm" class="mt-1 text-red-600">{{ $message }}</flux:text>
