@@ -203,6 +203,22 @@ class Index extends Component
             }
         }
 
+        // Reload saved settings into editValues to keep component state in sync
+        foreach ($changedKeys as $key) {
+            $setting = Setting::where('key', $key)->first();
+            if (! $setting) {
+                continue;
+            }
+
+            $isMailConfig = in_array($key, $mailConfigKeys);
+
+            if ($isMailConfig) {
+                $this->editValues[$key] = $setting->value ?? '';
+            } else {
+                $this->editValues[$key] = $setting->getTranslations('value');
+            }
+        }
+
         // Reload mail config if in email category
         if ($this->selectedCategory === 'email') {
             $this->reloadMailConfig();
