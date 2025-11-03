@@ -44,10 +44,18 @@ class Setting extends Model implements HasMedia
     {
         $setting = static::firstOrCreate(['key' => $key], ['type' => $type]);
 
-        // If locale is specified, set translation
-        if ($locale && in_array('value', $setting->translatable)) {
-            $setting->setTranslation('value', $locale, $value);
+        // If the value field is translatable, always preserve existing translations
+        if (in_array('value', $setting->translatable)) {
+            // If locale is specified, update only that locale
+            if ($locale) {
+                $setting->setTranslation('value', $locale, $value);
+            } else {
+                // If no locale specified, update current locale without overwriting others
+                $currentLocale = app()->getLocale();
+                $setting->setTranslation('value', $currentLocale, $value);
+            }
         } else {
+            // For non-translatable fields, set value directly
             $setting->value = $value;
         }
 

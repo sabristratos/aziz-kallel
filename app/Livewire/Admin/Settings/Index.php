@@ -49,7 +49,14 @@ class Index extends Component
             if ($isMailConfig) {
                 $this->editValues[$setting->key] = $setting->value ?? '';
             } else {
-                $this->editValues[$setting->key] = $setting->getTranslations('value');
+                // Get all translations and ensure both locales are present
+                $translations = $setting->getTranslations('value');
+
+                // Ensure both de and ar keys exist (defensive initialization)
+                $this->editValues[$setting->key] = [
+                    'de' => $translations['de'] ?? '',
+                    'ar' => $translations['ar'] ?? '',
+                ];
             }
         }
     }
@@ -179,9 +186,9 @@ class Index extends Component
                 // Build complete translations array to prevent overwrites
                 $translations = $setting->getTranslations('value');
 
-                // Only update locales that are present and not empty in editValues
+                // Update locales that are present in editValues (allow empty strings to clear content)
                 foreach (['de', 'ar'] as $locale) {
-                    if (isset($this->editValues[$key][$locale]) && ! empty($this->editValues[$key][$locale])) {
+                    if (isset($this->editValues[$key][$locale])) {
                         $translations[$locale] = $this->editValues[$key][$locale];
                     }
                 }
@@ -259,8 +266,8 @@ class Index extends Component
             // Build complete translations array to prevent overwrites
             $translations = $setting->getTranslations('value');
             foreach (['de', 'ar'] as $locale) {
-                // Only update if value is provided (not empty)
-                if (! empty($this->editValues[$key][$locale])) {
+                // Update if value is present (allow empty strings to clear content)
+                if (isset($this->editValues[$key][$locale])) {
                     $translations[$locale] = $this->editValues[$key][$locale];
                 }
             }
