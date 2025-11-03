@@ -24,7 +24,7 @@
             class="animate-slide-left" />
 
             <!-- Bento Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:h-96 animate-stagger">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:min-h-96 animate-stagger">
                 <!-- Left Column - Two benefits -->
                 <div class="flex flex-col gap-4 md:col-span-1">
                     <!-- Benefit 1 -->

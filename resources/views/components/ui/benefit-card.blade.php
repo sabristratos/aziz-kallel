@@ -8,7 +8,7 @@
 <div class="bg-science-blue-100 rounded-2xl p-6 flex-1 flex items-center relative overflow-hidden group">
     <div class="relative z-10">
         <x-ui.heading level="4" class="mb-2">{{ $title }}</x-ui.heading>
-        <x-ui.text size="small" color="secondary">{{ $description }}</x-ui.text>
+        <x-ui.text size="small" color="secondary" class="line-clamp-3">{{ $description }}</x-ui.text>
     </div>
     
     @if($icon)
