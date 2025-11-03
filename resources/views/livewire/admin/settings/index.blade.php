@@ -158,42 +158,21 @@
                                                     $isEmailCustomization = in_array($item['key'], ['email_consultation_subject', 'email_consultation_body', 'email_consultation_footer']);
                                                 @endphp
                                                 @if($isRichText)
-                                                    <div wire:ignore>
+                                                    <div wire:ignore wire:key="editor-{{ $item['key'] }}-{{ $currentLanguage }}">
                                                         <flux:editor
                                                             wire:model="{{ $model }}"
                                                             :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'"
                                                         />
                                                     </div>
-
-                                                    {{-- Hidden inputs to preserve other locales --}}
-                                                    @foreach(['de', 'ar'] as $locale)
-                                                        @if($locale !== $currentLanguage)
-                                                            <input type="hidden" wire:model="editValues.{{ $item['key'] }}.{{ $locale }}">
-                                                        @endif
-                                                    @endforeach
                                                 @elseif($item['type'] === 'text' || $item['type'] === 'json')
-                                                    <flux:textarea wire:model="{{ $model }}" rows="4" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
+                                                    <flux:textarea wire:key="textarea-{{ $item['key'] }}-{{ $currentLanguage }}" wire:model="{{ $model }}" rows="4" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                     @if($isEmailCustomization && $item['key'] === 'email_consultation_body')
                                                         <flux:text size="sm" class="mt-1 text-neutral-500">
                                                             {{ __('Available placeholders: {name}, {topics}, {notes}, {email}, {phone}') }}
                                                         </flux:text>
                                                     @endif
-
-                                                    {{-- Hidden inputs to preserve other locales --}}
-                                                    @foreach(['de', 'ar'] as $locale)
-                                                        @if($locale !== $currentLanguage)
-                                                            <input type="hidden" wire:model="editValues.{{ $item['key'] }}.{{ $locale }}">
-                                                        @endif
-                                                    @endforeach
                                                 @else
-                                                    <flux:input wire:model="{{ $model }}" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
-
-                                                    {{-- Hidden inputs to preserve other locales --}}
-                                                    @foreach(['de', 'ar'] as $locale)
-                                                        @if($locale !== $currentLanguage)
-                                                            <input type="hidden" wire:model="editValues.{{ $item['key'] }}.{{ $locale }}">
-                                                        @endif
-                                                    @endforeach
+                                                    <flux:input wire:key="input-{{ $item['key'] }}-{{ $currentLanguage }}" wire:model="{{ $model }}" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                 @endif
                                             @endif
                                             @error("editValues.{$item['key']}")

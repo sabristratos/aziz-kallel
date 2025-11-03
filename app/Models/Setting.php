@@ -42,25 +42,63 @@ class Setting extends Model implements HasMedia
 
     public static function set(string $key, mixed $value, string $type = 'string', ?string $locale = null): void
     {
+        \Log::debug('SETTINGS DEBUG - Setting::set() called', [
+            'key' => $key,
+            'value' => $value,
+            'type' => $type,
+            'locale' => $locale,
+            'current_app_locale' => app()->getLocale(),
+        ]);
+
         $setting = static::firstOrCreate(['key' => $key], ['type' => $type]);
+
+        \Log::debug('SETTINGS DEBUG - Existing translations before update', [
+            'key' => $key,
+            'existing_translations' => $setting->getTranslations('value'),
+        ]);
 
         // If the value field is translatable, always preserve existing translations
         if (in_array('value', $setting->translatable)) {
             // If locale is specified, update only that locale
             if ($locale) {
                 $setting->setTranslation('value', $locale, $value);
+                \Log::debug('SETTINGS DEBUG - Set translation for specific locale', [
+                    'key' => $key,
+                    'locale' => $locale,
+                    'value' => $value,
+                ]);
             } else {
                 // If no locale specified, update current locale without overwriting others
                 $currentLocale = app()->getLocale();
                 $setting->setTranslation('value', $currentLocale, $value);
+                \Log::debug('SETTINGS DEBUG - Set translation for current locale', [
+                    'key' => $key,
+                    'current_locale' => $currentLocale,
+                    'value' => $value,
+                ]);
             }
         } else {
             // For non-translatable fields, set value directly
             $setting->value = $value;
+            \Log::debug('SETTINGS DEBUG - Set non-translatable value directly', [
+                'key' => $key,
+                'value' => $value,
+            ]);
         }
 
         $setting->type = $type;
+
+        \Log::debug('SETTINGS DEBUG - Translations after setTranslation, before save', [
+            'key' => $key,
+            'translations_after' => $setting->getTranslations('value'),
+        ]);
+
         $setting->save();
+
+        \Log::debug('SETTINGS DEBUG - Translations after save', [
+            'key' => $key,
+            'final_translations' => $setting->fresh()->getTranslations('value'),
+        ]);
     }
 
     public function scopeByKey($query, string $key)

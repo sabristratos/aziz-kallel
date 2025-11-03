@@ -39,6 +39,8 @@ class Index extends Component
 
     public function mount(): void
     {
+        \Log::debug('SETTINGS DEBUG - Index component mount() called');
+
         // Initialize edit values for all settings
         $emailCustomizationKeys = ['email_consultation_subject', 'email_consultation_body', 'email_consultation_footer'];
         $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
@@ -48,17 +50,35 @@ class Index extends Component
 
             if ($isMailConfig) {
                 $this->editValues[$setting->key] = $setting->value ?? '';
+                \Log::debug('SETTINGS DEBUG - Initialized mail config setting', [
+                    'key' => $setting->key,
+                    'value' => $this->editValues[$setting->key],
+                ]);
             } else {
                 // Get all translations and ensure both locales are present
                 $translations = $setting->getTranslations('value');
+
+                \Log::debug('SETTINGS DEBUG - Loading translations from database', [
+                    'key' => $setting->key,
+                    'db_translations' => $translations,
+                ]);
 
                 // Ensure both de and ar keys exist (defensive initialization)
                 $this->editValues[$setting->key] = [
                     'de' => $translations['de'] ?? '',
                     'ar' => $translations['ar'] ?? '',
                 ];
+
+                \Log::debug('SETTINGS DEBUG - Initialized editValues for setting', [
+                    'key' => $setting->key,
+                    'editValues' => $this->editValues[$setting->key],
+                ]);
             }
         }
+
+        \Log::debug('SETTINGS DEBUG - Mount completed', [
+            'total_settings' => count($this->editValues),
+        ]);
     }
 
     #[Computed]
@@ -98,6 +118,11 @@ class Index extends Component
 
     public function saveCategory(): void
     {
+        \Log::debug('SETTINGS DEBUG - saveCategory() called', [
+            'selectedCategory' => $this->selectedCategory,
+            'currentLanguage' => $this->currentLanguage,
+        ]);
+
         $keys = $this->categories[$this->selectedCategory]['keys'] ?? [];
         $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
 
@@ -122,12 +147,25 @@ class Index extends Component
             } elseif (! $isMediaSetting && isset($this->editValues[$key])) {
                 // For translatable fields, check if any locale changed
                 $currentTranslations = $setting->getTranslations('value');
+
+                \Log::debug('SETTINGS DEBUG - Checking for changes in translatable field', [
+                    'key' => $key,
+                    'current_translations' => $currentTranslations,
+                    'editValues' => $this->editValues[$key] ?? null,
+                ]);
+
                 foreach (['de', 'ar'] as $locale) {
                     if (isset($this->editValues[$key][$locale])) {
                         $currentValue = $currentTranslations[$locale] ?? '';
                         $newValue = $this->editValues[$key][$locale];
                         if ($currentValue !== $newValue) {
                             $hasChanged = true;
+                            \Log::debug('SETTINGS DEBUG - Change detected', [
+                                'key' => $key,
+                                'locale' => $locale,
+                                'old_value' => $currentValue,
+                                'new_value' => $newValue,
+                            ]);
                             break;
                         }
                     }
@@ -138,6 +176,10 @@ class Index extends Component
                 $changedKeys[] = $key;
             }
         }
+
+        \Log::debug('SETTINGS DEBUG - Changed keys identified', [
+            'changed_keys' => $changedKeys,
+        ]);
 
         // If no changes, return early
         if (empty($changedKeys)) {
@@ -181,21 +223,46 @@ class Index extends Component
             $isMediaSetting = $setting->type === 'media';
 
             if ($isMailConfig) {
+                \Log::debug('SETTINGS DEBUG - Updating mail config', [
+                    'key' => $key,
+                    'value' => $this->editValues[$key],
+                ]);
                 $setting->update(['value' => $this->editValues[$key]]);
             } elseif (! $isMediaSetting) {
                 // Build complete translations array to prevent overwrites
                 $translations = $setting->getTranslations('value');
 
+                \Log::debug('SETTINGS DEBUG - Saving translatable setting', [
+                    'key' => $key,
+                    'existing_translations' => $translations,
+                    'incoming_editValues' => $this->editValues[$key] ?? null,
+                ]);
+
                 // Update locales that are present in editValues (allow empty strings to clear content)
                 foreach (['de', 'ar'] as $locale) {
                     if (isset($this->editValues[$key][$locale])) {
                         $translations[$locale] = $this->editValues[$key][$locale];
+                        \Log::debug('SETTINGS DEBUG - Merging locale', [
+                            'key' => $key,
+                            'locale' => $locale,
+                            'value' => $this->editValues[$key][$locale],
+                        ]);
                     }
                 }
+
+                \Log::debug('SETTINGS DEBUG - Final translations before setTranslations', [
+                    'key' => $key,
+                    'merged_translations' => $translations,
+                ]);
 
                 // Update all translations atomically
                 $setting->setTranslations('value', $translations);
                 $setting->save();
+
+                \Log::debug('SETTINGS DEBUG - After save, fresh from DB', [
+                    'key' => $key,
+                    'fresh_translations' => $setting->fresh()->getTranslations('value'),
+                ]);
             }
 
             // Handle media upload
@@ -237,10 +304,22 @@ class Index extends Component
 
     public function saveSetting(string $key): void
     {
+        \Log::debug('SETTINGS DEBUG - saveSetting() called', [
+            'key' => $key,
+            'currentLanguage' => $this->currentLanguage,
+        ]);
+
         $setting = Setting::where('key', $key)->firstOrFail();
         $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
         $isMailConfig = in_array($key, $mailConfigKeys);
         $isMediaSetting = $setting->type === 'media';
+
+        \Log::debug('SETTINGS DEBUG - Setting type determination', [
+            'key' => $key,
+            'isMailConfig' => $isMailConfig,
+            'isMediaSetting' => $isMediaSetting,
+            'editValues' => $this->editValues[$key] ?? null,
+        ]);
 
         // Validate based on setting type
         if ($isMediaSetting) {
@@ -255,6 +334,11 @@ class Index extends Component
                 "editValues.{$key}" => 'required|string',
             ]);
 
+            \Log::debug('SETTINGS DEBUG - Updating mail config in saveSetting', [
+                'key' => $key,
+                'value' => $this->editValues[$key],
+            ]);
+
             $setting->update(['value' => $this->editValues[$key]]);
             $this->reloadMailConfig();
         } else {
@@ -265,16 +349,38 @@ class Index extends Component
 
             // Build complete translations array to prevent overwrites
             $translations = $setting->getTranslations('value');
+
+            \Log::debug('SETTINGS DEBUG - Saving translatable setting in saveSetting', [
+                'key' => $key,
+                'existing_translations' => $translations,
+                'incoming_editValues' => $this->editValues[$key] ?? null,
+            ]);
+
             foreach (['de', 'ar'] as $locale) {
                 // Update if value is present (allow empty strings to clear content)
                 if (isset($this->editValues[$key][$locale])) {
                     $translations[$locale] = $this->editValues[$key][$locale];
+                    \Log::debug('SETTINGS DEBUG - Merging locale in saveSetting', [
+                        'key' => $key,
+                        'locale' => $locale,
+                        'value' => $this->editValues[$key][$locale],
+                    ]);
                 }
             }
+
+            \Log::debug('SETTINGS DEBUG - Final translations before setTranslations in saveSetting', [
+                'key' => $key,
+                'merged_translations' => $translations,
+            ]);
 
             // Update all translations atomically
             $setting->setTranslations('value', $translations);
             $setting->save();
+
+            \Log::debug('SETTINGS DEBUG - After save in saveSetting, fresh from DB', [
+                'key' => $key,
+                'fresh_translations' => $setting->fresh()->getTranslations('value'),
+            ]);
         }
 
         // Handle media upload
