@@ -94,9 +94,54 @@ class Index extends Component
         $keys = $this->categories[$this->selectedCategory]['keys'] ?? [];
         $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
 
-        // Build validation rules for all fields in category
-        $rules = [];
+        // Identify which fields have actually changed
+        $changedKeys = [];
         foreach ($keys as $key) {
+            $setting = Setting::where('key', $key)->first();
+            if (! $setting) {
+                continue;
+            }
+
+            $isMailConfig = in_array($key, $mailConfigKeys);
+            $isMediaSetting = $setting->type === 'media';
+
+            // Check if this field has been modified
+            $hasChanged = false;
+
+            if ($isMediaSetting && isset($this->mediaFiles[$key])) {
+                $hasChanged = true;
+            } elseif ($isMailConfig && isset($this->editValues[$key])) {
+                $hasChanged = ($this->editValues[$key] !== $setting->value);
+            } elseif (! $isMediaSetting && isset($this->editValues[$key])) {
+                // For translatable fields, check if any locale changed
+                $currentTranslations = $setting->getTranslations('value');
+                foreach (['de', 'ar'] as $locale) {
+                    if (isset($this->editValues[$key][$locale])) {
+                        $currentValue = $currentTranslations[$locale] ?? '';
+                        $newValue = $this->editValues[$key][$locale];
+                        if ($currentValue !== $newValue) {
+                            $hasChanged = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if ($hasChanged) {
+                $changedKeys[] = $key;
+            }
+        }
+
+        // If no changes, return early
+        if (empty($changedKeys)) {
+            Flux::toast(variant: 'info', text: __('No changes to save'));
+
+            return;
+        }
+
+        // Build validation rules only for changed fields
+        $rules = [];
+        foreach ($changedKeys as $key) {
             $setting = Setting::where('key', $key)->first();
             if (! $setting) {
                 continue;
@@ -115,11 +160,11 @@ class Index extends Component
             }
         }
 
-        // Validate all fields
+        // Validate changed fields
         $this->validate($rules);
 
-        // Save all settings in category
-        foreach ($keys as $key) {
+        // Save only changed settings
+        foreach ($changedKeys as $key) {
             $setting = Setting::where('key', $key)->first();
             if (! $setting) {
                 continue;
@@ -133,9 +178,10 @@ class Index extends Component
             } elseif (! $isMediaSetting) {
                 // Build complete translations array to prevent overwrites
                 $translations = $setting->getTranslations('value');
+
+                // Only update locales that are present and not empty in editValues
                 foreach (['de', 'ar'] as $locale) {
-                    // Only update if value is provided (not empty)
-                    if (! empty($this->editValues[$key][$locale])) {
+                    if (isset($this->editValues[$key][$locale]) && ! empty($this->editValues[$key][$locale])) {
                         $translations[$locale] = $this->editValues[$key][$locale];
                     }
                 }
@@ -162,7 +208,7 @@ class Index extends Component
             $this->reloadMailConfig();
         }
 
-        $savedCount = count($keys);
+        $savedCount = count($changedKeys);
         Flux::toast(variant: 'success', text: __('Saved :count settings successfully', ['count' => $savedCount]));
     }
 
