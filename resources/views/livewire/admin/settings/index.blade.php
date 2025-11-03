@@ -115,9 +115,9 @@
                                             @if($item['isMailConfig'])
                                                 {{-- Mail Configuration Settings (Non-translatable) --}}
                                                 @if($item['key'] === 'mail_password')
-                                                    <flux:input type="password" wire:model.live.debounce.500ms="editValues.{{ $item['key'] }}" />
+                                                    <flux:input type="password" wire:model="editValues.{{ $item['key'] }}" />
                                                 @else
-                                                    <flux:input wire:model.live.debounce.500ms="editValues.{{ $item['key'] }}" />
+                                                    <flux:input wire:model="editValues.{{ $item['key'] }}" />
                                                 @endif
                                             @elseif($item['isMedia'])
                                                 {{-- Media Upload --}}
@@ -160,19 +160,19 @@
                                                 @if($isRichText)
                                                     <div wire:ignore>
                                                         <flux:editor
-                                                            wire:model.live.debounce.500ms="{{ $model }}"
+                                                            wire:model="{{ $model }}"
                                                             :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'"
                                                         />
                                                     </div>
                                                 @elseif($item['type'] === 'text' || $item['type'] === 'json')
-                                                    <flux:textarea wire:model.live.debounce.500ms="{{ $model }}" rows="4" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
+                                                    <flux:textarea wire:model="{{ $model }}" rows="4" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                     @if($isEmailCustomization && $item['key'] === 'email_consultation_body')
                                                         <flux:text size="sm" class="mt-1 text-neutral-500">
                                                             {{ __('Available placeholders: {name}, {topics}, {notes}, {email}, {phone}') }}
                                                         </flux:text>
                                                     @endif
                                                 @else
-                                                    <flux:input wire:model.live.debounce.500ms="{{ $model }}" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
+                                                    <flux:input wire:model="{{ $model }}" :dir="$currentLanguage === 'ar' ? 'rtl' : 'ltr'" />
                                                 @endif
                                             @endif
                                             @error("editValues.{$item['key']}")
