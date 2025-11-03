@@ -18,6 +18,8 @@ class Index extends Component
 
     public array $editValues = [];
 
+    public array $originalValues = [];
+
     public array $mediaFiles = [];
 
     public string $testEmailAddress = '';
@@ -48,8 +50,10 @@ class Index extends Component
 
             if ($isMailConfig) {
                 $this->editValues[$setting->key] = $setting->value ?? '';
+                $this->originalValues[$setting->key] = $setting->value ?? '';
             } else {
                 $this->editValues[$setting->key] = $setting->getTranslations('value');
+                $this->originalValues[$setting->key] = $setting->getTranslations('value');
             }
         }
     }
@@ -89,6 +93,123 @@ class Index extends Component
         $this->currentLanguage = $language;
     }
 
+    #[Computed]
+    public function modifiedFields(): array
+    {
+        $modified = [];
+        $keys = $this->categories[$this->selectedCategory]['keys'] ?? [];
+
+        foreach ($keys as $key) {
+            if (! isset($this->editValues[$key]) || ! isset($this->originalValues[$key])) {
+                continue;
+            }
+
+            $editValue = $this->editValues[$key];
+            $originalValue = $this->originalValues[$key];
+
+            // Compare values (handle both arrays and strings)
+            if (is_array($editValue) && is_array($originalValue)) {
+                if (json_encode($editValue) !== json_encode($originalValue)) {
+                    $modified[] = $key;
+                }
+            } elseif ($editValue !== $originalValue) {
+                $modified[] = $key;
+            }
+        }
+
+        return $modified;
+    }
+
+    #[Computed]
+    public function hasModifiedFields(): bool
+    {
+        return count($this->modifiedFields) > 0;
+    }
+
+    public function saveCategory(): void
+    {
+        $keys = $this->categories[$this->selectedCategory]['keys'] ?? [];
+        $mailConfigKeys = ['mail_mailer', 'mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_address', 'mail_from_name'];
+
+        // Build validation rules for all fields in category
+        $rules = [];
+        foreach ($keys as $key) {
+            $setting = Setting::where('key', $key)->first();
+            if (! $setting) {
+                continue;
+            }
+
+            $isMailConfig = in_array($key, $mailConfigKeys);
+            $isMediaSetting = $setting->type === 'media';
+
+            if ($isMediaSetting && isset($this->mediaFiles[$key])) {
+                $rules["mediaFiles.{$key}"] = 'required|image|max:10240';
+            } elseif ($isMailConfig) {
+                $rules["editValues.{$key}"] = 'required|string';
+            } else {
+                $rules["editValues.{$key}.de"] = 'required|string';
+                $rules["editValues.{$key}.ar"] = 'nullable|string';
+            }
+        }
+
+        // Validate all fields
+        $this->validate($rules);
+
+        // Save all settings in category
+        foreach ($keys as $key) {
+            $setting = Setting::where('key', $key)->first();
+            if (! $setting) {
+                continue;
+            }
+
+            $isMailConfig = in_array($key, $mailConfigKeys);
+            $isMediaSetting = $setting->type === 'media';
+
+            if ($isMailConfig) {
+                $setting->update(['value' => $this->editValues[$key]]);
+            } elseif (! $isMediaSetting) {
+                // Build complete translations array to prevent overwrites
+                $translations = $setting->getTranslations('value');
+                foreach (['de', 'ar'] as $locale) {
+                    // Only update if value is provided (not empty)
+                    if (! empty($this->editValues[$key][$locale])) {
+                        $translations[$locale] = $this->editValues[$key][$locale];
+                    }
+                }
+
+                // Update all translations atomically
+                $setting->setTranslations('value', $translations);
+                $setting->save();
+            }
+
+            // Handle media upload
+            if (isset($this->mediaFiles[$key]) && $setting->type === 'media') {
+                $collectionName = $key;
+                $setting->clearMediaCollection($collectionName);
+                $setting->addMedia($this->mediaFiles[$key]->getRealPath())
+                    ->usingName(ucwords(str_replace('_', ' ', $key)))
+                    ->toMediaCollection($collectionName);
+
+                unset($this->mediaFiles[$key]);
+            }
+
+            // Update original values after save
+            if ($isMailConfig) {
+                $this->originalValues[$key] = $this->editValues[$key];
+            } else {
+                $this->originalValues[$key] = $this->editValues[$key];
+            }
+        }
+
+        // Reload mail config if in email category
+        if ($this->selectedCategory === 'email') {
+            $this->reloadMailConfig();
+        }
+
+        $savedCount = count($keys);
+        Flux::toast(variant: 'success', text: __('Saved :count settings successfully', ['count' => $savedCount]));
+    }
+
     public function saveSetting(string $key): void
     {
         $setting = Setting::where('key', $key)->firstOrFail();
@@ -117,11 +238,18 @@ class Index extends Component
                 "editValues.{$key}.ar" => 'nullable|string',
             ]);
 
+            // Build complete translations array to prevent overwrites
+            $translations = $setting->getTranslations('value');
             foreach (['de', 'ar'] as $locale) {
+                // Only update if value is provided (not empty)
                 if (! empty($this->editValues[$key][$locale])) {
-                    Setting::set($key, $this->editValues[$key][$locale], $setting->type, $locale);
+                    $translations[$locale] = $this->editValues[$key][$locale];
                 }
             }
+
+            // Update all translations atomically
+            $setting->setTranslations('value', $translations);
+            $setting->save();
         }
 
         // Handle media upload
@@ -133,6 +261,13 @@ class Index extends Component
                 ->toMediaCollection($collectionName);
 
             unset($this->mediaFiles[$key]);
+        }
+
+        // Update original values after save
+        if ($isMailConfig) {
+            $this->originalValues[$key] = $this->editValues[$key];
+        } else {
+            $this->originalValues[$key] = $this->editValues[$key];
         }
 
         Flux::toast(variant: 'success', text: __('Setting saved successfully'));

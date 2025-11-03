@@ -60,11 +60,25 @@
                 <div class="border-b border-neutral-200 px-6 py-4 dark:border-neutral-700">
                     <div class="flex items-center justify-between">
                         <flux:heading size="lg">{{ __($categories[$selectedCategory]['label']) }}</flux:heading>
-                        @if($selectedCategory === 'email')
-                            <flux:button size="sm" wire:click="openTestEmailModal" variant="primary">
-                                {{ __('Send Test Email') }}
+                        <div class="flex items-center gap-2">
+                            @if($selectedCategory === 'email')
+                                <flux:button size="sm" wire:click="openTestEmailModal" variant="ghost">
+                                    {{ __('Send Test Email') }}
+                                </flux:button>
+                            @endif
+                            <flux:button
+                                size="sm"
+                                wire:click="saveCategory"
+                                variant="primary"
+                                :disabled="!$this->hasModifiedFields"
+                            >
+                                @if($this->hasModifiedFields)
+                                    {{ __('Save All Changes') }} ({{ count($this->modifiedFields) }})
+                                @else
+                                    {{ __('Save All Changes') }}
+                                @endif
                             </flux:button>
-                        @endif
+                        </div>
                     </div>
                 </div>
 
@@ -79,15 +93,22 @@
                             <flux:table.columns>
                                 <flux:table.column class="w-1/3">{{ __('Setting') }}</flux:table.column>
                                 <flux:table.column>{{ __('Value') }}</flux:table.column>
-                                <flux:table.column align="end" class="w-32">{{ __('Actions') }}</flux:table.column>
                             </flux:table.columns>
 
                             <flux:table.rows>
                                 @foreach($this->categorySettings as $item)
+                                    @php
+                                        $isModified = in_array($item['key'], $this->modifiedFields);
+                                    @endphp
                                     <flux:table.row :key="$item['key']">
                                         <flux:table.cell>
                                             <div>
-                                                <flux:text variant="strong">{{ ucwords(str_replace('_', ' ', $item['key'])) }}</flux:text>
+                                                <div class="flex items-center gap-2">
+                                                    <flux:text variant="strong">{{ ucwords(str_replace('_', ' ', $item['key'])) }}</flux:text>
+                                                    @if($isModified)
+                                                        <flux:badge size="sm" color="blue">{{ __('Modified') }}</flux:badge>
+                                                    @endif
+                                                </div>
                                                 <flux:badge size="sm" color="zinc" class="mt-1">{{ $item['type'] }}</flux:badge>
                                             </div>
                                         </flux:table.cell>
@@ -162,16 +183,6 @@
                                             @error("editValues.{$item['key']}.{$currentLanguage}")
                                                 <flux:text size="sm" class="mt-1 text-red-600">{{ $message }}</flux:text>
                                             @enderror
-                                        </flux:table.cell>
-
-                                        <flux:table.cell align="end">
-                                            <flux:button
-                                                size="sm"
-                                                variant="primary"
-                                                wire:click="saveSetting('{{ $item['key'] }}')"
-                                            >
-                                                {{ __('Save') }}
-                                            </flux:button>
                                         </flux:table.cell>
                                     </flux:table.row>
                                 @endforeach

@@ -61,8 +61,9 @@ class IndexTest extends TestCase
         Setting::set('hero_title', ['de' => 'Old Title', 'ar' => 'عنوان قديم'], 'string');
 
         \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'hero')
             ->set('editValues.hero_title', ['de' => 'New Title', 'ar' => 'عنوان جديد'])
-            ->call('saveSetting', 'hero_title');
+            ->call('saveCategory');
 
         $setting = Setting::where('key', 'hero_title')->first();
         $this->assertEquals('New Title', $setting->getTranslation('value', 'de'));
@@ -76,8 +77,9 @@ class IndexTest extends TestCase
         Setting::set('consultant_name', ['de' => 'Old Name', 'ar' => 'اسم قديم'], 'string');
 
         \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'personal')
             ->set('editValues.consultant_name', ['de' => 'New Name', 'ar' => ''])
-            ->call('saveSetting', 'consultant_name');
+            ->call('saveCategory');
 
         $setting = Setting::where('key', 'consultant_name')->first();
         $this->assertEquals('New Name', $setting->getTranslation('value', 'de'));
@@ -90,8 +92,9 @@ class IndexTest extends TestCase
         Setting::set('consultant_name', ['de' => 'Test Name'], 'string');
 
         \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'personal')
             ->set('editValues.consultant_name', ['de' => '', 'ar' => 'اسم عربي'])
-            ->call('saveSetting', 'consultant_name')
+            ->call('saveCategory')
             ->assertHasErrors(['editValues.consultant_name.de']);
     }
 
@@ -102,20 +105,22 @@ class IndexTest extends TestCase
         Setting::set('consultant_name', ['de' => 'Test Name'], 'string');
 
         \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'personal')
             ->set('editValues.consultant_name', ['de' => 123, 'ar' => ''])
-            ->call('saveSetting', 'consultant_name')
+            ->call('saveCategory')
             ->assertHasErrors(['editValues.consultant_name.de']);
     }
 
-    public function test_saves_setting_successfully(): void
+    public function test_saves_category_successfully(): void
     {
         $this->actingAs(User::factory()->create());
 
         Setting::set('consultant_name', ['de' => 'Test Name'], 'string');
 
         \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'personal')
             ->set('editValues.consultant_name', ['de' => 'Updated Name', 'ar' => ''])
-            ->call('saveSetting', 'consultant_name');
+            ->call('saveCategory');
 
         $setting = Setting::where('key', 'consultant_name')->first();
         $this->assertEquals('Updated Name', $setting->getTranslation('value', 'de'));
@@ -153,5 +158,82 @@ class IndexTest extends TestCase
             ->assertSet('selectedCategory', 'personal')
             ->call('selectCategory', 'hero')
             ->assertSet('selectedCategory', 'hero');
+    }
+
+    public function test_updating_both_languages_preserves_both_translations(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        // Initialize setting with both translations
+        Setting::set('hero_title', ['de' => 'Original German', 'ar' => 'Original Arabic'], 'string');
+
+        // Update both translations in a single save operation
+        \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'hero')
+            ->set('editValues.hero_title', ['de' => 'Updated German', 'ar' => 'Updated Arabic'])
+            ->call('saveCategory');
+
+        // Verify both translations were saved correctly (not overwritten)
+        $setting = Setting::where('key', 'hero_title')->first();
+        $this->assertEquals('Updated German', $setting->getTranslation('value', 'de'));
+        $this->assertEquals('Updated Arabic', $setting->getTranslation('value', 'ar'));
+    }
+
+    public function test_updating_german_preserves_existing_arabic(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        // Initialize setting with both translations
+        Setting::set('consultant_name', ['de' => 'Original German', 'ar' => 'Original Arabic'], 'string');
+
+        // Update only German, leaving Arabic field empty in the form
+        \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'personal')
+            ->set('editValues.consultant_name', ['de' => 'Updated German', 'ar' => ''])
+            ->call('saveCategory');
+
+        // Verify German was updated but Arabic was preserved
+        $setting = Setting::where('key', 'consultant_name')->first();
+        $this->assertEquals('Updated German', $setting->getTranslation('value', 'de'));
+        $this->assertEquals('Original Arabic', $setting->getTranslation('value', 'ar'));
+    }
+
+    public function test_tracks_modified_fields(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        Setting::set('consultant_name', ['de' => 'Original Name'], 'string');
+        Setting::set('consultant_title', ['de' => 'Original Title'], 'string');
+
+        $component = \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'personal')
+            ->assertSet('hasModifiedFields', false);
+
+        // Modify one field
+        $component->set('editValues.consultant_name', ['de' => 'Modified Name', 'ar' => ''])
+            ->assertSet('hasModifiedFields', true);
+
+        // Check modifiedFields computed property contains the changed field
+        $this->assertTrue(in_array('consultant_name', $component->get('modifiedFields')));
+    }
+
+    public function test_saves_multiple_fields_in_category(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        Setting::set('consultant_name', ['de' => 'Old Name'], 'string');
+        Setting::set('consultant_title', ['de' => 'Old Title'], 'string');
+
+        \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
+            ->set('selectedCategory', 'personal')
+            ->set('editValues.consultant_name', ['de' => 'New Name', 'ar' => ''])
+            ->set('editValues.consultant_title', ['de' => 'New Title', 'ar' => ''])
+            ->call('saveCategory');
+
+        $nameSetting = Setting::where('key', 'consultant_name')->first();
+        $titleSetting = Setting::where('key', 'consultant_title')->first();
+
+        $this->assertEquals('New Name', $nameSetting->getTranslation('value', 'de'));
+        $this->assertEquals('New Title', $titleSetting->getTranslation('value', 'de'));
     }
 }
