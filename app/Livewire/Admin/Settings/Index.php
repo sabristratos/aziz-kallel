@@ -18,8 +18,6 @@ class Index extends Component
 
     public array $editValues = [];
 
-    public array $originalValues = [];
-
     public array $mediaFiles = [];
 
     public string $testEmailAddress = '';
@@ -50,10 +48,8 @@ class Index extends Component
 
             if ($isMailConfig) {
                 $this->editValues[$setting->key] = $setting->value ?? '';
-                $this->originalValues[$setting->key] = $setting->value ?? '';
             } else {
                 $this->editValues[$setting->key] = $setting->getTranslations('value');
-                $this->originalValues[$setting->key] = $setting->getTranslations('value');
             }
         }
     }
@@ -91,39 +87,6 @@ class Index extends Component
     public function switchLanguage(string $language): void
     {
         $this->currentLanguage = $language;
-    }
-
-    #[Computed]
-    public function modifiedFields(): array
-    {
-        $modified = [];
-        $keys = $this->categories[$this->selectedCategory]['keys'] ?? [];
-
-        foreach ($keys as $key) {
-            if (! isset($this->editValues[$key]) || ! isset($this->originalValues[$key])) {
-                continue;
-            }
-
-            $editValue = $this->editValues[$key];
-            $originalValue = $this->originalValues[$key];
-
-            // Compare values (handle both arrays and strings)
-            if (is_array($editValue) && is_array($originalValue)) {
-                if (json_encode($editValue) !== json_encode($originalValue)) {
-                    $modified[] = $key;
-                }
-            } elseif ($editValue !== $originalValue) {
-                $modified[] = $key;
-            }
-        }
-
-        return $modified;
-    }
-
-    #[Computed]
-    public function hasModifiedFields(): bool
-    {
-        return count($this->modifiedFields) > 0;
     }
 
     public function saveCategory(): void
@@ -192,13 +155,6 @@ class Index extends Component
 
                 unset($this->mediaFiles[$key]);
             }
-
-            // Update original values after save
-            if ($isMailConfig) {
-                $this->originalValues[$key] = $this->editValues[$key];
-            } else {
-                $this->originalValues[$key] = $this->editValues[$key];
-            }
         }
 
         // Reload mail config if in email category
@@ -261,13 +217,6 @@ class Index extends Component
                 ->toMediaCollection($collectionName);
 
             unset($this->mediaFiles[$key]);
-        }
-
-        // Update original values after save
-        if ($isMailConfig) {
-            $this->originalValues[$key] = $this->editValues[$key];
-        } else {
-            $this->originalValues[$key] = $this->editValues[$key];
         }
 
         Flux::toast(variant: 'success', text: __('Setting saved successfully'));

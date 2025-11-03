@@ -198,25 +198,6 @@ class IndexTest extends TestCase
         $this->assertEquals('Original Arabic', $setting->getTranslation('value', 'ar'));
     }
 
-    public function test_tracks_modified_fields(): void
-    {
-        $this->actingAs(User::factory()->create());
-
-        Setting::set('consultant_name', ['de' => 'Original Name'], 'string');
-        Setting::set('consultant_title', ['de' => 'Original Title'], 'string');
-
-        $component = \Livewire\Livewire::test(\App\Livewire\Admin\Settings\Index::class)
-            ->set('selectedCategory', 'personal')
-            ->assertSet('hasModifiedFields', false);
-
-        // Modify one field
-        $component->set('editValues.consultant_name', ['de' => 'Modified Name', 'ar' => ''])
-            ->assertSet('hasModifiedFields', true);
-
-        // Check modifiedFields computed property contains the changed field
-        $this->assertTrue(in_array('consultant_name', $component->get('modifiedFields')));
-    }
-
     public function test_saves_multiple_fields_in_category(): void
     {
         $this->actingAs(User::factory()->create());
